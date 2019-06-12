@@ -1,7 +1,7 @@
 ---
 layout: post
 title: " Google Gmail的 机密模式 - 全面开放"
-subtitle: "“将于6月25日面向G Suite订阅用户开放，普通Gmail用户也可以使用”"
+subtitle: "“普通Gmail用户也可以使用”"
 author: "ztow"
 header-img: "img/post-bg-gmail-ConfidentialMode.png"
 catalog: true
