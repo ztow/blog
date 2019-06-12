@@ -4,6 +4,7 @@ title: " Google Gmail的 机密模式 - 全面开放"
 subtitle: "“将于6月25日面向G Suite订阅用户开放，普通Gmail用户也可以使用”"
 author: "ztow"
 header-img: "img/post-bg-gmail-ConfidentialMode.png"
+catalog: true
 tags:
   - gmail
   - ConfidentialMode
@@ -14,11 +15,11 @@ tags:
 ---
 
 前一阵，发现gmail上在发送邮件时，多了一个新模式，叫  ConfidentialMode （机密模式），官方介绍如下：
-\<img style="-webkit-user-select: none;cursor: zoom-in;" src="https://storage.googleapis.com/support-kms-prod/Y7Fl8GeBwstul2shRgkYZXtO0UQSHhFHmwuO" width="833" height="468"\>
+![][image-1]
 
 > 您可以通过机密模式发送邮件和附件，从而保护敏感信息。您可以限制收件人可对您的电子邮件执行的操作，例如设置到期日期、要求输入验证码，或移除转发选项。当您发送电子邮件后，收件人会收到关于您所选限制的通知。
 
-![][image-1]
+![][image-2]
 
 ### 以机密模式发送邮件和附件
 注意：如果您通过单位或学校帐号使用 Gmail，请与管理员联系以确保您可以使用机密模式。
@@ -45,26 +46,26 @@ tags:
 - 您可能需要输入验证码才能打开电子邮件。
 
 ### 搜索通过 Gmail 机密模式收发邮件
-- 要搜索您通过机密模式发送的邮件，请在 Gmail 搜索框中输入 I:^irm_outbound。
-- 要搜索您通过机密模式接收的邮件，请在 Gmail 搜索框中输入 I^irm_inbound。
+- 要搜索您通过机密模式发送的邮件，请在 Gmail 搜索框中输入 I:^irm\_outbound。
+- 要搜索您通过机密模式接收的邮件，请在 Gmail 搜索框中输入 I^irm\_inbound。
 
 ### 打开通过机密模式发送的电子邮件
 如果发件人使用机密模式发送电子邮件：
 - 您可以在到期日或发件人移除访问权限之前查看邮件和附件。
 - 复制、粘贴、下载、打印以及转发邮件文本和附件的选项将会停用。
 - 您可能需要输入验证码才能打开电子邮件。
-#### 我使用的是 Gmail 帐号
-1. 打开相应电子邮件。
-2. 如果发件人不要求输入短信验证码：
+	> 我使用的是 Gmail 帐号
+	1. 打开相应电子邮件。
+	2. 如果发件人不要求输入短信验证码：
 	- 如果您使用的是最新版本的 Gmail 应用（网页版或移动版），那么您在打开电子邮件后就可以直接看到其中的内容。
 	- 如果您使用的是其他电子邮件客户端，请打开电子邮件，点击查看电子邮件链接，然后使用 Google 凭据登录以查看邮件。
 3. 如果发件人要求输入短信验证码：
 	- 点击发送验证码。
 	- 查看您的短信以获取验证码。
 	- 输入验证码，然后点击提交。
-#### 我使用的是其他电子邮件帐号
+> 我使用的是其他电子邮件帐号
 1. 打开相应电子邮件。点击查看电子邮件链接。
-2. 系统会打开一个新页面。点击发送验证码。
+	2. 系统会打开一个新页面。点击发送验证码。
 	- 查看您的短信或电子邮件以获取验证码。
 	- 输入验证码，然后点击提交。
 
@@ -77,4 +78,5 @@ tags:
 ### 发送端
 上文全是pc端网页登录的，安卓和ios端需要下载gmail的应用，不过。。你懂得。
 
-[image-1]:	https://s.yimg.com/ny/api/res/1.2/PB9GWcC5knjAfpjZZldZRg--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9ODAwO2lsPXBsYW5l/https://img.huffingtonpost.com/asset/5ce217372100007505809793.png.cf.jpg
+[image-1]:	https://storage.googleapis.com/support-kms-prod/Y7Fl8GeBwstul2shRgkYZXtO0UQSHhFHmwuO
+[image-2]:	https://s.yimg.com/ny/api/res/1.2/PB9GWcC5knjAfpjZZldZRg--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9ODAwO2lsPXBsYW5l/https://img.huffingtonpost.com/asset/5ce217372100007505809793.png.cf.jpg
