@@ -1,7 +1,7 @@
 ---
 layout: post
-title: “Google Gmail的 机密模式 - 全面开放”
-subtitle: "“将于6月25日面向G Suite订阅用户开放，普通Gmail用户也可以使用””
+title: " Google Gmail的 机密模式 - 全面开放"
+subtitle: "“将于6月25日面向G Suite订阅用户开放，普通Gmail用户也可以使用”"
 author: "ztow"
 header-img: "img/post-bg-gmail-ConfidentialMode.png"
 tags:
@@ -13,7 +13,7 @@ tags:
 
 ---
 
-  前一阵，发现gmail上在发送邮件时，多了一个新模式，叫  ConfidentialMode （机密模式），官方介绍如下：
+前一阵，发现gmail上在发送邮件时，多了一个新模式，叫  ConfidentialMode （机密模式），官方介绍如下：
 \<img style="-webkit-user-select: none;cursor: zoom-in;" src="https://storage.googleapis.com/support-kms-prod/Y7Fl8GeBwstul2shRgkYZXtO0UQSHhFHmwuO" width="833" height="468"\>
 
 > 您可以通过机密模式发送邮件和附件，从而保护敏感信息。您可以限制收件人可对您的电子邮件执行的操作，例如设置到期日期、要求输入验证码，或移除转发选项。当您发送电子邮件后，收件人会收到关于您所选限制的通知。
