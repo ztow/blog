@@ -180,24 +180,44 @@
 					<integer>47</integer>
 				</dict>
 			</dict>
-			<key>无标题 - 2.md</key>
+			<key>2019-06-12-gmail-ConfidentialMode.md</key>
 			<dict>
 				<key>lastModification</key>
-				<real>578286419.58723295</real>
+				<real>599411543.79129601</real>
 				<key>version</key>
 				<dict>
 					<key>b025c2abcce057b716a8e2269bbec4c69ad39584d2199b1d898f3947ddb139d4</key>
-					<integer>44</integer>
+					<integer>48</integer>
+					<key>c55e2643b09d2bc554eaeedcddde7aa8884e147fcd466eda475dd040bb49cba0</key>
+					<integer>4</integer>
 				</dict>
 			</dict>
-			<key>无标题.md</key>
+			<key>2019-12-31-2020.md</key>
 			<dict>
 				<key>lastModification</key>
-				<real>578154879.00431204</real>
+				<real>599411606.76174104</real>
 				<key>version</key>
 				<dict>
 					<key>b025c2abcce057b716a8e2269bbec4c69ad39584d2199b1d898f3947ddb139d4</key>
-					<integer>36</integer>
+					<integer>48</integer>
+					<key>c55e2643b09d2bc554eaeedcddde7aa8884e147fcd466eda475dd040bb49cba0</key>
+					<integer>5</integer>
+				</dict>
+			</dict>
+			<key>无标题 - 2.md</key>
+			<dict>
+				<key>explicitUnassignment</key>
+				<true/>
+				<key>firstUnassignment</key>
+				<real>599411480.01798201</real>
+				<key>lastModification</key>
+				<real>599411480.01798201</real>
+				<key>version</key>
+				<dict>
+					<key>b025c2abcce057b716a8e2269bbec4c69ad39584d2199b1d898f3947ddb139d4</key>
+					<integer>48</integer>
+					<key>c55e2643b09d2bc554eaeedcddde7aa8884e147fcd466eda475dd040bb49cba0</key>
+					<integer>2</integer>
 				</dict>
 			</dict>
 		</dict>
@@ -211,13 +231,13 @@
 			<string>2019-05-15-1q84.md</string>
 		</array>
 		<array>
-			<string>无标题.md</string>
-		</array>
-		<array>
 			<string>无标题 - 2.md</string>
 		</array>
 		<array>
 			<string>2019-04-30-goodemail.md</string>
+		</array>
+		<array>
+			<string>2019-12-31-2020.md</string>
 		</array>
 		<array>
 			<string>2019-03-29-wanzidesktop-Alita.md</string>
@@ -261,6 +281,9 @@
 		<array>
 			<string>2018-10-08-All-You-Zombies.md</string>
 		</array>
+		<array>
+			<string>2019-06-12-gmail-ConfidentialMode.md</string>
+		</array>
 	</array>
 	<key>storeFormatVersion</key>
 	<integer>1</integer>
@@ -275,6 +298,8 @@
 		<dict>
 			<key>b025c2abcce057b716a8e2269bbec4c69ad39584d2199b1d898f3947ddb139d4</key>
 			<integer>48</integer>
+			<key>c55e2643b09d2bc554eaeedcddde7aa8884e147fcd466eda475dd040bb49cba0</key>
+			<integer>6</integer>
 		</dict>
 	</dict>
 </dict>
