@@ -3,11 +3,12 @@ layout: post
 title: "期望值最大化原则和它在生活上的应用"
 subtitle: "如果你是老板，不妨给大家设置一个好的收益函数，如果你是员工，按照公司的章程，最大化自己的利益是合情合理的事情。科学原理不仅适用于科学本身，也适用于生活。"
 author: "吴军"
-header-img: "img/post-bg-2019birthday.jpg"
+header-img: "img/post-bg-maximization.jpg"
 catalog: true
 tags:
-  - 生日
-  - 中年
+  - 期望值
+  - 收益函数
+  - 激励
 
 /文 吴军
 
