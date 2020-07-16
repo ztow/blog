@@ -120,20 +120,6 @@
 					<integer>7</integer>
 				</dict>
 			</dict>
-			<key>2019-02-12-wujun-expectation-maximization-and-its-application-in-life.md</key>
-			<dict>
-				<key>lastModification</key>
-				<real>616557555.817783</real>
-				<key>version</key>
-				<dict>
-					<key>79dd7a41bcb565f437490a49385c65e22419db53b959a9b163e5b403d5a11d5c</key>
-					<integer>3</integer>
-					<key>b025c2abcce057b716a8e2269bbec4c69ad39584d2199b1d898f3947ddb139d4</key>
-					<integer>48</integer>
-					<key>c55e2643b09d2bc554eaeedcddde7aa8884e147fcd466eda475dd040bb49cba0</key>
-					<integer>24</integer>
-				</dict>
-			</dict>
 			<key>2019-03-08-mcu10year.md</key>
 			<dict>
 				<key>lastModification</key>
@@ -232,6 +218,20 @@
 					<integer>11</integer>
 				</dict>
 			</dict>
+			<key>2020-07-16-wujun-expectation-maximization-and-its-application-in-life.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>616557688.01082504</real>
+				<key>version</key>
+				<dict>
+					<key>79dd7a41bcb565f437490a49385c65e22419db53b959a9b163e5b403d5a11d5c</key>
+					<integer>3</integer>
+					<key>b025c2abcce057b716a8e2269bbec4c69ad39584d2199b1d898f3947ddb139d4</key>
+					<integer>48</integer>
+					<key>c55e2643b09d2bc554eaeedcddde7aa8884e147fcd466eda475dd040bb49cba0</key>
+					<integer>26</integer>
+				</dict>
+			</dict>
 		</dict>
 	</dict>
 	<key>sheetClusters</key>
@@ -240,7 +240,7 @@
 			<string>2019-02-12-2019birthday.md</string>
 		</array>
 		<array>
-			<string>2019-02-12-wujun-expectation-maximization-and-its-application-in-life.md</string>
+			<string>2020-07-16-wujun-expectation-maximization-and-its-application-in-life.md</string>
 		</array>
 		<array>
 			<string>2020-02-01-2020birthday.md</string>
@@ -316,7 +316,7 @@
 			<key>b025c2abcce057b716a8e2269bbec4c69ad39584d2199b1d898f3947ddb139d4</key>
 			<integer>48</integer>
 			<key>c55e2643b09d2bc554eaeedcddde7aa8884e147fcd466eda475dd040bb49cba0</key>
-			<integer>25</integer>
+			<integer>27</integer>
 		</dict>
 	</dict>
 </dict>
