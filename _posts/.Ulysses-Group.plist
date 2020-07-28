@@ -232,12 +232,29 @@
 					<integer>26</integer>
 				</dict>
 			</dict>
+			<key>2020-07-27-Layoffs.md</key>
+			<dict>
+				<key>lastModification</key>
+				<real>617533392.86608398</real>
+				<key>version</key>
+				<dict>
+					<key>79dd7a41bcb565f437490a49385c65e22419db53b959a9b163e5b403d5a11d5c</key>
+					<integer>3</integer>
+					<key>b025c2abcce057b716a8e2269bbec4c69ad39584d2199b1d898f3947ddb139d4</key>
+					<integer>48</integer>
+					<key>c55e2643b09d2bc554eaeedcddde7aa8884e147fcd466eda475dd040bb49cba0</key>
+					<integer>32</integer>
+				</dict>
+			</dict>
 		</dict>
 	</dict>
 	<key>sheetClusters</key>
 	<array>
 		<array>
 			<string>2019-02-12-2019birthday.md</string>
+		</array>
+		<array>
+			<string>2020-07-27-Layoffs.md</string>
 		</array>
 		<array>
 			<string>2020-07-16-wujun-expectation-maximization-and-its-application-in-life.md</string>
@@ -316,7 +333,7 @@
 			<key>b025c2abcce057b716a8e2269bbec4c69ad39584d2199b1d898f3947ddb139d4</key>
 			<integer>48</integer>
 			<key>c55e2643b09d2bc554eaeedcddde7aa8884e147fcd466eda475dd040bb49cba0</key>
-			<integer>27</integer>
+			<integer>33</integer>
 		</dict>
 	</dict>
 </dict>
