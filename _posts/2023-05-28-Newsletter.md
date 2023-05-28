@@ -70,4 +70,4 @@ Newsletter和邮件列表是紧密相关的概念。Newsletter是一种定期发
 2023-05-28 1651
 与诸位共勉
 
-[image-1]: /img/post-img-Newsletter-1.jpg
+[image-1]: /img/post-img-Newsletter-1.png
