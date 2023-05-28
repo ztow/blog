@@ -60,10 +60,10 @@ Newsletter和邮件列表是紧密相关的概念。Newsletter是一种定期发
 其实，也并没有很好的渠道来发放我的邮件列表，我猜我会用朋友圈，然后再去勾兑几个Newsletter的列表，定位前期就是对熟悉人的一些信息、观点、小玩意的分享。
 
 直接的地址：
-[ztow.substack.com](ztow.substack.com)
+[订阅可以点这里](https://ztow.substack.com/)
 
 如果是手机，不知道二维码的方式是否更简单
-![手机直接扫码][image-4]
+![手机直接扫码][image-1]
 
 
 ----------
