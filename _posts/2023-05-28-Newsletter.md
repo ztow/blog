@@ -9,7 +9,6 @@ tags:
   - Newsletter
   - 邮件列表
   - 订阅
-  - 去中心
 ---
 
 # 什么是 Newsletter
