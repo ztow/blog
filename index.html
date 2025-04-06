@@ -4,18 +4,26 @@ description: "等号的意思，等于有些东西不重要"
 ---
 
 {% for post in paginator.posts %}
+<!-- 遍历所有文章，生成文章预览 -->
 <div class="post-preview">
+<!-- 文章预览容器 -->
     <a href="{{ post.url | prepend: site.baseurl }}">
+<!-- 文章链接 -->
         <h2 class="post-title">
+<!-- 文章标题 -->
             {{ post.title }}
         </h2>
         {% if post.subtitle %}
+<!-- 如果文章有副标题 -->
         <h3 class="post-subtitle">
+<!-- 文章副标题 -->
             {{ post.subtitle }}
         </h3>
         {% endif %}
         <div class="post-content-preview">
+<!-- 文章内容预览 -->
             {% if post.lang == 'en' %}
+<!-- 根据文章语言设置不同的截取长度 -->
                 {{ post.content | strip_html | truncate:300 }}
             {% else %}
                 {{ post.content | strip_html | truncate:200 }}
@@ -23,6 +31,7 @@ description: "等号的意思，等于有些东西不重要"
         </div>
     </a>
     <p class="post-meta">
+<!-- 文章元信息（作者、日期） -->
         Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
     </p>
 </div>
@@ -31,14 +40,20 @@ description: "等号的意思，等于有些东西不重要"
 
 <!-- Pager -->
 {% if paginator.total_pages > 1 %}
+<!-- 如果有多页文章，显示分页导航 -->
 <ul class="pager">
+<!-- 分页导航容器 -->
     {% if paginator.previous_page %}
+<!-- 如果有上一页 -->
     <li class="previous">
+<!-- 上一页链接 -->
         <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
     </li>
     {% endif %}
     {% if paginator.next_page %}
+<!-- 如果有下一页 -->
     <li class="next">
+<!-- 下一页链接 -->
         <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
     </li>
     {% endif %}
