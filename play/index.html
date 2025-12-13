@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>躯体化症状综合评估</title>
+    <!-- 引入Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入自定义CSS -->
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* 容器样式 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 标题样式 */
+        h1, h2, h3 {
+            color: #2c3e50;
+            font-weight: 700;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.5rem;
+        }
+        
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        /* 卡片样式 */
+        .section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* 问题样式 */
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        /* 选项样式 */
+        .option {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+        
+        .option:hover {
+            background-color: #f0f4ff;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .option label {
+            cursor: pointer;
+            margin: 0;
+            flex: 1;
+        }
+        
+        /* 得分显示 */
+        .score-display {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e74c3c;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 结果样式 */
+        .result {
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .result.low {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+        
+        .result.medium {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .result.high {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border-left: 5px solid #dc3545;
+        }
+        
+        .result.severe {
+            background: linear-gradient(135deg, #f5c6cb 0%, #f1aeb5 100%);
+            color: #721c24;
+            border-left: 5px solid #dc3545;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            font-weight: 600;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-outline-primary {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        
+        .btn-outline-primary:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            color: white;
+        }
+        
+        .btn-outline-secondary {
+            border-color: #6c757d;
+            color: #6c757d;
+        }
+        
+        .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            color: white;
+        }
+        
+        /* 矩阵样式 - 全新设计 */
+        .matrix-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .matrix-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #495057;
+            font-size: 1.1rem;
+        }
+        
+        .matrix-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        /* 非选中状态 */
+        .matrix-btn {
+            flex: 1;
+            min-width: 140px;
+            text-align: left;
+            transition: all 0.3s ease;
+            /* 统一非选中状态样式 */
+            border: 2px solid #e9ecef !important;
+            border-radius: 8px !important;
+            background-color: #f8f9fa !important;
+            color: #495057 !important;
+            font-weight: 500 !important;
+            padding: 12px 16px !important;
+        }
+        
+        /* 悬停状态 */
+        .matrix-btn:hover {
+            border-color: #3b82f6 !important;
+            background-color: #eff6ff !important;
+            color: #1d4ed8 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        /* 统一所有outline按钮样式 */
+        .matrix-btn.btn-outline-primary,
+        .matrix-btn.btn-outline-secondary {
+            border: 2px solid #e9ecef !important;
+            border-radius: 8px !important;
+            background-color: #f8f9fa !important;
+            color: #495057 !important;
+        }
+        
+        /* 选中状态 */
+        .matrix-btn.btn-primary,
+        .matrix-btn.btn-secondary {
+            border: 2px solid #3b82f6 !important;
+            border-radius: 8px !important;
+            background-color: #3b82f6 !important;
+            color: white !important;
+            font-weight: 600 !important;
+            transform: translateY(-1px) !important;
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3) !important;
+        }
+        
+        /* 确保选中状态的文字清晰可见 */
+        .matrix-btn.btn-primary,
+        .matrix-btn.btn-secondary {
+            text-shadow: none !important;
+        }
+        
+        /* 介绍部分 */
+        .intro {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .intro h2 {
+            color: white;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 0.5rem;
+        }
+        
+        /* 红旗症状样式 */
+        .red-flags {
+            background-color: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .red-flags h3 {
+            color: #c53030;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .red-flags ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .red-flags li {
+            margin-bottom: 8px;
+            color: #742a2a;
+        }
+        
+        /* 行为实验样式 */
+        .behavioral-experiment {
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .behavioral-experiment h3 {
+            color: #0369a1;
+            margin-bottom: 15px;
+        }
+        
+        .experiment-steps {
+            background-color: white;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .experiment-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .experiment-steps li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        /* 症状日记样式 */
+        .symptom-diary {
+            background-color: #fefce8;
+            border: 1px solid #fef08a;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .symptom-diary h3 {
+            color: #854d0e;
+            margin-bottom: 15px;
+        }
+        
+        .diary-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .diary-form .form-group {
+            margin: 0;
+        }
+        
+        @media (max-width: 768px) {
+            .diary-form {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .diary-entries {
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 6px;
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .diary-entry {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 10px 0;
+        }
+        
+        .diary-entry:last-child {
+            border-bottom: none;
+        }
+        
+        /* 教育内容样式 */
+        .education-content {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .education-content h3 {
+            color: #15803d;
+            margin-bottom: 15px;
+        }
+        
+        /* 进度条样式 */
+        .progress-container {
+            margin: 25px 0;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            .matrix-btn {
+                min-width: 100%;
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">躯体化症状综合评估</h1>
+        
+        <!-- 介绍部分 -->
+        <div class="section intro">
+            <h2>简介</h2>
+            <p>本评估工具基于DSM-5标准，帮助您初步判断自身症状是否具有躯体化特征。评估包括SSS-8量表评分、症状与压力相关性分析、心理与行为维度评估，最终给出综合判断结果。</p>
+        </div>
+        
+        <!-- 页签导航 -->
+        <div class="section mb-4">
+            <ul class="nav nav-tabs" id="assessmentTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="unified-test-tab" data-bs-toggle="tab" data-bs-target="#unified-test" type="button" role="tab" aria-controls="unified-test" aria-selected="true">1. 统一测试</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="behavioral-experiment-tab" data-bs-toggle="tab" data-bs-target="#behavioral-experiment" type="button" role="tab" aria-controls="behavioral-experiment" aria-selected="false">2. 行为实验</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="symptom-record-tab" data-bs-toggle="tab" data-bs-target="#symptom-record" type="button" role="tab" aria-controls="symptom-record" aria-selected="false">3. 症状记录</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="important-reminder-tab" data-bs-toggle="tab" data-bs-target="#important-reminder" type="button" role="tab" aria-controls="important-reminder" aria-selected="false">4. 重要提醒</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="understand-somatization-tab" data-bs-toggle="tab" data-bs-target="#understand-somatization" type="button" role="tab" aria-controls="understand-somatization" aria-selected="false">5. 了解躯体化</button>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- 页签内容 -->
+        <div class="tab-content" id="assessmentTabsContent">
+            <!-- 统一测试页签 -->
+            <div class="tab-pane fade show active" id="unified-test" role="tabpanel" aria-labelledby="unified-test-tab">
+                <!-- SSS-8量表评分 -->
+                <div class="section">
+                    <h2>1.1 躯体症状量表-8 (SSS-8)</h2>
+                    <p>请根据过去7天内的情况，对以下症状的困扰程度进行评分（0=完全没有，1=有一点，2=中度，3=严重，4=非常严重）：</p>
+                    
+                    <div id="sss8-questions">
+                        <div class="question">
+                            <p>1. 胃或肠道问题</p>
+                            <div class="option">
+                                <input type="radio" name="q1" value="0" id="q1-0"> <label for="q1-0">0=完全没有</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="1" id="q1-1"> <label for="q1-1">1=有一点</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="2" id="q1-2"> <label for="q1-2">2=中度</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="3" id="q1-3"> <label for="q1-3">3=严重</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" value="4" id="q1-4"> <label for="q1-4">4=非常严重</label>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>2. 背痛</p>
+                            <div class="option">
+                                <input type="radio" name="q2" value="0" id="q2-0"> <label for="q2-0">0=完全没有</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="1" id="q2-1"> <label for="q2-1">1=有一点</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="2" id="q2-2"> <label for="q2-2">2=中度</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="3" id="q2-3"> <label for="q2-3">3=严重</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q2" value="4" id="q2-4"> <label for="q2-4">4=非常严重</label>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>3. 手臂、腿或关节疼痛</p>
+                            <div class="option">
+                                <input type="radio" name="q3" value="0" id="q3-0"> <label for="q3-0">0=完全没有</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="1" id="q3-1"> <label for="q3-1">1=有一点</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="2" id="q3-2"> <label for="q3-2">2=中度</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="3" id="q3-3"> <label for="q3-3">3=严重</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q3" value="4" id="q3-4"> <label for="q3-4">4=非常严重</label>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>4. 头痛</p>
+                            <div class="option">
+                                <input type="radio" name="q4" value="0" id="q4-0"> <label for="q4-0">0=完全没有</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="1" id="q4-1"> <label for="q4-1">1=有一点</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="2" id="q4-2"> <label for="q4-2">2=中度</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="3" id="q4-3"> <label for="q4-3">3=严重</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q4" value="4" id="q4-4"> <label for="q4-4">4=非常严重</label>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>5. 胸痛或呼吸急促</p>
+                            <div class="option">
+                                <input type="radio" name="q5" value="0" id="q5-0"> <label for="q5-0">0=完全没有</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="1" id="q5-1"> <label for="q5-1">1=有一点</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="2" id="q5-2"> <label for="q5-2">2=中度</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="3" id="q5-3"> <label for="q5-3">3=严重</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q5" value="4" id="q5-4"> <label for="q5-4">4=非常严重</label>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>6. 头晕</p>
+                            <div class="option">
+                                <input type="radio" name="q6" value="0" id="q6-0"> <label for="q6-0">0=完全没有</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="1" id="q6-1"> <label for="q6-1">1=有一点</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="2" id="q6-2"> <label for="q6-2">2=中度</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="3" id="q6-3"> <label for="q6-3">3=严重</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q6" value="4" id="q6-4"> <label for="q6-4">4=非常严重</label>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>7. 感到疲倦或精力不足</p>
+                            <div class="option">
+                                <input type="radio" name="q7" value="0" id="q7-0"> <label for="q7-0">0=完全没有</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="1" id="q7-1"> <label for="q7-1">1=有一点</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="2" id="q7-2"> <label for="q7-2">2=中度</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="3" id="q7-3"> <label for="q7-3">3=严重</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q7" value="4" id="q7-4"> <label for="q7-4">4=非常严重</label>
+                            </div>
+                        </div>
+                        
+                        <div class="question">
+                            <p>8. 睡眠困难</p>
+                            <div class="option">
+                                <input type="radio" name="q8" value="0" id="q8-0"> <label for="q8-0">0=完全没有</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="1" id="q8-1"> <label for="q8-1">1=有一点</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="2" id="q8-2"> <label for="q8-2">2=中度</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="3" id="q8-3"> <label for="q8-3">3=严重</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q8" value="4" id="q8-4"> <label for="q8-4">4=非常严重</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <p>当前得分：<span id="sss8-score" class="score-display">0</span>/32</p>
+                        <div id="sss8-result" class="result"></div>
+                    </div>
+                </div>
+                
+                <!-- 症状与压力相关性分析 -->
+                <div class="section">
+                    <h2>1.2 症状与压力相关性分析</h2>
+                    <p>请根据您的实际情况，选择最符合的选项：</p>
+                    
+                    <div id="stress-correlation">
+                        <div class="matrix-item">
+                            <div class="matrix-label">1. 症状发作模式</div>
+                            <div class="matrix-options">
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="0" data-type="stress">症状起伏不定，随压力波动，病程迁延（>6个月）</button>
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="1" data-type="organic">突然起病，如"雷击样"头痛、突发剧烈胸痛</button>
+                            </div>
+                        </div>
+                        
+                        <div class="matrix-item">
+                            <div class="matrix-label">2. 夜间症状</div>
+                            <div class="matrix-options">
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="0" data-type="stress">症状通常在清醒时出现，睡眠中消失或缓解</button>
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="1" data-type="organic">疼痛、腹泻或咳嗽常常痛醒/弄醒睡眠中的患者</button>
+                            </div>
+                        </div>
+                        
+                        <div class="matrix-item">
+                            <div class="matrix-label">3. 症状与压力的关系</div>
+                            <div class="matrix-options">
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="0" data-type="stress">症状随情绪波动明显；存在"周末效应"或"纪念日效应"</button>
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="1" data-type="organic">症状发作与情绪状态无明显相关性（如睡眠中发作）</button>
+                            </div>
+                        </div>
+                        
+                        <div class="matrix-item">
+                            <div class="matrix-label">4. 症状定位</div>
+                            <div class="matrix-options">
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="0" data-type="stress">症状游走不定，描述模糊（如"全身都不舒服"、"气到处乱窜"）</button>
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="1" data-type="organic">定位精准，符合解剖学分布（如坐骨神经痛沿神经走向）</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 心理与行为维度评估 -->
+                <div class="section">
+                    <h2>1.3 心理与行为维度评估</h2>
+                    <p>请根据您的实际情况，选择最符合的选项：</p>
+                    
+                    <div id="psycho-behavioral">
+                        <div class="matrix-item">
+                            <div class="matrix-label">1. 认知反应</div>
+                            <div class="matrix-options">
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="0" data-type="stress">对轻微症状过度担忧，立即联想到最坏结果；难以接受"没病"的诊断</button>
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="1" data-type="organic">对病情有合理担忧，但能接受医学解释和安抚</button>
+                            </div>
+                        </div>
+                        
+                        <div class="matrix-item">
+                            <div class="matrix-label">2. 情感反应</div>
+                            <div class="matrix-options">
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="0" data-type="stress">持续的高焦虑，即使检查正常也无法缓解；难以识别和描述自身情绪</button>
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="1" data-type="organic">情绪反应与病情严重程度相符</button>
+                            </div>
+                        </div>
+                        
+                        <div class="matrix-item">
+                            <div class="matrix-label">3. 求医行为</div>
+                            <div class="matrix-options">
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="0" data-type="stress">反复检查身体；过度求医（在不同医院、科室间流转）；对阴性结果感到失望</button>
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="1" data-type="organic">按医嘱就诊，对检查结果有合理预期</button>
+                            </div>
+                        </div>
+                        
+                        <div class="matrix-item">
+                            <div class="matrix-label">4. 行为模式</div>
+                            <div class="matrix-options">
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="0" data-type="stress">因为害怕诱发症状而停止运动、社交或工作</button>
+                                <button type="button" class="btn btn-outline-secondary matrix-btn" data-score="1" data-type="organic">保持正常的生活和工作，根据病情调整活动</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 综合判断结果 -->
+                <div class="section">
+                    <h2>1.4 综合判断结果</h2>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="calculateResult()">生成综合评估结果</button>
+                    
+                    <div id="comprehensive-result" class="mt-4 result"></div>
+                </div>
+            </div>
+            
+            <!-- 行为实验页签 -->
+            <div class="tab-pane fade" id="behavioral-experiment" role="tabpanel" aria-labelledby="behavioral-experiment-tab">
+                <div class="section">
+                    <h2>行为实验：验证心理因素的作用</h2>
+                    <p>以下行为实验可以帮助您验证心理因素在症状产生中的作用。这些实验基于循证医学证据，能帮助您更好地理解症状的本质。</p>
+                    
+                    <!-- 注意力转移测试 -->
+                    <div class="behavioral-experiment">
+                        <h3>实验一：注意力转移测试</h3>
+                        <p>这个实验用于验证症状是否受注意力机制影响。</p>
+                        <div class="experiment-steps">
+                            <ol>
+                                <li>当您感到剧烈疼痛或不适时，记录当前症状的强度（0-10分）。</li>
+                                <li>立即全身心投入一件极具挑战性的任务，例如：
+                                    <ul>
+                                        <li>玩高难度游戏（如快速反应类游戏）</li>
+                                        <li>进行复杂的计算（如心算2位数乘法）</li>
+                                        <li>激烈的运动（如快速跳绳或俯卧撑）</li>
+                                    </ul>
+                                </li>
+                                <li>持续5-10分钟后，再次记录症状的强度。</li>
+                                <li>任务结束后，立即再次记录症状的强度。</li>
+                            </ol>
+                        </div>
+                        <p><strong>结果分析：</strong>如果任务期间症状完全消失或被忽略，而任务一结束症状立即回归，这有力地支持了中枢神经系统（大脑注意力机制）在症状产生中的主导作用，而非外周器官的持续损伤。</p>
+                    </div>
+                    
+                    <!-- 呼吸测试 -->
+                    <div class="behavioral-experiment">
+                        <h3>实验二：呼吸测试</h3>
+                        <p>这个实验用于验证胸闷气短是否由过度换气（生理性焦虑反应）引起。</p>
+                        <div class="experiment-steps">
+                            <ol>
+                                <li>当您感到胸闷气短时，记录当前症状的强度（0-10分）。</li>
+                                <li>进行5分钟严格的腹式呼吸：
+                                    <ul>
+                                        <li>缓慢吸气，使腹部隆起，持续4秒</li>
+                                        <li>屏息2秒</li>
+                                        <li>缓慢呼气，使腹部收缩，持续6秒</li>
+                                        <li>重复以上步骤，保持节奏</li>
+                                    </ul>
+                                </li>
+                                <li>5分钟后，再次记录症状的强度。</li>
+                            </ol>
+                        </div>
+                        <p><strong>结果分析：</strong>如果症状显著缓解，提示其机制为过度换气（生理性焦虑反应），而非心脏缺血或肺部病变（后者通常不会因呼吸方式改变而迅速缓解）。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 症状记录页签 -->
+            <div class="tab-pane fade" id="symptom-record" role="tabpanel" aria-labelledby="symptom-record-tab">
+                <div class="section">
+                    <h2>症状日记：记录与分析</h2>
+                    <p>记录症状是发现规律的最强工具。人类的记忆具有欺骗性，我们往往只记住最痛苦的时刻。通过连续记录，您可以发现症状与压力、情绪之间的关联。</p>
+                    
+                    <div class="symptom-diary">
+                        <h3>记录您的症状</h3>
+                        <div class="diary-form">
+                            <div class="form-group">
+                                <label for="diary-date">日期/时间</label>
+                                <input type="datetime-local" id="diary-date" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="diary-symptom">症状（部位/强度0-10）</label>
+                                <input type="text" id="diary-symptom" class="form-control" placeholder="如：胸闷 (7/10)">
+                            </div>
+                            <div class="form-group">
+                                <label for="diary-context">当时在做什么？（情境）</label>
+                                <input type="text" id="diary-context" class="form-control" placeholder="如：开车遇堵车，担心迟到">
+                            </div>
+                            <div class="form-group">
+                                <label for="diary-thoughts">当时的想法/情绪</label>
+                                <input type="text" id="diary-thoughts" class="form-control" placeholder="如：焦虑、烦躁，'又要被老板骂了'">
+                            </div>
+                            <div class="form-group">
+                                <label for="diary-relief">缓解因素</label>
+                                <input type="text" id="diary-relief" class="form-control" placeholder="如：深呼吸，到达公司后">
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-primary" onclick="addDiaryEntry()">添加记录</button>
+                            <button type="button" class="btn btn-secondary" onclick="clearDiary()">清空记录</button>
+                        </div>
+                        
+                        <div id="diary-entries" class="diary-entries mt-3">
+                            <!-- 日记条目将在这里动态添加 -->
+                        </div>
+                    </div>
+                    
+                    <p class="mt-3"><strong>分析策略：</strong>连续记录两周，寻找以下模式：</p>
+                    <ul>
+                        <li><strong>情境关联：</strong>症状是否总在特定的压力源（如周一早晨、家庭聚会前）出现？</li>
+                        <li><strong>情绪一致性：</strong>症状强度是否与当时的负面情绪强度成正比？</li>
+                        <li><strong>行为后果：</strong>症状是否让你成功回避了某些不喜欢的活动（继发性获益）？</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 重要提醒页签 -->
+            <div class="tab-pane fade" id="important-reminder" role="tabpanel" aria-labelledby="important-reminder-tab">
+                <div class="section">
+                    <h2>重要提醒：识别危险信号（Red Flags）</h2>
+                    <p>在进行自我评估之前，请先检查是否存在以下"红旗症状"。如果出现这些症状，<strong>请立即就医</strong>，这些可能提示严重的器质性疾病，而非单纯的躯体化：</p>
+                    
+                    <div class="red-flags">
+                        <h3>红旗症状清单</h3>
+                        <ul>
+                            <li>突然起病，如"雷击样"头痛、突发剧烈胸痛</li>
+                            <li>夜间因疼痛、腹泻或咳嗽被痛醒/弄醒</li>
+                            <li>明显的体重下降、发热（>38.5°C）、便血、黑便、持续性呕吐</li>
+                            <li>症状定位精准，符合解剖学分布（如坐骨神经痛沿神经走向）</li>
+                            <li>对特异性药物（如抗生素、止痛药）反应良好</li>
+                            <li>大汗淋漓（冷汗）、极度虚弱、恶心呕吐</li>
+                            <li>症状持续且逐渐加重（>20分钟），休息不缓解</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 了解躯体化页签 -->
+            <div class="tab-pane fade" id="understand-somatization" role="tabpanel" aria-labelledby="understand-somatization-tab">
+                <div class="section">
+                    <h2>了解躯体化：科学背景</h2>
+                    
+                    <!-- 诊断演变 -->
+                    <div class="education-content mb-4">
+                        <h3>诊断演变：从DSM-IV到DSM-5的范式革命</h3>
+                        <p>要判断症状是否为躯体化，首先必须理解医学界对这一概念定义的演变，因为这直接决定了评估的重点。</p>
+                        <div class="mt-3">
+                            <h4>DSM-IV时代：基于症状计数</h4>
+                            <p>在DSM-IV时代，诊断"躯体化障碍"主要依赖于症状的数量和多样性。患者必须在30岁之前发病，并表现出至少四种疼痛症状、两种胃肠道症状、一种性功能症状和一种假性神经系统症状，且这些症状无法通过常规医疗状况来解释。</p>
+                            
+                            <h4 class="mt-3">DSM-5时代：基于积极症状</h4>
+                            <p>DSM-5彻底摒弃了这种计数法，转而建立了以"躯体症状障碍"（Somatic Symptom Disorder, SSD）为核心的新分类。DSM-5不再过分强调症状是否"医学无法解释"，而是关注患者对症状的<strong>反应</strong>。</p>
+                            <p>这一转变具有革命性意义：个体可以同时患有明确的器质性疾病（如关节炎或心脏病）和躯体症状障碍。判断的关键不在于症状的物理成因是否明确，而在于个体是否表现出了<strong>过度的、不成比例的</strong>思想、焦虑或耗费了过多的时间和精力。</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 神经生物学基础 -->
+                    <div class="education-content">
+                        <h3>躯体化的神经生物学基础</h3>
+                        <p>了解身体是如何产生这些"无病之痛"的机制，有助于消除"装病"的误解，并为自我观察提供生理学依据。</p>
+                        <div class="mt-3">
+                            <h4>自律神经系统的失调</h4>
+                            <p>当个体面临压力时，交感神经系统（SNS）激活"战斗或逃跑"反应，而副交感神经系统（PNS）的"休息与消化"功能被抑制：</p>
+                            <ul>
+                                <li><strong>循环系统：</strong>肾上腺素激增导致心率加快、血管收缩，个体可能感到心悸、胸闷或手脚冰凉。</li>
+                                <li><strong>呼吸系统：</strong>支气管扩张以摄入更多氧气，但如果这种反应发生在非运动状态下，会导致过度换气，引发头晕、手麻和胸痛。</li>
+                                <li><strong>消化系统：</strong>血液从肠胃分流至肌肉，导致消化减缓或痉挛，表现为胃痛、恶心或腹泻。</li>
+                            </ul>
+                            
+                            <h4 class="mt-3">下丘脑-垂体-肾上腺（HPA）轴的慢性激活</h4>
+                            <p>长期的心理压力会导致HPA轴持续分泌皮质醇。高水平的皮质醇不仅抑制免疫系统，还会导致全身性的低度炎症和代谢异常，这解释了为何躯体化患者常感到全身酸痛、疲劳且易感冒。</p>
+                            
+                            <h4 class="mt-3">内感受与中枢敏化</h4>
+                            <p>躯体症状障碍的核心机制之一是<strong>内感受（Interoception）的异常</strong>。内感受是指大脑感知身体内部状态（如心跳、肠蠕动、呼吸）的能力。在躯体化个体中，大脑的"音量旋钮"被调大了，导致正常的生理活动被大脑错误地解读为疼痛或危险信号。</p>
+                            <p>这种现象被称为<strong>中枢敏化（Central Sensitization）</strong>，即中枢神经系统对感觉信号的反应性增强，使得疼痛阈值降低。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 引入Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 引入自定义JS -->
+    <script>
+        // SSS-8量表评分计算
+        let sss8Scores = [0, 0, 0, 0, 0, 0, 0, 0];
+        
+        // 初始化事件监听
+        document.addEventListener('DOMContentLoaded', function() {
+            // SSS-8问题的单选按钮监听
+            const radioButtons = document.querySelectorAll('#sss8-questions input[type="radio"]');
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const questionIndex = parseInt(this.name.charAt(1)) - 1;
+                    sss8Scores[questionIndex] = parseInt(this.value);
+                    updateSSS8Score();
+                });
+            });
+            
+            // 矩阵按钮监听
+            const matrixButtons = document.querySelectorAll('.matrix-btn');
+            matrixButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 移除同组其他按钮的激活状态
+                    const parent = this.closest('.matrix-options');
+                    parent.querySelectorAll('.matrix-btn').forEach(btn => {
+                        btn.classList.remove('btn-primary', 'btn-secondary');
+                        // 移除所有outline类，然后添加统一的outline类
+                        btn.classList.remove('btn-outline-primary', 'btn-outline-secondary');
+                        btn.classList.add('btn-outline-secondary');
+
+                    });
+                    
+                    // 激活当前按钮
+                    this.classList.remove('btn-outline-primary', 'btn-outline-secondary');
+                    if (this.dataset.type === 'stress') {
+                        this.classList.add('btn-primary');
+                    } else {
+                        this.classList.add('btn-secondary');
+                    }
+                });
+            });
+            
+            // 初始化SSS-8结果
+            updateSSS8Score();
+        });
+        
+        // 更新SSS-8评分和结果
+        function updateSSS8Score() {
+            const totalScore = sss8Scores.reduce((sum, score) => sum + score, 0);
+            document.getElementById('sss8-score').textContent = totalScore;
+            
+            let resultText = '';
+            let resultClass = '';
+            
+            if (totalScore <= 3) {
+                resultText = '极低：正常范围。';
+                resultClass = 'low';
+            } else if (totalScore <= 7) {
+                resultText = '低：轻微躯体化，需关注压力管理。';
+                resultClass = 'low';
+            } else if (totalScore <= 11) {
+                resultText = '中等：临床界限值。通常建议进一步评估焦虑/抑郁共病。';
+                resultClass = 'medium';
+            } else if (totalScore <= 15) {
+                resultText = '高：典型躯体症状障碍表现，功能受损明显。';
+                resultClass = 'high';
+            } else {
+                resultText = '极高：严重躯体化，强烈建议寻求精神科或心理专科帮助。';
+                resultClass = 'severe';
+            }
+            
+            const resultDiv = document.getElementById('sss8-result');
+            resultDiv.textContent = resultText;
+            resultDiv.className = `result ${resultClass}`;
+        }
+        
+        // 症状日记功能
+        let diaryEntries = [];
+        const STORAGE_KEY = 'somatic_symptom_diary';
+        const EXPIRY_DAYS = 14; // 记录保留14天
+        
+        // 从localStorage加载日记条目
+        function loadDiaryEntries() {
+            try {
+                const storedData = localStorage.getItem(STORAGE_KEY);
+                if (storedData) {
+                    const parsedData = JSON.parse(storedData);
+                    
+                    // 检查数据是否过期
+                    const currentTime = Date.now();
+                    const expiryTime = parsedData.timestamp + (EXPIRY_DAYS * 24 * 60 * 60 * 1000);
+                    
+                    if (currentTime <= expiryTime) {
+                        diaryEntries = parsedData.entries;
+                    } else {
+                        // 数据过期，清空存储
+                        localStorage.removeItem(STORAGE_KEY);
+                        diaryEntries = [];
+                    }
+                }
+            } catch (error) {
+                console.error('加载日记条目失败：', error);
+                diaryEntries = [];
+            }
+        }
+        
+        // 保存日记条目到localStorage
+        function saveDiaryEntries() {
+            try {
+                const dataToStore = {
+                    entries: diaryEntries,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToStore));
+            } catch (error) {
+                console.error('保存日记条目失败：', error);
+            }
+        }
+        
+        // 添加日记条目
+        function addDiaryEntry() {
+            const dateInput = document.getElementById('diary-date');
+            const symptomInput = document.getElementById('diary-symptom');
+            const contextInput = document.getElementById('diary-context');
+            const thoughtsInput = document.getElementById('diary-thoughts');
+            const reliefInput = document.getElementById('diary-relief');
+            
+            // 验证输入
+            if (!dateInput.value || !symptomInput.value) {
+                alert('请至少填写日期和症状！');
+                return;
+            }
+            
+            // 创建日记条目
+            const entry = {
+                id: Date.now(),
+                date: dateInput.value,
+                symptom: symptomInput.value,
+                context: contextInput.value,
+                thoughts: thoughtsInput.value,
+                relief: reliefInput.value
+            };
+            
+            // 添加到数组
+            diaryEntries.unshift(entry);
+            
+            // 更新显示
+            updateDiaryDisplay();
+            
+            // 保存到localStorage
+            saveDiaryEntries();
+            
+            // 清空输入框
+            dateInput.value = '';
+            symptomInput.value = '';
+            contextInput.value = '';
+            thoughtsInput.value = '';
+            reliefInput.value = '';
+        }
+        
+        // 更新日记显示
+        function updateDiaryDisplay() {
+            const diaryContainer = document.getElementById('diary-entries');
+            
+            if (diaryEntries.length === 0) {
+                diaryContainer.innerHTML = '<p class="text-center text-muted">暂无记录</p>';
+                return;
+            }
+            
+            let html = '';
+            diaryEntries.forEach(entry => {
+                html += `
+                    <div class="diary-entry">
+                        <div><strong>日期：</strong>${new Date(entry.date).toLocaleString()}</div>
+                        <div><strong>症状：</strong>${entry.symptom}</div>
+                        ${entry.context ? `<div><strong>情境：</strong>${entry.context}</div>` : ''}
+                        ${entry.thoughts ? `<div><strong>想法/情绪：</strong>${entry.thoughts}</div>` : ''}
+                        ${entry.relief ? `<div><strong>缓解因素：</strong>${entry.relief}</div>` : ''}
+                    </div>
+                `;
+            });
+            
+            diaryContainer.innerHTML = html;
+        }
+        
+        // 清空日记
+        function clearDiary() {
+            if (confirm('确定要清空所有记录吗？')) {
+                diaryEntries = [];
+                updateDiaryDisplay();
+                // 清空localStorage
+                localStorage.removeItem(STORAGE_KEY);
+            }
+        }
+        
+        // 在页面加载时加载日记条目
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDiaryEntries();
+            updateDiaryDisplay();
+        });
+        
+        // 计算综合结果
+        function calculateResult() {
+            // 1. 检查是否完成所有评估
+            
+            // 检查SSS-8量表是否完成
+            let sss8Completed = true;
+            for (let i = 0; i < sss8Scores.length; i++) {
+                // 检查是否有任何一个问题被回答（得分不为0不代表完成，因为默认值可能为0）
+                const questionName = `q${i+1}`;
+                const checkedRadio = document.querySelector(`input[name="${questionName}"]:checked`);
+                if (!checkedRadio) {
+                    sss8Completed = false;
+                    break;
+                }
+            }
+            
+            if (!sss8Completed) {
+                const resultDiv = document.getElementById('comprehensive-result');
+                resultDiv.innerHTML = `<p class="text-danger">请完成所有SSS-8量表评估！</p>`;
+                resultDiv.className = `result high`;
+                return;
+            }
+            
+            // 检查症状与压力相关性分析是否完成
+            const stressMatrixGroups = document.querySelectorAll('#stress-correlation .matrix-item');
+            let stressCorrelationCompleted = true;
+            stressMatrixGroups.forEach(group => {
+                const checkedButton = group.querySelector('.matrix-btn.btn-primary, .matrix-btn.btn-secondary');
+                if (!checkedButton) {
+                    stressCorrelationCompleted = false;
+                }
+            });
+            
+            if (!stressCorrelationCompleted) {
+                const resultDiv = document.getElementById('comprehensive-result');
+                resultDiv.innerHTML = `<p class="text-danger">请完成所有症状与压力相关性分析！</p>`;
+                resultDiv.className = `result high`;
+                return;
+            }
+            
+            // 检查心理与行为维度评估是否完成
+            const psychoMatrixGroups = document.querySelectorAll('#psycho-behavioral .matrix-item');
+            let psychoBehavioralCompleted = true;
+            psychoMatrixGroups.forEach(group => {
+                const checkedButton = group.querySelector('.matrix-btn.btn-primary, .matrix-btn.btn-secondary');
+                if (!checkedButton) {
+                    psychoBehavioralCompleted = false;
+                }
+            });
+            
+            if (!psychoBehavioralCompleted) {
+                const resultDiv = document.getElementById('comprehensive-result');
+                resultDiv.innerHTML = `<p class="text-danger">请完成所有心理与行为维度评估！</p>`;
+                resultDiv.className = `result high`;
+                return;
+            }
+            
+            // 2. 所有评估完成，开始计算得分
+            
+            // 获取SSS-8得分
+            const sss8Total = sss8Scores.reduce((sum, score) => sum + score, 0);
+            
+            // 计算症状与压力相关性得分
+            let stressCorrelationScore = 0;
+            const stressCorrelationButtons = document.querySelectorAll('#stress-correlation .matrix-btn.btn-primary, #stress-correlation .matrix-btn.btn-secondary');
+            stressCorrelationButtons.forEach(button => {
+                stressCorrelationScore += parseInt(button.dataset.score);
+            });
+            
+            // 计算心理与行为维度得分
+            let psychoBehavioralScore = 0;
+            const psychoBehavioralButtons = document.querySelectorAll('#psycho-behavioral .matrix-btn.btn-primary, #psycho-behavioral .matrix-btn.btn-secondary');
+            psychoBehavioralButtons.forEach(button => {
+                psychoBehavioralScore += parseInt(button.dataset.score);
+            });
+            
+            // 计算总得分
+            const totalStressScore = (4 - stressCorrelationScore) + (4 - psychoBehavioralScore);
+            const totalOrganicScore = stressCorrelationScore + psychoBehavioralScore;
+            
+            // 生成综合判断
+            let comprehensiveResult = '';
+            let resultClass = '';
+            let recommendations = '';
+            let severity = '';
+            
+            // 评估严重程度
+            if (sss8Total <= 3 && totalStressScore <= 2) {
+                comprehensiveResult = '您的症状倾向于器质性疾病，建议尽快就医，进行详细的医学检查。';
+                resultClass = 'low';
+                severity = '低风险';
+                recommendations = `
+                    <h4>就医建议：</h4>
+                    <ul>
+                        <li>尽快前往全科/内科就诊</li>
+                        <li>详细描述症状，包括发作时间、持续时间、诱发因素</li>
+                        <li>按照医生建议进行必要的检查（如血液检查、影像学检查）</li>
+                    </ul>
+                `;
+            } else if (sss8Total <= 7 && totalStressScore <= 4) {
+                comprehensiveResult = '您的症状可能与轻度躯体化有关，建议关注压力管理，保持良好的生活习惯。';
+                resultClass = 'low';
+                severity = '轻度躯体化';
+                recommendations = `
+                    <h4>自我管理建议：</h4>
+                    <ul>
+                        <li>学习并实践压力管理技巧（如深呼吸、冥想、渐进式肌肉放松）</li>
+                        <li>保持规律的作息时间，充足的睡眠</li>
+                        <li>适度运动，每周至少150分钟中等强度有氧运动</li>
+                        <li>建立良好的社交支持系统，与亲友保持沟通</li>
+                    </ul>
+                `;
+            } else if (sss8Total <= 11 && totalStressScore <= 6) {
+                comprehensiveResult = '您的症状具有中度躯体化特征，建议寻求心理科或心身医学科的专业帮助，进行进一步评估和治疗。';
+                resultClass = 'medium';
+                severity = '中度躯体化';
+                recommendations = `
+                    <h4>专业帮助建议：</h4>
+                    <ul>
+                        <li>寻求心理科或心身医学科医生的帮助</li>
+                        <li>考虑接受认知行为疗法（CBT），这是治疗躯体化障碍的金标准</li>
+                        <li>学习情绪管理技巧，识别并表达情绪</li>
+                        <li>坚持症状日记，帮助识别症状与压力的关联</li>
+                    </ul>
+                `;
+            } else {
+                comprehensiveResult = '您的症状具有明显的躯体化特征，强烈建议寻求精神科或心理专科帮助，进行系统的评估和治疗。';
+                resultClass = 'high';
+                severity = '重度躯体化';
+                recommendations = `
+                    <h4>紧急干预建议：</h4>
+                    <ul>
+                        <li>立即寻求精神科或心理专科医生的帮助</li>
+                        <li>考虑药物治疗（如抗焦虑药、抗抑郁药）联合心理治疗</li>
+                        <li>建立治疗联盟，与医生密切合作制定治疗计划</li>
+                        <li>避免过度就医和反复检查，这可能加重症状</li>
+                    </ul>
+                `;
+            }
+            
+            // 显示结果
+            const resultDiv = document.getElementById('comprehensive-result');
+            resultDiv.innerHTML = `
+                <h3>评估结果详情</h3>
+                
+                <!-- 评估概览 -->
+                <div class="mb-4">
+                    <div class="mb-3">
+                        <strong>评估结果：</strong><span class="score-display">${severity}</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>躯体化倾向程度</span>
+                            <span>${totalStressScore}/8</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${(totalStressScore/8)*100}%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 详细得分 -->
+                <div class="mb-4">
+                    <h4>详细得分</h4>
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>评估维度</th>
+                                <th>得分</th>
+                                <th>说明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SSS-8量表</td>
+                                <td>${sss8Total}/32</td>
+                                <td>躯体症状的困扰程度</td>
+                            </tr>
+                            <tr>
+                                <td>症状与压力相关性</td>
+                                <td>${4 - stressCorrelationScore}/4</td>
+                                <td>越高越倾向于躯体化</td>
+                            </tr>
+                            <tr>
+                                <td>心理与行为维度</td>
+                                <td>${4 - psychoBehavioralScore}/4</td>
+                                <td>越高越倾向于躯体化</td>
+                            </tr>
+                            <tr>
+                                <td>总躯体化倾向</td>
+                                <td>${totalStressScore}/8</td>
+                                <td>综合评估结果</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- 综合评估 -->
+                <div class="mb-4">
+                    <h4>综合评估</h4>
+                    <p>${comprehensiveResult}</p>
+                </div>
+                
+                <!-- 建议 -->
+                <div class="mb-4">
+                    ${recommendations}
+                </div>
+                
+                <!-- 红旗症状提醒 -->
+                <div class="red-flags">
+                    <h3>重要提醒</h3>
+                    <p>本评估工具仅用于初步判断，不能替代专业医生的诊断。如果您出现以下红旗症状，请立即就医：</p>
+                    <ul>
+                        <li>突然起病，如"雷击样"头痛、突发剧烈胸痛</li>
+                        <li>夜间因疼痛、腹泻或咳嗽被痛醒/弄醒</li>
+                        <li>明显的体重下降、发热（>38.5°C）、便血、黑便、持续性呕吐</li>
+                    </ul>
+                </div>
+            `;
+            resultDiv.className = `result ${resultClass}`;
+        }
+    </script>
+</body>
+</html>
