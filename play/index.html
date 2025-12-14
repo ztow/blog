@@ -4,10 +4,374 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>躯体化症状综合评估</title>
-    <!-- 引入Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- 引入自定义CSS -->
+    <!-- Bootstrap CSS已内联，减少外链依赖 -->
     <style>
+        /* Bootstrap CSS 核心样式 - 简化版 */
+        :root {
+            --bs-blue: #0d6efd;
+            --bs-indigo: #6610f2;
+            --bs-purple: #6f42c1;
+            --bs-pink: #d63384;
+            --bs-red: #dc3545;
+            --bs-orange: #fd7e14;
+            --bs-yellow: #ffc107;
+            --bs-green: #198754;
+            --bs-teal: #20c997;
+            --bs-cyan: #0dcaf0;
+            --bs-white: #ffffff;
+            --bs-gray-100: #f8f9fa;
+            --bs-gray-200: #e9ecef;
+            --bs-gray-300: #dee2e6;
+            --bs-gray-400: #ced4da;
+            --bs-gray-500: #adb5bd;
+            --bs-gray-600: #6c757d;
+            --bs-gray-700: #495057;
+            --bs-gray-800: #343a40;
+            --bs-gray-900: #212529;
+            --bs-primary: #0d6efd;
+            --bs-secondary: #6c757d;
+            --bs-success: #198754;
+            --bs-info: #0dcaf0;
+            --bs-warning: #ffc107;
+            --bs-danger: #dc3545;
+            --bs-light: #f8f9fa;
+            --bs-dark: #212529;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .container {
+            width: 100%;
+            padding-right: var(--bs-gutter-x, 0.75rem);
+            padding-left: var(--bs-gutter-x, 0.75rem);
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        @media (min-width: 576px) {
+            .container {
+                max-width: 540px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .container {
+                max-width: 960px;
+            }
+        }
+        
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px;
+            }
+        }
+        
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1320px;
+            }
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+        
+        h1 {
+            font-size: calc(1.375rem + 1.5vw);
+        }
+        
+        h2 {
+            font-size: calc(1.325rem + 0.9vw);
+        }
+        
+        h3 {
+            font-size: calc(1.3rem + 0.6vw);
+        }
+        
+        h4 {
+            font-size: calc(1.275rem + 0.3vw);
+        }
+        
+        p {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+        
+        ul, ol {
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        button {
+            border-radius: 0;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            margin: 0;
+        }
+        
+        button:focus {
+            outline: 1px dotted;
+            outline: 5px auto -webkit-focus-ring-color;
+        }
+        
+        input, button, select, optgroup, textarea {
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+        
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            text-align: center;
+            text-decoration: none;
+            vertical-align: middle;
+            cursor: pointer;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            border-radius: 0.25rem;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .btn:hover {
+            color: #212529;
+            text-decoration: none;
+        }
+        
+        .btn:focus {
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        .btn-primary {
+            color: #fff;
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+        
+        .btn-secondary {
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            color: #fff;
+            background-color: #5c636a;
+            border-color: #565e64;
+        }
+        
+        .btn-outline-primary {
+            color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        
+        .btn-outline-primary:hover {
+            color: #fff;
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        
+        .btn-outline-secondary {
+            color: #6c757d;
+            border-color: #6c757d;
+        }
+        
+        .btn-outline-secondary:hover {
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        
+        .form-control {
+            display: block;
+            width: 100%;
+            padding: 0.375rem 0.75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #212529;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.25rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        
+        .form-control:focus {
+            color: #212529;
+            background-color: #fff;
+            border-color: #86b7fe;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: #0d6efd;
+            text-decoration: none;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        }
+        
+        .nav-link:hover, .nav-link:focus {
+            color: #0a58ca;
+        }
+        
+        .nav-link.disabled {
+            color: #6c757d;
+            pointer-events: none;
+            cursor: default;
+        }
+        
+        .nav-tabs {
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .nav-tabs .nav-item {
+            margin-bottom: -1px;
+        }
+        
+        .nav-tabs .nav-link {
+            border: 1px solid transparent;
+            border-top-left-radius: 0.25rem;
+            border-top-right-radius: 0.25rem;
+        }
+        
+        .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
+            border-color: #e9ecef #e9ecef #dee2e6;
+        }
+        
+        .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+            color: #495057;
+            background-color: #fff;
+            border-color: #dee2e6 #dee2e6 #fff;
+        }
+        
+        .tab-content > .tab-pane {
+            display: none;
+        }
+        
+        .tab-content > .active {
+            display: block;
+        }
+        
+        .fade {
+            transition: opacity 0.15s ease-in-out;
+        }
+        
+        .fade:not(.show) {
+            opacity: 0;
+        }
+        
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+        }
+        
+        .table th, .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .table-sm th, .table-sm td {
+            padding: 0.375rem;
+        }
+        
+        .table-bordered {
+            border: 1px solid #dee2e6;
+        }
+        
+        .table-bordered th, .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+        
+        .table-bordered thead th, .table-bordered thead td {
+            border-bottom-width: 2px;
+        }
+        
+        .text-center {
+            text-align: center !important;
+        }
+        
+        .text-muted {
+            color: #6c757d !important;
+        }
+        
+        .mb-3 { margin-bottom: 1rem !important; }
+        .mb-4 { margin-bottom: 1.5rem !important; }
+        .mt-3 { margin-top: 1rem !important; }
+        .mt-4 { margin-top: 1.5rem !important; }
+        .me-2 { margin-right: 0.5rem !important; }
+        .d-flex { display: flex !important; }
+        .flex-wrap { flex-wrap: wrap !important; }
+        .gap-2 { gap: 0.5rem !important; }
+        .justify-content-between { justify-content: space-between !important; }
+        
         /* 全局样式 */
         body {
             font-family: 'Microsoft YaHei', Arial, sans-serif;
@@ -446,6 +810,31 @@
                 min-width: 100%;
                 margin-bottom: 8px;
             }
+            
+            /* 移动端页签样式 */
+            .nav-tabs {
+                display: flex;
+                overflow-x: auto;
+                white-space: nowrap;
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE/Edge */
+                padding-bottom: 5px;
+            }
+            
+            .nav-tabs::-webkit-scrollbar {
+                display: none; /* Chrome/Safari/Opera */
+            }
+            
+            .nav-tabs .nav-item {
+                flex: 0 0 auto;
+                margin-right: 10px;
+            }
+            
+            .nav-tabs .nav-link {
+                font-size: 0.85rem;
+                padding: 0.5rem 0.8rem;
+                white-space: nowrap;
+            }
         }
     </style>
 </head>
@@ -463,27 +852,23 @@
         <div class="section mb-4">
             <ul class="nav nav-tabs" id="assessmentTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="unified-test-tab" data-bs-toggle="tab" data-bs-target="#unified-test" type="button" role="tab" aria-controls="unified-test" aria-selected="true">1. 统一测试</button>
+                    <button class="nav-link active" id="understand-somatization-tab" data-bs-toggle="tab" data-bs-target="#understand-somatization" type="button" role="tab" aria-controls="understand-somatization" aria-selected="true">1. 了解躯体化</button>
                 </li>
+
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="behavioral-experiment-tab" data-bs-toggle="tab" data-bs-target="#behavioral-experiment" type="button" role="tab" aria-controls="behavioral-experiment" aria-selected="false">2. 行为实验</button>
+                    <button class="nav-link" id="unified-test-tab" data-bs-toggle="tab" data-bs-target="#unified-test" type="button" role="tab" aria-controls="unified-test" aria-selected="false">2. 测试</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="symptom-record-tab" data-bs-toggle="tab" data-bs-target="#symptom-record" type="button" role="tab" aria-controls="symptom-record" aria-selected="false">3. 症状记录</button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="important-reminder-tab" data-bs-toggle="tab" data-bs-target="#important-reminder" type="button" role="tab" aria-controls="important-reminder" aria-selected="false">4. 重要提醒</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="understand-somatization-tab" data-bs-toggle="tab" data-bs-target="#understand-somatization" type="button" role="tab" aria-controls="understand-somatization" aria-selected="false">5. 了解躯体化</button>
-                </li>
+
             </ul>
         </div>
         
         <!-- 页签内容 -->
         <div class="tab-content" id="assessmentTabsContent">
             <!-- 统一测试页签 -->
-            <div class="tab-pane fade show active" id="unified-test" role="tabpanel" aria-labelledby="unified-test-tab">
+            <div class="tab-pane fade" id="unified-test" role="tabpanel" aria-labelledby="unified-test-tab">
                 <!-- SSS-8量表评分 -->
                 <div class="section">
                     <h2>1.1 躯体症状量表-8 (SSS-8)</h2>
@@ -859,7 +1244,7 @@
             </div>
             
             <!-- 了解躯体化页签 -->
-            <div class="tab-pane fade" id="understand-somatization" role="tabpanel" aria-labelledby="understand-somatization-tab">
+            <div class="tab-pane fade show active" id="understand-somatization" role="tabpanel" aria-labelledby="understand-somatization-tab">
                 <div class="section">
                     <h2>了解躯体化：科学背景</h2>
                     
@@ -898,14 +1283,104 @@
                             <p>这种现象被称为<strong>中枢敏化（Central Sensitization）</strong>，即中枢神经系统对感觉信号的反应性增强，使得疼痛阈值降低。</p>
                         </div>
                     </div>
+                    
+                    <!-- 行为实验 -->
+                    <div class="education-content mt-5">
+                        <h3>行为实验：探索身心连接</h3>
+                        <p>通过以下简单实验，您可以亲身体验到心理因素如何影响身体感受。这些实验旨在帮助您理解躯体化的机制。</p>
+                        
+                        <div class="behavioral-experiment mt-4">
+                            <h4>实验一：注意力转移测试</h4>
+                            <ol>
+                                <li>请将注意力集中在您身体的某个轻微不适部位（如果没有，可以选择一个中性部位，如手背），专注感受1分钟。</li>
+                                <li>现在，进行一项需要集中注意力的活动：背诵一首您熟悉的诗、计算25×36，或者回忆一次愉快的旅行经历，持续2分钟。</li>
+                                <li>活动结束后，再次评估您身体不适的程度是否发生了变化。</li>
+                            </ol>
+                            <div class="result-analysis mt-3">
+                                <strong>结果分析：</strong>注意力转移通常会显著减轻不适感，这说明我们的注意力分配对感知到的症状强度有直接影响。在日常生活中，焦虑和过度关注往往会放大身体的轻微感觉。
+                            </div>
+                        </div>
+                        
+                        <div class="behavioral-experiment mt-4">
+                            <h4>实验二：呼吸测试</h4>
+                            <ol>
+                                <li>正常平静呼吸1分钟，记录您的感受。</li>
+                                <li>接下来，连续快速深呼吸（每分钟约30次）1分钟。</li>
+                                <li>停止后，立即记录您的身体感受。</li>
+                            </ol>
+                            <div class="result-analysis mt-3">
+                                <strong>结果分析：</strong>过度呼吸（呼吸性碱中毒）会引发与焦虑发作相似的症状：头晕、手指麻木、心悸和轻微胸痛。这说明呼吸模式的改变（常由情绪状态触发）可以产生看似"器质性"的症状。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 重要提醒 -->
+                    <div class="education-content mt-5">
+                        <h3>重要提醒：识别危险信号（Red Flags）</h3>
+                        <p>在进行自我评估之前，请先检查是否存在以下"红旗症状"。如果出现这些症状，<strong>请立即就医</strong>，这些可能提示严重的器质性疾病，而非单纯的躯体化：</p>
+                        
+                        <div class="red-flags mt-3">
+                            <ul>
+                                <li>突然起病，如"雷击样"头痛、突发剧烈胸痛</li>
+                                <li>夜间因疼痛、腹泻或咳嗽被痛醒/弄醒</li>
+                                <li>明显的体重下降、发热（>38.5°C）、便血、黑便、持续性呕吐</li>
+                                <li>症状定位精准，符合解剖学分布（如坐骨神经痛沿神经走向）</li>
+                                <li>对特异性药物（如抗生素、止痛药）反应良好</li>
+                                <li>大汗淋漓（冷汗）、极度虚弱、恶心呕吐</li>
+                                <li>症状持续且逐渐加重（>20分钟），休息不缓解</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- 引入Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- 引入自定义JS -->
+    <!-- 内联简化版Bootstrap JS核心功能，替代外链依赖 -->
+    <script>
+        // 简化版Bootstrap Tab功能实现
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化所有标签页切换
+            const tabLinks = document.querySelectorAll('[data-bs-toggle="tab"]');
+            
+            tabLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 获取目标标签页ID
+                    const targetId = this.getAttribute('data-bs-target').substring(1);
+                    const targetTab = document.getElementById(targetId);
+                    
+                    if (!targetTab) return;
+                    
+                    // 获取当前标签页组
+                    const tablistId = this.getAttribute('aria-controls');
+                    const tabContent = document.querySelector(`#assessmentTabsContent`);
+                    
+                    // 隐藏所有标签页内容
+                    const allTabs = tabContent.querySelectorAll('.tab-pane');
+                    allTabs.forEach(tab => {
+                        tab.classList.remove('show', 'active');
+                        tab.classList.add('fade');
+                    });
+                    
+                    // 取消所有标签链接的活动状态
+                    const allLinks = document.querySelectorAll('.nav-link');
+                    allLinks.forEach(navLink => {
+                        navLink.classList.remove('active');
+                        navLink.setAttribute('aria-selected', 'false');
+                    });
+                    
+                    // 激活当前标签页和链接
+                    targetTab.classList.remove('fade');
+                    targetTab.classList.add('show', 'active');
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+                });
+            });
+        });
+    </script>
+    <!-- 自定义JS -->
     <script>
         // SSS-8量表评分计算
         let sss8Scores = [0, 0, 0, 0, 0, 0, 0, 0];
