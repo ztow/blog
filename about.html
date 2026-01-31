@@ -6,35 +6,196 @@ header-img: "img/about-bg.jpg"
 multilingual: true
 ---
 
+<!-- Parallax Effect Script -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Parallax effect for the header
+    window.addEventListener("scroll", function() {
+        const scrollPosition = window.pageYOffset;
+        const header = document.querySelector('.intro-header');
+        if (header) {
+            header.style.backgroundPosition = 'center ' + (scrollPosition * 0.5) + 'px';
+        }
+    });
+    
+    // Animated typing effect
+    const textElement = document.querySelector('.typing-text');
+    if (textElement) {
+        const text = textElement.textContent;
+        textElement.textContent = '';
+        let i = 0;
+        const timer = setInterval(() => {
+            if (i < text.length) {
+                textElement.textContent += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(timer);
+            }
+        }, 50);
+    }
+});
+</script>
+
+<style>
+/* Enhanced About Page Styles */
+.profile-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    margin: 30px 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.animated-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease infinite;
+    background-size: 300% 300%;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.tech-badge {
+    display: inline-block;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin: 5px;
+    font-size: 0.9em;
+}
+
+.skill-bar {
+    height: 10px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 5px;
+    width: 0;
+    animation: fillBar 2s ease-in-out forwards;
+}
+
+@keyframes fillBar {
+    to { width: var(--skill-percent); }
+}
+
+.interactive-section {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.interactive-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.typing-text {
+    border-right: 2px solid #4ecdc4;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { border-color: #4ecdc4; }
+    51%, 100% { border-color: transparent; }
+}
+</style>
+
 <!-- Language Selector -->
-<select class="sel-lang" onchange= "onLanChange(this.options[this.options.selectedIndex].value)">
+<select class="sel-lang" onchange="onLanChange(this.options[this.options.selectedIndex].value)">
     <option value="0" selected> 中文 Chinese </option>
     <option value="1"> 英文 English </option>
 </select>
 
 <!-- Chinese Version -->
 <div class="zh post-container">
-    {% capture about_zh %}{% include about/zh.md %}{% endcapture %}
-    {{ about_zh | markdownify }}
+    <div class="profile-card interactive-section">
+        <h1 class="animated-title">丸子汤</h1>
+        <h3 class="typing-text">ztow.me - 产品经理 | 思考者 | 生活家</h3>
+        
+        <div style="margin-top: 30px;">
+            <h4>🎯 关于我</h4>
+            <p>年过四十，对社会贡献不大，过了36的门槛后，对钱有点渴望。</p>
+            <p>当前在母婴行业，着力于新零售、传统渠道改造、供应链、零售门店和移动互联网的融合。</p>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <h4>🔧 技能标签</h4>
+            <div>
+                <span class="tech-badge">产品经理</span>
+                <span class="tech-badge">新零售</span>
+                <span class="tech-badge">供应链</span>
+                <span class="tech-badge">移动互联网</span>
+                <span class="tech-badge">思考者</span>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <h4>📈 专业能力</h4>
+            <div><strong>产品规划</strong><div class="skill-bar"><div class="skill-progress" style="--skill-percent: 90%;"></div></div></div>
+            <div><strong>商业分析</strong><div class="skill-bar"><div class="skill-progress" style="--skill-percent: 85%;"></div></div></div>
+            <div><strong>团队协作</strong><div class="skill-bar"><div class="skill-progress" style="--skill-percent: 80%;"></div></div></div>
+        </div>
+    </div>
+
+    <div class="profile-card interactive-section">
+        <h4>❓ 为什么叫"丸子汤"?</h4>
+        <div class="post-content">
+            {% capture about_zh %}{% include about/zh.md %}{% endcapture %}
+            {{ about_zh | markdownify }}
+        </div>
+    </div>
 </div>
 
 <!-- English Version -->
 <div class="en post-container">
-    {% capture about_en %}{% include about/en.md %}{% endcapture %}
-    {{ about_en | markdownify }}
-</div>
+    <div class="profile-card interactive-section">
+        <h1 class="animated-title">Wanzi Tang</h1>
+        <h3 class="typing-text">ztow.me - Product Manager | Thinker | Life Enthusiast</h3>
+        
+        <div style="margin-top: 30px;">
+            <h4>About Me</h4>
+            <p>Aged over forty, with modest contributions to society. After crossing the threshold of 36, I've developed a certain longing for money.</p>
+            <p>Currently in the maternal and infant industry, focusing on the integration of new retail, traditional channel transformation, supply chain, retail stores, and mobile internet.</p>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <h4>Why "Wanzi Tang" (Dumpling Soup)?</h4>
+            <p>Check out the Chinese version to discover the fascinating story behind my blog's name!</p>
+        </div>
+    </div>
 
+    <div class="profile-card">
+        <p>啊?还想看英文的?是不是想的太多了…</p>
+    </div>
+</div>
 
 {% if site.disqus_username %}
 <!-- disqus 评论框 start -->
 <div class="comment">
     <div id="disqus_thread" class="disqus-thread">
-
     </div>
 </div>
 <!-- disqus 评论框 end -->
 
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<!-- disqus 公共JS代码 start -->
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "{{site.disqus_username}}";
