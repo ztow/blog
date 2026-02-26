@@ -16,6 +16,13 @@ multilingual: true
 <div class="zh post-container">
     {% capture about_zh %}{% include about/zh.md %}{% endcapture %}
     {{ about_zh | markdownify }}
+    
+    <hr>
+    {% include sns-links.html %}
+    
+    {% if site.email %}
+    <p>📧 <a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+    {% endif %}
 </div>
 
 <!-- English Version -->
