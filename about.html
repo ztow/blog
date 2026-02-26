@@ -12,10 +12,235 @@ multilingual: true
     <option value="1"> 英文 English </option>
 </select>
 
+<!-- Custom Styles -->
+<style>
+    /* Timeline Styles */
+    .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px 0;
+    }
+    
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        border-radius: 2px;
+    }
+    
+    .timeline-item {
+        position: relative;
+        margin: 30px 0;
+        padding: 20px;
+        background: rgba(255,255,255,0.95);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .timeline-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(102,126,234,0.3);
+    }
+    
+    .timeline-item:nth-child(odd) {
+        margin-right: 50%;
+        padding-right: 40px;
+        text-align: right;
+    }
+    
+    .timeline-item:nth-child(even) {
+        margin-left: 50%;
+        padding-left: 40px;
+        text-align: left;
+    }
+    
+    .timeline-dot {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: #667eea;
+        border-radius: 50%;
+        top: 30px;
+        z-index: 1;
+        box-shadow: 0 0 0 4px rgba(102,126,234,0.2);
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-dot {
+        right: -10px;
+    }
+    
+    .timeline-item:nth-child(even) .timeline-dot {
+        left: -10px;
+    }
+    
+    .timeline-year {
+        font-size: 24px;
+        font-weight: bold;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+    }
+    
+    .timeline-content h3 {
+        color: #333;
+        margin-bottom: 15px;
+    }
+    
+    .timeline-content p {
+        color: #666;
+        line-height: 1.8;
+    }
+    
+    /* Particle Background */
+    #particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+    }
+    
+    /* Avatar Animation */
+    .avatar-container {
+        text-align: center;
+        margin: 30px 0;
+    }
+    
+    .avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 4px solid #667eea;
+        box-shadow: 0 0 30px rgba(102,126,234,0.4);
+        animation: avatarFloat 3s ease-in-out infinite;
+    }
+    
+    @keyframes avatarFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    /* Quote Style */
+    .quote-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin: 30px 0;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .quote-box::before {
+        content: '"';
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        font-size: 80px;
+        opacity: 0.3;
+        font-family: Georgia, serif;
+    }
+    
+    .quote-box p {
+        position: relative;
+        z-index: 1;
+        font-size: 18px;
+        line-height: 1.8;
+        margin: 0;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .timeline::before {
+            left: 20px;
+        }
+        
+        .timeline-item:nth-child(odd),
+        .timeline-item:nth-child(even) {
+            margin: 30px 0 30px 50px;
+            padding: 20px;
+            text-align: left;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-dot,
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -30px;
+        }
+    }
+</style>
+
+<!-- Particle Canvas -->
+<canvas id="particles"></canvas>
+
 <!-- Chinese Version -->
 <div class="zh post-container">
-    {% capture about_zh %}{% include about/zh.md %}{% endcapture %}
-    {{ about_zh | markdownify }}
+    
+    <!-- Avatar -->
+    <div class="avatar-container">
+        <img src="/img/about-my.jpeg" alt="ztow" class="avatar">
+    </div>
+    
+    <!-- Timeline -->
+    <div class="timeline">
+        
+        <!-- 2012 -->
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2012</div>
+            <div class="timeline-content">
+                <h3>丸子汤的诞生</h3>
+                <p>32 岁生日前夕，写下这段文字。那时候觉得自己像块肉，被扔到绞肉机里弄得粉身碎骨，最后被做成丸子汤。</p>
+                <p>"不管掺了什么调味料，什么样的辅菜，放在什么碗里，我都会做好一个丸子该做的事。"</p>
+            </div>
+        </div>
+        
+        <!-- 2012-2026 -->
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2012 → 2026</div>
+            <div class="timeline-content">
+                <h3>这 14 年</h3>
+                <p>从 32 岁到 46 岁，从北京到哈尔滨，从互联网到母婴行业。</p>
+                <p>着力于新零售、传统渠道改造、供应链、零售门店和移动互联网的融合。</p>
+            </div>
+        </div>
+        
+        <!-- 2026 -->
+        <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-year">2026</div>
+            <div class="timeline-content">
+                <h3>现在的我</h3>
+                <p>年过四十，对社会贡献不大，过了 36 的门槛后，对钱有点渴望。</p>
+                <p>什么时候变迷信了？年纪大了吧，发现人胜不了天的时候，自然就信了。</p>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- Quote Box -->
+    <div class="quote-box">
+        <p>丸子口感不错，和着汤也算鲜美。心里一直揣着那成为臀尖肉的理想，默默努力，默默行走，默默坚韧。</p>
+    </div>
+    
+    <!-- Original Content -->
+    <div class="timeline-content" style="margin-top: 40px;">
+        <hr style="border: none; border-top: 2px solid #667eea; margin: 40px 0;">
+        <h3 style="text-align: center; color: #667eea; margin-bottom: 30px;">原文存档</h3>
+        {% capture about_zh %}{% include about/zh.md %}{% endcapture %}
+        {{ about_zh | markdownify }}
+    </div>
+    
 </div>
 
 <!-- English Version -->
@@ -24,6 +249,86 @@ multilingual: true
     {{ about_en | markdownify }}
 </div>
 
+<!-- Particle Script -->
+<script>
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const particlesArray = [];
+    const numberOfParticles = 80;
+    
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 3 + 1;
+            this.speedX = Math.random() * 1 - 0.5;
+            this.speedY = Math.random() * 1 - 0.5;
+            this.opacity = Math.random() * 0.5 + 0.2;
+        }
+        
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            
+            if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+            if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+        }
+        
+        draw() {
+            ctx.fillStyle = `rgba(102, 126, 234, ${this.opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+    
+    function init() {
+        for (let i = 0; i < numberOfParticles; i++) {
+            particlesArray.push(new Particle());
+        }
+    }
+    
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        for (let i = 0; i < particlesArray.length; i++) {
+            particlesArray[i].update();
+            particlesArray[i].draw();
+        }
+        
+        // Connect particles with lines
+        for (let a = 0; a < particlesArray.length; a++) {
+            for (let b = a; b < particlesArray.length; b++) {
+                const dx = particlesArray[a].x - particlesArray[b].x;
+                const dy = particlesArray[a].y - particlesArray[b].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 100) {
+                    ctx.strokeStyle = `rgba(102, 126, 234, ${0.2 - distance/500})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                    ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        requestAnimationFrame(animate);
+    }
+    
+    init();
+    animate();
+    
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</script>
 
 {% if site.disqus_username %}
 <!-- disqus 评论框 start -->
@@ -34,7 +339,7 @@ multilingual: true
 </div>
 <!-- disqus 评论框 end -->
 
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<!-- disqus 公共 JS 代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "{{site.disqus_username}}";
@@ -47,5 +352,5 @@ multilingual: true
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
-<!-- disqus 公共JS代码 end -->
+<!-- disqus 公共 JS 代码 end -->
 {% endif %}
