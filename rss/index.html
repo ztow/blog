@@ -1,0 +1,83 @@
+---
+layout: null
+title: "看看世界"
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赵兄收集的RSS</title>
+    <meta name="description" content="赵兄收集的RSS订阅源，纯前端解析，无 API 依赖">
+    
+    <!-- 本地 CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- ========== 左侧边栏 ========== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>📰 赵兄收集的RSS</h1>
+                <p>有些源需要有"额外的"上网手段，你懂的</p>
+            </div>
+            
+            <!-- 搜索框 -->
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="搜索订阅源..."
+                    autocomplete="off"
+                >
+            </div>
+            
+            <!-- 订阅源列表 -->
+            <div class="feed-list" id="feedList">
+                <!-- 由 JavaScript 动态渲染 -->
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <p>加载订阅源中...</p>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- ========== 右侧主内容区 ========== -->
+        <main class="main-content">
+            <!-- 顶部信息栏 -->
+            <header class="content-header">
+                <div class="current-feed-info" id="currentFeedInfo">
+                    <h2>选择订阅源</h2>
+                    <div class="feed-url">从左侧选择一个网站开始阅读</div>
+                </div>
+                <button class="refresh-btn" id="refreshBtn" disabled>
+                    🔄 刷新
+                </button>
+            </header>
+            
+            <!-- 文章列表容器 -->
+            <div class="articles-container">
+                <div class="articles-list" id="articlesList">
+                    <!-- 由 JavaScript 动态渲染 -->
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📰</div>
+                        <h3>请从左侧选择一个订阅源</h3>
+                        <p>点击左侧网站列表开始阅读</p>
+                    </div>
+                </div>
+                
+                <!-- 加载更多按钮 -->
+                <div class="load-more-container">
+                    <button class="load-more-btn" id="loadMoreBtn" style="display: none;">
+                        📄 加载更多
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- 本地 JavaScript -->
+    <script src="./js/app.js"></script>
+</body>
+</html>
