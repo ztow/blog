@@ -6,12 +6,12 @@ layout: default
 {% include intro-header.html type='page' %}
 
 <!-- Main Content -->
-<div class="container">
+<div class="container-fluid" style="padding: 0 2.5%;">
 	<div class="row">
         {% if page.sidebar == false or site.sidebar == false %}
 <!-- NO SIDEBAR -->
     <!-- PostList Container -->
-            <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 postlist-container">
+            <div class="col-lg-12 col-md-12 postlist-container" style="width: 100%; padding: 0;">
                 {{ content }}
             </div>
         {% else %}
