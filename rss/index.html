@@ -1,83 +1,344 @@
 ---
-layout: null
+layout: page
 title: "看看世界"
+description: "赵兄收集的RSS订阅源，有些源需要有额外的上网手段"
+header-img: "img/post-bg-universe.jpg"
 ---
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>赵兄收集的RSS</title>
-    <meta name="description" content="赵兄收集的RSS订阅源，纯前端解析，无 API 依赖">
+
+<style>
+.rss-container {
+    margin-top: 20px;
+}
+
+.rss-search {
+    margin-bottom: 25px;
+}
+
+.rss-search input {
+    width: 100%;
+    padding: 12px 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.rss-search input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.rss-layout {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.rss-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+}
+
+.rss-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.feed-list-title {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.feed-list {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.feed-item {
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #f8fafc;
+}
+
+.feed-item:hover {
+    background-color: #eff6ff;
+}
+
+.feed-item.active {
+    background-color: #2563eb;
+    color: white;
+}
+
+.feed-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background-color: #2563eb;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.feed-item.active .feed-icon {
+    background-color: white;
+    color: #2563eb;
+}
+
+.feed-name {
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.feed-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.feed-header h3 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #1e293b;
+}
+
+.feed-header .feed-url {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+.refresh-btn {
+    padding: 8px 16px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.refresh-btn:disabled {
+    background-color: #94a3b8;
+    cursor: not-allowed;
+}
+
+.articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.article-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 18px;
+    transition: all 0.2s;
+}
+
+.article-card:hover {
+    border-color: #2563eb;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+}
+
+.article-card.unread {
+    border-left: 4px solid #2563eb;
+}
+
+.article-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1e293b;
+    text-decoration: none;
+    line-height: 1.4;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.article-title:hover {
+    color: #2563eb;
+}
+
+.article-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.article-source {
+    background-color: #eff6ff;
+    color: #2563eb;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.article-description {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin-top: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.load-more-container {
+    text-align: center;
+    padding: 25px;
+}
+
+.load-more-btn {
+    padding: 10px 35px;
+    background-color: white;
+    color: #2563eb;
+    border: 2px solid #2563eb;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.load-more-btn:hover {
+    background-color: #2563eb;
+    color: white;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #94a3b8;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.empty-state h4 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #64748b;
+}
+
+.error-state {
+    text-align: center;
+    padding: 40px;
+    color: #ef4444;
+}
+
+.error-state-icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+}
+
+.loading-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #2563eb;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.rss-tip {
+    background-color: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #92400e;
+}
+
+@media (max-width: 768px) {
+    .rss-layout {
+        flex-direction: column;
+    }
     
-    <!-- 本地 CSS -->
-    <link rel="stylesheet" href="./css/style.css">
-</head>
-<body>
-    <div class="app-container">
-        <!-- ========== 左侧边栏 ========== -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h1>📰 赵兄收集的RSS</h1>
-                <p>有些源需要有"额外的"上网手段，你懂的</p>
-            </div>
-            
-            <!-- 搜索框 -->
-            <div class="search-container">
-                <input 
-                    type="text" 
-                    id="searchInput" 
-                    class="search-input" 
-                    placeholder="搜索订阅源..."
-                    autocomplete="off"
-                >
-            </div>
-            
-            <!-- 订阅源列表 -->
-            <div class="feed-list" id="feedList">
-                <!-- 由 JavaScript 动态渲染 -->
-                <div class="loading-state">
-                    <div class="loading-spinner"></div>
-                    <p>加载订阅源中...</p>
-                </div>
-            </div>
-        </aside>
-        
-        <!-- ========== 右侧主内容区 ========== -->
-        <main class="main-content">
-            <!-- 顶部信息栏 -->
-            <header class="content-header">
-                <div class="current-feed-info" id="currentFeedInfo">
-                    <h2>选择订阅源</h2>
-                    <div class="feed-url">从左侧选择一个网站开始阅读</div>
-                </div>
-                <button class="refresh-btn" id="refreshBtn" disabled>
-                    🔄 刷新
-                </button>
-            </header>
-            
-            <!-- 文章列表容器 -->
-            <div class="articles-container">
-                <div class="articles-list" id="articlesList">
-                    <!-- 由 JavaScript 动态渲染 -->
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📰</div>
-                        <h3>请从左侧选择一个订阅源</h3>
-                        <p>点击左侧网站列表开始阅读</p>
-                    </div>
-                </div>
-                
-                <!-- 加载更多按钮 -->
-                <div class="load-more-container">
-                    <button class="load-more-btn" id="loadMoreBtn" style="display: none;">
-                        📄 加载更多
-                    </button>
-                </div>
-            </div>
-        </main>
+    .rss-sidebar {
+        width: 100%;
+    }
+    
+    .feed-list {
+        max-height: 300px;
+    }
+}
+</style>
+
+<div class="rss-container">
+    <div class="rss-tip">
+        💡 有些订阅源需要"额外的"上网手段才能访问，你懂的
     </div>
     
-    <!-- 本地 JavaScript -->
-    <script src="./js/app.js"></script>
-</body>
-</html>
+    <div class="rss-search">
+        <input type="text" id="searchInput" placeholder="搜索订阅源..." autocomplete="off">
+    </div>
+    
+    <div class="rss-layout">
+        <div class="rss-sidebar">
+            <div class="feed-list-title">订阅源列表</div>
+            <div class="feed-list" id="feedList">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+        
+        <div class="rss-main">
+            <div class="feed-header" id="feedHeader">
+                <div>
+                    <h3>选择订阅源</h3>
+                    <div class="feed-url">从左侧选择一个网站开始阅读</div>
+                </div>
+                <button class="refresh-btn" id="refreshBtn" disabled>🔄 刷新</button>
+            </div>
+            
+            <div class="articles-list" id="articlesList">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📰</div>
+                    <h4>请从左侧选择一个订阅源</h4>
+                    <p>点击左侧网站列表开始阅读</p>
+                </div>
+            </div>
+            
+            <div class="load-more-container">
+                <button class="load-more-btn" id="loadMoreBtn" style="display: none;">📄 加载更多</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="./js/app.js"></script>

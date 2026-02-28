@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', init);
 async function init() {
     elements.feedList = document.getElementById('feedList');
     elements.articlesList = document.getElementById('articlesList');
-    elements.currentFeedInfo = document.getElementById('currentFeedInfo');
+    elements.currentFeedInfo = document.getElementById('feedHeader');
     elements.loadMoreBtn = document.getElementById('loadMoreBtn');
     elements.searchInput = document.getElementById('searchInput');
     elements.refreshBtn = document.getElementById('refreshBtn');
@@ -127,9 +127,13 @@ async function selectFeed(feedId) {
 
 function updateFeedInfo(feed) {
     elements.currentFeedInfo.innerHTML = `
-        <h2>${escapeHtml(feed.title)}</h2>
-        <div class="feed-url">${escapeHtml(feed.url)}</div>
+        <div>
+            <h3>${escapeHtml(feed.title)}</h3>
+            <div class="feed-url">${escapeHtml(feed.url)}</div>
+        </div>
+        <button class="refresh-btn" id="refreshBtn" onclick="refreshCurrentFeed()">🔄 刷新</button>
     `;
+    elements.refreshBtn = document.getElementById('refreshBtn');
 }
 
 async function fetchWithProxy(url) {
@@ -351,12 +355,14 @@ function refreshCurrentFeed() {
 }
 
 function updateRefreshBtn(loading) {
+    const btn = document.getElementById('refreshBtn');
+    if (!btn) return;
     if (loading) {
-        elements.refreshBtn.innerHTML = '<span class="spinner"></span> 加载中...';
-        elements.refreshBtn.disabled = true;
+        btn.innerHTML = '<span class="loading-spinner" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:6px;"></span> 加载中...';
+        btn.disabled = true;
     } else {
-        elements.refreshBtn.innerHTML = '🔄 刷新';
-        elements.refreshBtn.disabled = !state.currentFeed;
+        btn.innerHTML = '🔄 刷新';
+        btn.disabled = !state.currentFeed;
     }
 }
 
