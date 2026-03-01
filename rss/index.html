@@ -1,542 +1,560 @@
 ---
-layout: page
+layout: null
 title: "看看世界"
 description: "赵兄收集的RSS订阅源，有些源需要有额外的上网手段"
 header-img: "img/post-bg-universe.jpg"
 sidebar: false
 ---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} - {{ site.SEOTitle }}</title>
+  <meta name="description" content="{{ page.description }}">
+  
+  {% include head.html %}
+</head>
+<body class="bg-slate-950">
 
-<!-- 1. 引入必要的前端运行环境 -->
-<!-- 关闭 Tailwind 的 Preflight 以保护博客原有样式不被破坏 -->
-<script>
-  tailwind = {
-    config: {
-      corePlugins: { preflight: false }
+{% include nav.html %}
+
+  <!-- 1. 引入必要的前端运行环境 -->
+  <!-- 关闭 Tailwind 的 Preflight 以保护博客原有样式不被破坏 -->
+  <script>
+    tailwind = {
+      config: {
+        corePlugins: { preflight: false }
+      }
     }
-  }
-</script>
-<script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-<style>
-  /* 针对 RSS 阅读器容器的局部样式重置，替代 Tailwind 的 Preflight */
-  #rss-root *, #rss-root ::before, #rss-root ::after {
-    box-sizing: border-box;
-    border-width: 0;
-    border-style: solid;
-    border-color: #334155; /* slate-700 default border */
-  }
+  <style>
+    /* 针对 RSS 阅读器容器的局部样式重置，替代 Tailwind 的 Preflight */
+    #rss-root *, #rss-root ::before, #rss-root ::after {
+      box-sizing: border-box;
+      border-width: 0;
+      border-style: solid;
+      border-color: #334155; /* slate-700 default border */
+    }
 
-  /* 隐藏滚动条但保留滚动功能的 CSS */
-  .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-  .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.5); border-radius: 10px; }
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.5); }
-  
-  /* 修复 Tailwind Typography 在暗色模式下的一些默认文字颜色 */
-  .prose-invert { color: #cbd5e1; }
-  .prose-invert h1, .prose-invert h2, .prose-invert h3, .prose-invert h4 { color: #f8fafc; }
-  .prose-invert strong { color: #f1f5f9; }
-  .prose-invert a { color: #38bdf8; text-decoration: none; }
-  .prose-invert a:hover { text-decoration: underline; }
+    /* 隐藏滚动条但保留滚动功能的 CSS */
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.5); border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(56, 189, 248, 0.5); }
+    
+    /* 修复 Tailwind Typography 在暗色模式下的一些默认文字颜色 */
+    .prose-invert { color: #cbd5e1; }
+    .prose-invert h1, .prose-invert h2, .prose-invert h3, .prose-invert h4 { color: #f8fafc; }
+    .prose-invert strong { color: #f1f5f9; }
+    .prose-invert a { color: #38bdf8; text-decoration: none; }
+    .prose-invert a:hover { text-decoration: underline; }
 
-  /* 嵌入式组件的高度与布局限制 */
-  #rss-app-container {
-    width: 95%;
-    max-width: 1400px;
-    margin: 2rem auto 4rem auto;
-  }
-  
-  #rss-root {
-    height: 80vh;
-    min-height: 600px;
-    max-height: 900px;
-  }
-</style>
+    /* 嵌入式组件的高度与布局限制 */
+    #rss-app-container {
+      width: 95%;
+      max-width: 1400px;
+      margin: 2rem auto 4rem auto;
+    }
+    
+    #rss-root {
+      height: 80vh;
+      min-height: 600px;
+      max-height: 900px;
+    }
+  </style>
 
-<!-- 2. HTML 骨架挂载点 -->
-<div id="rss-app-container">
-  <!-- 保留并美化原有的温馨提示 -->
-  <div class="bg-amber-100/90 border-l-4 border-amber-500 rounded-r-lg p-4 mb-6 shadow-sm flex items-center gap-3 text-amber-900 font-medium">
-    <i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i>
-    <span>💡 有些订阅源需要"额外的"上网手段才能访问，你懂的。</span>
+  <!-- 2. HTML 骨架挂载点 -->
+  <div id="rss-app-container">
+    <!-- 保留并美化原有的温馨提示 -->
+    <div class="bg-amber-100/90 border-l-4 border-amber-500 rounded-r-lg p-4 mb-6 shadow-sm flex items-center gap-3 text-amber-900 font-medium">
+      <i class="fa-solid fa-lightbulb text-amber-500 text-xl"></i>
+      <span>💡 有些订阅源需要"额外的"上网手段才能访问，你懂的。</span>
+    </div>
+
+    <!-- React 渲染容器 -->
+    <div id="rss-root" class="rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-800 bg-slate-950 font-sans"></div>
   </div>
 
-  <!-- React 渲染容器 -->
-  <div id="rss-root" class="rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-800 bg-slate-950 font-sans"></div>
-</div>
+  <!-- 3. React 业务逻辑代码 -->
+  <script type="text/babel">
+    const { useState, useEffect } = React;
 
-<!-- 3. React 业务逻辑代码 -->
-<script type="text/babel">
-  const { useState, useEffect } = React;
+    const RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
-  const RSS_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
+    // 预置提取的所有 92 个 RSS 订阅源
+    const DEFAULT_FEEDS = [
+      { id: '1', name: 'simonwillison.net', url: 'https://simonwillison.net/atom/everything/' },
+      { id: '2', name: 'jeffgeerling.com', url: 'https://www.jeffgeerling.com/blog.xml' },
+      { id: '3', name: 'seangoedecke.com', url: 'https://www.seangoedecke.com/rss.xml' },
+      { id: '4', name: 'krebsonsecurity.com', url: 'https://krebsonsecurity.com/feed/' },
+      { id: '5', name: 'daringfireball.net', url: 'https://daringfireball.net/feeds/main' },
+      { id: '6', name: 'ericmigi.com', url: 'https://ericmigi.com/rss.xml' },
+      { id: '7', name: 'antirez.com', url: 'http://antirez.com/rss' },
+      { id: '8', name: 'idiallo.com', url: 'https://idiallo.com/feed.rss' },
+      { id: '9', name: 'maurycyz.com', url: 'https://maurycyz.com/index.xml' },
+      { id: '10', name: 'pluralistic.net', url: 'https://pluralistic.net/feed/' },
+      { id: '11', name: 'shkspr.mobi', url: 'https://shkspr.mobi/blog/feed/' },
+      { id: '12', name: 'lcamtuf.substack.com', url: 'https://lcamtuf.substack.com/feed' },
+      { id: '13', name: 'mitchellh.com', url: 'https://mitchellh.com/feed.xml' },
+      { id: '14', name: 'dynomight.net', url: 'https://dynomight.net/feed.xml' },
+      { id: '15', name: 'utcc.utoronto.ca/~cks', url: 'https://utcc.utoronto.ca/~cks/space/blog/?atom' },
+      { id: '16', name: 'xeiaso.net', url: 'https://xeiaso.net/blog.rss' },
+      { id: '17', name: 'devblogs.microsoft.com/oldnewthing', url: 'https://devblogs.microsoft.com/oldnewthing/feed' },
+      { id: '18', name: 'righto.com', url: 'https://www.righto.com/feeds/posts/default' },
+      { id: '19', name: 'lucumr.pocoo.org', url: 'https://lucumr.pocoo.org/feed.atom' },
+      { id: '20', name: 'skyfall.dev', url: 'https://skyfall.dev/rss.xml' },
+      { id: '21', name: 'garymarcus.substack.com', url: 'https://garymarcus.substack.com/feed' },
+      { id: '22', name: 'rachelbythebay.com', url: 'https://rachelbythebay.com/w/atom.xml' },
+      { id: '23', name: 'overreacted.io', url: 'https://overreacted.io/rss.xml' },
+      { id: '24', name: 'timsh.org', url: 'https://timsh.org/rss/' },
+      { id: '25', name: 'johndcook.com', url: 'https://www.johndcook.com/blog/feed/' },
+      { id: '26', name: 'gilesthomas.com', url: 'https://gilesthomas.com/feed/rss.xml' },
+      { id: '27', name: 'matklad.github.io', url: 'https://matklad.github.io/feed.xml' },
+      { id: '28', name: 'derekthompson.org', url: 'https://www.theatlantic.com/feed/author/derek-thompson/' },
+      { id: '29', name: 'evanhahn.com', url: 'https://evanhahn.com/feed.xml' },
+      { id: '30', name: 'terriblesoftware.org', url: 'https://terriblesoftware.org/feed/' },
+      { id: '31', name: 'rakhim.exotext.com', url: 'https://rakhim.exotext.com/rss.xml' },
+      { id: '32', name: 'joanwestenberg.com', url: 'https://joanwestenberg.com/rss' },
+      { id: '33', name: 'xania.org', url: 'https://xania.org/feed' },
+      { id: '34', name: 'micahflee.com', url: 'https://micahflee.com/feed/' },
+      { id: '35', name: 'nesbitt.io', url: 'https://nesbitt.io/feed.xml' },
+      { id: '36', name: 'construction-physics.com', url: 'https://www.construction-physics.com/feed' },
+      { id: '37', name: 'tedium.co', url: 'https://feed.tedium.co/' },
+      { id: '38', name: 'susam.net', url: 'https://susam.net/feed.xml' },
+      { id: '39', name: 'entropicthoughts.com', url: 'https://entropicthoughts.com/feed.xml' },
+      { id: '40', name: 'buttondown.com/hillelwayne', url: 'https://buttondown.com/hillelwayne/rss' },
+      { id: '41', name: 'dwarkesh.com', url: 'https://www.dwarkeshpatel.com/feed' },
+      { id: '42', name: 'borretti.me', url: 'https://borretti.me/feed.xml' },
+      { id: '43', name: 'wheresyoured.at', url: 'https://www.wheresyoured.at/rss/' },
+      { id: '44', name: 'jayd.ml', url: 'https://jayd.ml/feed.xml' },
+      { id: '45', name: 'minimaxir.com', url: 'https://minimaxir.com/index.xml' },
+      { id: '46', name: 'geohot.github.io', url: 'https://geohot.github.io/blog/feed.xml' },
+      { id: '47', name: 'paulgraham.com', url: 'http://www.aaronsw.com/2002/feeds/pgessays.rss' },
+      { id: '48', name: 'filfre.net', url: 'https://www.filfre.net/feed/' },
+      { id: '49', name: 'blog.jim-nielsen.com', url: 'https://blog.jim-nielsen.com/feed.xml' },
+      { id: '50', name: 'dfarq.homeip.net', url: 'https://dfarq.homeip.net/feed/' },
+      { id: '51', name: 'jyn.dev', url: 'https://jyn.dev/atom.xml' },
+      { id: '52', name: 'geoffreylitt.com', url: 'https://www.geoffreylitt.com/feed.xml' },
+      { id: '53', name: 'downtowndougbrown.com', url: 'https://www.downtowndougbrown.com/feed/' },
+      { id: '54', name: 'brutecat.com', url: 'https://brutecat.com/rss.xml' },
+      { id: '55', name: 'eli.thegreenplace.net', url: 'https://eli.thegreenplace.net/feeds/all.atom.xml' },
+      { id: '56', name: 'abortretry.fail', url: 'https://www.abortretry.fail/feed' },
+      { id: '57', name: 'fabiensanglard.net', url: 'https://fabiensanglard.net/rss.xml' },
+      { id: '58', name: 'oldvcr.blogspot.com', url: 'https://oldvcr.blogspot.com/feeds/posts/default' },
+      { id: '59', name: 'bogdanthegeek.github.io', url: 'https://bogdanthegeek.github.io/blog/index.xml' },
+      { id: '60', name: 'hugotunius.se', url: 'https://hugotunius.se/feed.xml' },
+      { id: '61', name: 'gwern.net', url: 'https://gwern.substack.com/feed' },
+      { id: '62', name: 'berthub.eu', url: 'https://berthub.eu/articles/index.xml' },
+      { id: '63', name: 'chadnauseam.com', url: 'https://chadnauseam.com/rss.xml' },
+      { id: '64', name: 'simone.org', url: 'https://simone.org/feed/' },
+      { id: '65', name: 'it-notes.dragas.net', url: 'https://it-notes.dragas.net/feed/' },
+      { id: '66', name: 'beej.us', url: 'https://beej.us/blog/rss.xml' },
+      { id: '67', name: 'hey.paris', url: 'https://hey.paris/index.xml' },
+      { id: '68', name: 'danielwirtz.com', url: 'https://danielwirtz.com/rss.xml' },
+      { id: '69', name: 'matduggan.com', url: 'https://matduggan.com/rss/' },
+      { id: '70', name: 'refactoringenglish.com', url: 'https://refactoringenglish.com/index.xml' },
+      { id: '71', name: 'worksonmymachine.substack.com', url: 'https://worksonmymachine.substack.com/feed' },
+      { id: '72', name: 'philiplaine.com', url: 'https://philiplaine.com/index.xml' },
+      { id: '73', name: 'steveblank.com', url: 'https://steveblank.com/feed/' },
+      { id: '74', name: 'bernsteinbear.com', url: 'https://bernsteinbear.com/feed.xml' },
+      { id: '75', name: 'danieldelaney.net', url: 'https://danieldelaney.net/feed' },
+      { id: '76', name: 'troyhunt.com', url: 'https://www.troyhunt.com/rss/' },
+      { id: '77', name: 'herman.bearblog.dev', url: 'https://herman.bearblog.dev/feed/' },
+      { id: '78', name: 'tomrenner.com', url: 'https://tomrenner.com/index.xml' },
+      { id: '79', name: 'blog.pixelmelt.dev', url: 'https://blog.pixelmelt.dev/rss/' },
+      { id: '80', name: 'martinalderson.com', url: 'https://martinalderson.com/feed.xml' },
+      { id: '81', name: 'danielchasehooper.com', url: 'https://danielchasehooper.com/feed.xml' },
+      { id: '82', name: 'chiark.greenend.org.uk/~sgtatham', url: 'https://www.chiark.greenend.org.uk/~sgtatham/quasiblog/feed.xml' },
+      { id: '83', name: 'grantslatton.com', url: 'https://grantslatton.com/rss.xml' },
+      { id: '84', name: 'experimental-history.com', url: 'https://www.experimental-history.com/feed' },
+      { id: '85', name: 'anildash.com', url: 'https://anildash.com/feed.xml' },
+      { id: '86', name: 'aresluna.org', url: 'https://aresluna.org/main.rss' },
+      { id: '87', name: 'michael.stapelberg.ch', url: 'https://michael.stapelberg.ch/feed.xml' },
+      { id: '88', name: 'miguelgrinberg.com', url: 'https://blog.miguelgrinberg.com/feed' },
+      { id: '89', name: 'keygen.sh', url: 'https://keygen.sh/blog/feed.xml' },
+      { id: '90', name: 'mjg59.dreamwidth.org', url: 'https://mjg59.dreamwidth.org/data/rss' },
+      { id: '91', name: 'computer.rip', url: 'https://computer.rip/rss.xml' },
+      { id: '92', name: 'tedunangst.com', url: 'https://www.tedunangst.com/flak/rss' }
+    ];
 
-  // 预置提取的所有 92 个 RSS 订阅源
-  const DEFAULT_FEEDS = [
-    { id: '1', name: 'simonwillison.net', url: 'https://simonwillison.net/atom/everything/' },
-    { id: '2', name: 'jeffgeerling.com', url: 'https://www.jeffgeerling.com/blog.xml' },
-    { id: '3', name: 'seangoedecke.com', url: 'https://www.seangoedecke.com/rss.xml' },
-    { id: '4', name: 'krebsonsecurity.com', url: 'https://krebsonsecurity.com/feed/' },
-    { id: '5', name: 'daringfireball.net', url: 'https://daringfireball.net/feeds/main' },
-    { id: '6', name: 'ericmigi.com', url: 'https://ericmigi.com/rss.xml' },
-    { id: '7', name: 'antirez.com', url: 'http://antirez.com/rss' },
-    { id: '8', name: 'idiallo.com', url: 'https://idiallo.com/feed.rss' },
-    { id: '9', name: 'maurycyz.com', url: 'https://maurycyz.com/index.xml' },
-    { id: '10', name: 'pluralistic.net', url: 'https://pluralistic.net/feed/' },
-    { id: '11', name: 'shkspr.mobi', url: 'https://shkspr.mobi/blog/feed/' },
-    { id: '12', name: 'lcamtuf.substack.com', url: 'https://lcamtuf.substack.com/feed' },
-    { id: '13', name: 'mitchellh.com', url: 'https://mitchellh.com/feed.xml' },
-    { id: '14', name: 'dynomight.net', url: 'https://dynomight.net/feed.xml' },
-    { id: '15', name: 'utcc.utoronto.ca/~cks', url: 'https://utcc.utoronto.ca/~cks/space/blog/?atom' },
-    { id: '16', name: 'xeiaso.net', url: 'https://xeiaso.net/blog.rss' },
-    { id: '17', name: 'devblogs.microsoft.com/oldnewthing', url: 'https://devblogs.microsoft.com/oldnewthing/feed' },
-    { id: '18', name: 'righto.com', url: 'https://www.righto.com/feeds/posts/default' },
-    { id: '19', name: 'lucumr.pocoo.org', url: 'https://lucumr.pocoo.org/feed.atom' },
-    { id: '20', name: 'skyfall.dev', url: 'https://skyfall.dev/rss.xml' },
-    { id: '21', name: 'garymarcus.substack.com', url: 'https://garymarcus.substack.com/feed' },
-    { id: '22', name: 'rachelbythebay.com', url: 'https://rachelbythebay.com/w/atom.xml' },
-    { id: '23', name: 'overreacted.io', url: 'https://overreacted.io/rss.xml' },
-    { id: '24', name: 'timsh.org', url: 'https://timsh.org/rss/' },
-    { id: '25', name: 'johndcook.com', url: 'https://www.johndcook.com/blog/feed/' },
-    { id: '26', name: 'gilesthomas.com', url: 'https://gilesthomas.com/feed/rss.xml' },
-    { id: '27', name: 'matklad.github.io', url: 'https://matklad.github.io/feed.xml' },
-    { id: '28', name: 'derekthompson.org', url: 'https://www.theatlantic.com/feed/author/derek-thompson/' },
-    { id: '29', name: 'evanhahn.com', url: 'https://evanhahn.com/feed.xml' },
-    { id: '30', name: 'terriblesoftware.org', url: 'https://terriblesoftware.org/feed/' },
-    { id: '31', name: 'rakhim.exotext.com', url: 'https://rakhim.exotext.com/rss.xml' },
-    { id: '32', name: 'joanwestenberg.com', url: 'https://joanwestenberg.com/rss' },
-    { id: '33', name: 'xania.org', url: 'https://xania.org/feed' },
-    { id: '34', name: 'micahflee.com', url: 'https://micahflee.com/feed/' },
-    { id: '35', name: 'nesbitt.io', url: 'https://nesbitt.io/feed.xml' },
-    { id: '36', name: 'construction-physics.com', url: 'https://www.construction-physics.com/feed' },
-    { id: '37', name: 'tedium.co', url: 'https://feed.tedium.co/' },
-    { id: '38', name: 'susam.net', url: 'https://susam.net/feed.xml' },
-    { id: '39', name: 'entropicthoughts.com', url: 'https://entropicthoughts.com/feed.xml' },
-    { id: '40', name: 'buttondown.com/hillelwayne', url: 'https://buttondown.com/hillelwayne/rss' },
-    { id: '41', name: 'dwarkesh.com', url: 'https://www.dwarkeshpatel.com/feed' },
-    { id: '42', name: 'borretti.me', url: 'https://borretti.me/feed.xml' },
-    { id: '43', name: 'wheresyoured.at', url: 'https://www.wheresyoured.at/rss/' },
-    { id: '44', name: 'jayd.ml', url: 'https://jayd.ml/feed.xml' },
-    { id: '45', name: 'minimaxir.com', url: 'https://minimaxir.com/index.xml' },
-    { id: '46', name: 'geohot.github.io', url: 'https://geohot.github.io/blog/feed.xml' },
-    { id: '47', name: 'paulgraham.com', url: 'http://www.aaronsw.com/2002/feeds/pgessays.rss' },
-    { id: '48', name: 'filfre.net', url: 'https://www.filfre.net/feed/' },
-    { id: '49', name: 'blog.jim-nielsen.com', url: 'https://blog.jim-nielsen.com/feed.xml' },
-    { id: '50', name: 'dfarq.homeip.net', url: 'https://dfarq.homeip.net/feed/' },
-    { id: '51', name: 'jyn.dev', url: 'https://jyn.dev/atom.xml' },
-    { id: '52', name: 'geoffreylitt.com', url: 'https://www.geoffreylitt.com/feed.xml' },
-    { id: '53', name: 'downtowndougbrown.com', url: 'https://www.downtowndougbrown.com/feed/' },
-    { id: '54', name: 'brutecat.com', url: 'https://brutecat.com/rss.xml' },
-    { id: '55', name: 'eli.thegreenplace.net', url: 'https://eli.thegreenplace.net/feeds/all.atom.xml' },
-    { id: '56', name: 'abortretry.fail', url: 'https://www.abortretry.fail/feed' },
-    { id: '57', name: 'fabiensanglard.net', url: 'https://fabiensanglard.net/rss.xml' },
-    { id: '58', name: 'oldvcr.blogspot.com', url: 'https://oldvcr.blogspot.com/feeds/posts/default' },
-    { id: '59', name: 'bogdanthegeek.github.io', url: 'https://bogdanthegeek.github.io/blog/index.xml' },
-    { id: '60', name: 'hugotunius.se', url: 'https://hugotunius.se/feed.xml' },
-    { id: '61', name: 'gwern.net', url: 'https://gwern.substack.com/feed' },
-    { id: '62', name: 'berthub.eu', url: 'https://berthub.eu/articles/index.xml' },
-    { id: '63', name: 'chadnauseam.com', url: 'https://chadnauseam.com/rss.xml' },
-    { id: '64', name: 'simone.org', url: 'https://simone.org/feed/' },
-    { id: '65', name: 'it-notes.dragas.net', url: 'https://it-notes.dragas.net/feed/' },
-    { id: '66', name: 'beej.us', url: 'https://beej.us/blog/rss.xml' },
-    { id: '67', name: 'hey.paris', url: 'https://hey.paris/index.xml' },
-    { id: '68', name: 'danielwirtz.com', url: 'https://danielwirtz.com/rss.xml' },
-    { id: '69', name: 'matduggan.com', url: 'https://matduggan.com/rss/' },
-    { id: '70', name: 'refactoringenglish.com', url: 'https://refactoringenglish.com/index.xml' },
-    { id: '71', name: 'worksonmymachine.substack.com', url: 'https://worksonmymachine.substack.com/feed' },
-    { id: '72', name: 'philiplaine.com', url: 'https://philiplaine.com/index.xml' },
-    { id: '73', name: 'steveblank.com', url: 'https://steveblank.com/feed/' },
-    { id: '74', name: 'bernsteinbear.com', url: 'https://bernsteinbear.com/feed.xml' },
-    { id: '75', name: 'danieldelaney.net', url: 'https://danieldelaney.net/feed' },
-    { id: '76', name: 'troyhunt.com', url: 'https://www.troyhunt.com/rss/' },
-    { id: '77', name: 'herman.bearblog.dev', url: 'https://herman.bearblog.dev/feed/' },
-    { id: '78', name: 'tomrenner.com', url: 'https://tomrenner.com/index.xml' },
-    { id: '79', name: 'blog.pixelmelt.dev', url: 'https://blog.pixelmelt.dev/rss/' },
-    { id: '80', name: 'martinalderson.com', url: 'https://martinalderson.com/feed.xml' },
-    { id: '81', name: 'danielchasehooper.com', url: 'https://danielchasehooper.com/feed.xml' },
-    { id: '82', name: 'chiark.greenend.org.uk/~sgtatham', url: 'https://www.chiark.greenend.org.uk/~sgtatham/quasiblog/feed.xml' },
-    { id: '83', name: 'grantslatton.com', url: 'https://grantslatton.com/rss.xml' },
-    { id: '84', name: 'experimental-history.com', url: 'https://www.experimental-history.com/feed' },
-    { id: '85', name: 'anildash.com', url: 'https://anildash.com/feed.xml' },
-    { id: '86', name: 'aresluna.org', url: 'https://aresluna.org/main.rss' },
-    { id: '87', name: 'michael.stapelberg.ch', url: 'https://michael.stapelberg.ch/feed.xml' },
-    { id: '88', name: 'miguelgrinberg.com', url: 'https://blog.miguelgrinberg.com/feed' },
-    { id: '89', name: 'keygen.sh', url: 'https://keygen.sh/blog/feed.xml' },
-    { id: '90', name: 'mjg59.dreamwidth.org', url: 'https://mjg59.dreamwidth.org/data/rss' },
-    { id: '91', name: 'computer.rip', url: 'https://computer.rip/rss.xml' },
-    { id: '92', name: 'tedunangst.com', url: 'https://www.tedunangst.com/flak/rss' }
-  ];
+    function App() {
+      const [feeds, setFeeds] = useState(DEFAULT_FEEDS);
+      const [activeFeed, setActiveFeed] = useState(DEFAULT_FEEDS[0]);
+      const [articles, setArticles] = useState([]);
+      const [loading, setLoading] = useState(false);
+      const [error, setError] = useState(null);
+      const [newFeedUrl, setNewFeedUrl] = useState('');
+      const [showImport, setShowImport] = useState(false);
+      const [importUrl, setImportUrl] = useState('https://ztow.me/rss/');
+      const [readingArticle, setReadingArticle] = useState(null);
 
-  function App() {
-    const [feeds, setFeeds] = useState(DEFAULT_FEEDS);
-    const [activeFeed, setActiveFeed] = useState(DEFAULT_FEEDS[0]);
-    const [articles, setArticles] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [newFeedUrl, setNewFeedUrl] = useState('');
-    const [showImport, setShowImport] = useState(false);
-    const [importUrl, setImportUrl] = useState('https://ztow.me/rss/');
-    const [readingArticle, setReadingArticle] = useState(null);
+      const fetchFeed = async (feed) => {
+        if (!feed) return;
+        setLoading(true);
+        setError(null);
+        setArticles([]);
 
-    const fetchFeed = async (feed) => {
-      if (!feed) return;
-      setLoading(true);
-      setError(null);
-      setArticles([]);
+        try {
+          const response = await fetch(`${RSS_API}${encodeURIComponent(feed.url)}&_=${new Date().getTime()}`);
+          const data = await response.json();
 
-      try {
-        const response = await fetch(`${RSS_API}${encodeURIComponent(feed.url)}&_=${new Date().getTime()}`);
-        const data = await response.json();
-
-        if (data.status === 'ok') {
-          setArticles(data.items);
-        } else {
-          throw new Error(data.message || '无法解析该 RSS 源');
+          if (data.status === 'ok') {
+            setArticles(data.items);
+          } else {
+            throw new Error(data.message || '无法解析该 RSS 源');
+          }
+        } catch (err) {
+          setError('抓取失败，该 RSS 源可能不支持或存在跨域拦截。');
+        } finally {
+          setLoading(false);
         }
-      } catch (err) {
-        setError('抓取失败，该 RSS 源可能不支持或存在跨域拦截。');
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
 
-    useEffect(() => {
-      fetchFeed(activeFeed);
-    }, [activeFeed]);
+      useEffect(() => {
+        fetchFeed(activeFeed);
+      }, [activeFeed]);
 
-    const handleAddFeed = (e) => {
-      e.preventDefault();
-      if (!newFeedUrl) return;
-      if (feeds.some(f => f.url === newFeedUrl)) { setNewFeedUrl(''); return; }
-      const newFeed = { id: Date.now().toString(), name: new URL(newFeedUrl).hostname.replace('www.', ''), url: newFeedUrl };
-      setFeeds([newFeed, ...feeds]);
-      setActiveFeed(newFeed);
-      setNewFeedUrl('');
-    };
+      const handleAddFeed = (e) => {
+        e.preventDefault();
+        if (!newFeedUrl) return;
+        if (feeds.some(f => f.url === newFeedUrl)) { setNewFeedUrl(''); return; }
+        const newFeed = { id: Date.now().toString(), name: new URL(newFeedUrl).hostname.replace('www.', ''), url: newFeedUrl };
+        setFeeds([newFeed, ...feeds]);
+        setActiveFeed(newFeed);
+        setNewFeedUrl('');
+      };
 
-    const removeFeed = (e, id) => {
-      e.stopPropagation();
-      const updated = feeds.filter(f => f.id !== id);
-      setFeeds(updated);
-      if (activeFeed && activeFeed.id === id) {
-        setActiveFeed(updated.length > 0 ? updated[0] : null);
-      }
-    };
+      const removeFeed = (e, id) => {
+        e.stopPropagation();
+        const updated = feeds.filter(f => f.id !== id);
+        setFeeds(updated);
+        if (activeFeed && activeFeed.id === id) {
+          setActiveFeed(updated.length > 0 ? updated[0] : null);
+        }
+      };
 
-    const extractFeedsFromUrl = async (e) => {
-      e.preventDefault();
-      if (!importUrl) return;
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(importUrl)}`);
-        if (!response.ok) throw new Error('无法访问该网页');
-        const text = await response.text();
-        
-        let extractedFeeds = [];
-        const parser = new DOMParser();
+      const extractFeedsFromUrl = async (e) => {
+        e.preventDefault();
+        if (!importUrl) return;
+        setLoading(true);
+        setError(null);
+        try {
+          const response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(importUrl)}`);
+          if (!response.ok) throw new Error('无法访问该网页');
+          const text = await response.text();
+          
+          let extractedFeeds = [];
+          const parser = new DOMParser();
 
-        if (text.includes('<opml') || text.includes('<outline')) {
-          const xmlDoc = parser.parseFromString(text, "text/xml");
-          const outlines = xmlDoc.querySelectorAll('outline[xmlUrl]');
-          outlines.forEach((node, idx) => {
-            extractedFeeds.push({ id: `ext-opml-${idx}`, name: node.getAttribute('title') || node.getAttribute('text') || '未命名源', url: node.getAttribute('xmlUrl') });
-          });
-        } else {
-          const doc = parser.parseFromString(text, "text/html");
-          const baseUrl = new URL(importUrl);
-          const headLinks = doc.querySelectorAll('link[type="application/rss+xml"], link[type="application/atom+xml"]');
-          headLinks.forEach((link, idx) => {
-            let href = link.getAttribute('href');
-            if (href) {
-              href = href.startsWith('http') ? href : new URL(href, baseUrl.origin).href;
-              extractedFeeds.push({ id: `ext-head-${idx}`, name: link.getAttribute('title') || baseUrl.hostname, url: href });
-            }
-          });
-          const aTags = doc.querySelectorAll('a');
-          aTags.forEach((a, idx) => {
-            let href = a.getAttribute('href');
-            if (href && (href.endsWith('.xml') || href.includes('rss') || href.includes('feed'))) {
-              if (!href.startsWith('mailto:') && !href.startsWith('javascript:')) {
+          if (text.includes('<opml') || text.includes('<outline')) {
+            const xmlDoc = parser.parseFromString(text, "text/xml");
+            const outlines = xmlDoc.querySelectorAll('outline[xmlUrl]');
+            outlines.forEach((node, idx) => {
+              extractedFeeds.push({ id: `ext-opml-${idx}`, name: node.getAttribute('title') || node.getAttribute('text') || '未命名源', url: node.getAttribute('xmlUrl') });
+            });
+          } else {
+            const doc = parser.parseFromString(text, "text/html");
+            const baseUrl = new URL(importUrl);
+            const headLinks = doc.querySelectorAll('link[type="application/rss+xml"], link[type="application/atom+xml"]');
+            headLinks.forEach((link, idx) => {
+              let href = link.getAttribute('href');
+              if (href) {
                 href = href.startsWith('http') ? href : new URL(href, baseUrl.origin).href;
-                extractedFeeds.push({ id: `ext-a-${idx}`, name: a.textContent.trim() || new URL(href).hostname, url: href });
+                extractedFeeds.push({ id: `ext-head-${idx}`, name: link.getAttribute('title') || baseUrl.hostname, url: href });
               }
-            }
-          });
+            });
+            const aTags = doc.querySelectorAll('a');
+            aTags.forEach((a, idx) => {
+              let href = a.getAttribute('href');
+              if (href && (href.endsWith('.xml') || href.includes('rss') || href.includes('feed'))) {
+                if (!href.startsWith('mailto:') && !href.startsWith('javascript:')) {
+                  href = href.startsWith('http') ? href : new URL(href, baseUrl.origin).href;
+                  extractedFeeds.push({ id: `ext-a-${idx}`, name: a.textContent.trim() || new URL(href).hostname, url: href });
+                }
+              }
+            });
+          }
+
+          const uniqueFeeds = Array.from(new Map(extractedFeeds.map(item => [item.url, item])).values());
+
+          if (uniqueFeeds.length > 0) {
+            setFeeds(uniqueFeeds);
+            setActiveFeed(uniqueFeeds[0]);
+            setShowImport(false);
+          } else {
+            setError('未能在该网页中找到明显的 RSS 链接。');
+          }
+        } catch (err) {
+          setError('网页提取失败，可能存在跨域拦截。');
+        } finally {
+          setLoading(false);
         }
+      };
 
-        const uniqueFeeds = Array.from(new Map(extractedFeeds.map(item => [item.url, item])).values());
+      const getThumbnail = (article) => {
+        if (article.thumbnail) return article.thumbnail;
+        if (article.enclosure && article.enclosure.link) return article.enclosure.link;
+        const imgRegex = /<img[^>]+src="([^">]+)"/g;
+        const match = imgRegex.exec(article.content || article.description);
+        return match ? match[1] : null;
+      };
 
-        if (uniqueFeeds.length > 0) {
-          setFeeds(uniqueFeeds);
-          setActiveFeed(uniqueFeeds[0]);
-          setShowImport(false);
-        } else {
-          setError('未能在该网页中找到明显的 RSS 链接。');
-        }
-      } catch (err) {
-        setError('网页提取失败，可能存在跨域拦截。');
-      } finally {
-        setLoading(false);
-      }
-    };
+      const formatDate = (dateString) => {
+        const options = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return new Date(dateString).toLocaleDateString('zh-CN', options);
+      };
 
-    const getThumbnail = (article) => {
-      if (article.thumbnail) return article.thumbnail;
-      if (article.enclosure && article.enclosure.link) return article.enclosure.link;
-      const imgRegex = /<img[^>]+src="([^">]+)"/g;
-      const match = imgRegex.exec(article.content || article.description);
-      return match ? match[1] : null;
-    };
-
-    const formatDate = (dateString) => {
-      const options = { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-      return new Date(dateString).toLocaleDateString('zh-CN', options);
-    };
-
-    if (readingArticle) {
-      return (
-        <div className="h-full w-full bg-slate-950 text-slate-200 overflow-y-auto custom-scrollbar relative">
-          <div className="sticky top-0 bg-slate-900/90 backdrop-blur-md p-4 flex items-center justify-between border-b border-slate-800 z-10 px-8">
-            <button 
-              onClick={() => setReadingArticle(null)}
-              className="flex items-center gap-2 text-slate-400 hover:text-cyan-400 transition-colors px-3 py-1.5 rounded-lg hover:bg-slate-800 bg-transparent outline-none cursor-pointer"
-            >
-              <i className="fa-solid fa-chevron-left"></i> 返回列表
-            </button>
-            <a 
-              href={readingArticle.link} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 px-4 py-2 rounded-full transition-colors no-underline"
-            >
-              原文链接 <i className="fa-solid fa-external-link-alt"></i>
-            </a>
-          </div>
-
-          <div className="max-w-4xl mx-auto p-8 pb-12">
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-50 mb-6 leading-tight mt-4">
-              {readingArticle.title}
-            </h1>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400 mb-8 pb-6 border-b border-slate-800/50">
-              <span className="flex items-center gap-1"><i className="fa-regular fa-clock"></i> {formatDate(readingArticle.pubDate)}</span>
-              {readingArticle.author && <span className="flex items-center gap-1"><i className="fa-solid fa-user-pen"></i> {readingArticle.author}</span>}
+      if (readingArticle) {
+        return (
+          <div className="h-full w-full bg-slate-950 text-slate-200 overflow-y-auto custom-scrollbar relative">
+            <div className="sticky top-0 bg-slate-900/90 backdrop-blur-md p-4 flex items-center justify-between border-b border-slate-800 z-10 px-8">
+              <button 
+                onClick={() => setReadingArticle(null)}
+                className="flex items-center gap-2 text-slate-400 hover:text-cyan-400 transition-colors px-3 py-1.5 rounded-lg hover:bg-slate-800 bg-transparent outline-none cursor-pointer"
+              >
+                <i className="fa-solid fa-chevron-left"></i> 返回列表
+              </button>
+              <a 
+                href={readingArticle.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-sm bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20 px-4 py-2 rounded-full transition-colors no-underline"
+              >
+                原文链接 <i className="fa-solid fa-external-link-alt"></i>
+              </a>
             </div>
 
-            <div className="prose prose-invert prose-cyan max-w-none 
-              prose-headings:font-bold prose-a:text-cyan-400 hover:prose-a:text-cyan-300
-              prose-img:rounded-xl prose-img:shadow-lg prose-img:w-full prose-img:object-cover text-base leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: readingArticle.content || readingArticle.description }}
-            />
+            <div className="max-w-4xl mx-auto p-8 pb-12">
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-50 mb-6 leading-tight mt-4">
+                {readingArticle.title}
+              </h1>
+              <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400 mb-8 pb-6 border-b border-slate-800/50">
+                <span className="flex items-center gap-1"><i className="fa-regular fa-clock"></i> {formatDate(readingArticle.pubDate)}</span>
+                {readingArticle.author && <span className="flex items-center gap-1"><i className="fa-solid fa-user-pen"></i> {readingArticle.author}</span>}
+              </div>
+
+              <div className="prose prose-invert prose-cyan max-w-none 
+                prose-headings:font-bold prose-a:text-cyan-400 hover:prose-a:text-cyan-300
+                prose-img:rounded-xl prose-img:shadow-lg prose-img:w-full prose-img:object-cover text-base leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: readingArticle.content || readingArticle.description }}
+              />
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div className="flex h-full w-full bg-slate-950 text-slate-200 font-sans overflow-hidden text-left">
+          
+          {/* 左侧边栏 */}
+          <div className="w-72 bg-slate-900/50 border-r border-slate-800 flex flex-col backdrop-blur-xl z-10 flex-shrink-0">
+            <div className="p-6">
+              <h1 className="text-2xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent flex items-center gap-3 m-0">
+                <i className="fa-solid fa-bolt text-cyan-400"></i>
+                世界视野
+              </h1>
+              <p className="text-xs text-slate-500 mt-2 tracking-wider m-0">MODERN RSS READER</p>
+            </div>
+
+            <div className="px-4 pb-4">
+              <form onSubmit={handleAddFeed} className="relative m-0">
+                <input 
+                  type="url" 
+                  placeholder="直接输入 RSS 链接..." 
+                  value={newFeedUrl}
+                  onChange={(e) => setNewFeedUrl(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-4 pr-10 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-500/50 transition-all m-0 box-border"
+                  required
+                />
+                <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-cyan-400 transition-colors bg-transparent border-none cursor-pointer">
+                  <i className="fa-solid fa-plus"></i>
+                </button>
+              </form>
+
+              <button 
+                onClick={() => setShowImport(!showImport)}
+                className="w-full mt-3 flex items-center justify-center gap-2 text-xs font-medium text-cyan-400/80 hover:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 py-2 rounded-lg transition-colors border border-cyan-500/20 cursor-pointer"
+              >
+                <i className="fa-solid fa-cloud-download-alt"></i>
+                一键导入网页/博客源
+              </button>
+            </div>
+
+            {showImport && (
+              <div className="px-4 pb-4 mb-2">
+                <div className="bg-slate-950 border border-cyan-500/30 rounded-xl p-3 relative">
+                  <button 
+                    onClick={() => setShowImport(false)}
+                    className="absolute top-2 right-2 text-slate-500 hover:text-slate-300 bg-transparent border-none cursor-pointer"
+                  >
+                    <i className="fa-solid fa-times"></i>
+                  </button>
+                  <h3 className="text-xs font-bold text-slate-300 mb-2 mt-0">嗅探页面 RSS</h3>
+                  <form onSubmit={extractFeedsFromUrl} className="flex flex-col gap-2 m-0">
+                    <input 
+                      type="url" 
+                      value={importUrl}
+                      onChange={(e) => setImportUrl(e.target.value)}
+                      className="w-full bg-slate-900 border border-slate-700 rounded-lg py-1.5 px-3 text-xs text-slate-200 focus:outline-none focus:border-cyan-500/50 box-border m-0"
+                      required
+                    />
+                    <button 
+                      type="submit"
+                      disabled={loading}
+                      className="w-full bg-cyan-600 hover:bg-cyan-500 text-white text-xs py-1.5 rounded-lg transition-colors flex items-center justify-center gap-2 border-none cursor-pointer"
+                    >
+                      {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : '开始提取'}
+                    </button>
+                  </form>
+                </div>
+              </div>
+            )}
+
+            <div className="flex-1 overflow-y-auto px-3 space-y-1 custom-scrollbar pb-4">
+              <div className="text-xs font-bold text-slate-600 mb-3 px-3 uppercase tracking-wider">共 {feeds.length} 个订阅源</div>
+              {feeds.map(feed => (
+                <div 
+                  key={feed.id}
+                  onClick={() => setActiveFeed(feed)}
+                  className={`group flex items-center justify-between px-3 py-3 rounded-xl cursor-pointer transition-all duration-200 border border-solid
+                    ${activeFeed?.id === feed.id 
+                      ? 'bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-cyan-500/20 text-cyan-400' 
+                      : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200 border-transparent'}`}
+                >
+                  <div className="flex items-center gap-3 overflow-hidden">
+                    <i className={`fa-solid fa-rss text-xs ${activeFeed?.id === feed.id ? 'text-cyan-400' : 'text-slate-600'}`}></i>
+                    <span className="truncate text-sm font-medium">{feed.name}</span>
+                  </div>
+                  <button 
+                    onClick={(e) => removeFeed(e, feed.id)}
+                    className="opacity-0 group-hover:opacity-100 p-1 text-slate-500 hover:text-red-400 transition-all rounded-md hover:bg-red-400/10 bg-transparent border-none cursor-pointer"
+                  >
+                    <i className="fa-solid fa-trash text-xs"></i>
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 右侧主内容区 */}
+          <div className="flex-1 flex flex-col bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 relative overflow-hidden">
+            
+            <header className="h-20 border-b border-slate-800/50 flex items-center justify-between px-8 bg-slate-950/20 backdrop-blur-sm relative z-10 flex-shrink-0">
+              <div>
+                <h2 className="text-xl font-bold text-slate-200">{activeFeed?.name || '请选择订阅源'}</h2>
+                <p className="text-xs text-slate-500">{articles.length} 篇文章</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={() => fetchFeed(activeFeed)}
+                  disabled={loading}
+                  className={`flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full transition-colors border-none cursor-pointer
+                    ${loading 
+                      ? 'bg-slate-800 text-slate-500' 
+                      : 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-500/20'}`}
+                >
+                  <i className={`fa-solid fa-sync-alt ${loading ? 'fa-spin' : ''}`}></i>
+                  刷新
+                </button>
+              </div>
+            </header>
+
+            <div className="flex-1 overflow-y-auto p-8 custom-scrollbar relative z-10">
+              {error && (
+                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-sm flex items-center gap-3 mb-6">
+                  <i className="fa-solid fa-triangle-exclamation"></i> {error}
+                </div>
+              )}
+
+              {!activeFeed && !error && (
+                <div className="h-full flex flex-col items-center justify-center text-slate-500">
+                  <i className="fa-solid fa-rss text-5xl mb-4 opacity-20"></i>
+                  <p>请在左侧选择或添加一个 RSS 源</p>
+                </div>
+              )}
+
+              {loading && articles.length === 0 && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {[1, 2, 3, 4, 5, 6].map(i => (
+                    <div key={i} className="animate-pulse bg-slate-800/50 border border-slate-800 rounded-2xl h-80"></div>
+                  ))}
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 auto-rows-max">
+                {articles.map((article, index) => {
+                  const thumbnail = getThumbnail(article);
+                  const snippet = article.description ? article.description.replace(/<[^>]+>/g, '').substring(0, 100) + '...' : '暂无摘要';
+
+                  return (
+                    <div 
+                      key={index}
+                      onClick={() => setReadingArticle(article)}
+                      className="group bg-slate-900/60 border border-slate-800 hover:border-cyan-500/40 rounded-2xl overflow-hidden cursor-pointer hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-cyan-500/10 flex flex-col h-[380px]"
+                    >
+                      <div className="h-44 bg-slate-800 relative overflow-hidden flex-shrink-0">
+                        {thumbnail ? (
+                          <img 
+                            src={thumbnail} 
+                            alt="封面" 
+                            className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                            onError={(e) => { e.target.style.display = 'none'; }} 
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-slate-700 group-hover:text-cyan-900 transition-colors">
+                            <i className="fa-solid fa-newspaper text-5xl"></i>
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/20 to-transparent"></div>
+                        
+                        {article.categories && article.categories.length > 0 && (
+                          <div className="absolute bottom-3 left-4">
+                            <span className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider bg-cyan-600 text-white rounded shadow-md">
+                              {article.categories[0]}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="p-5 flex flex-col flex-1">
+                        <h3 className="text-base font-bold text-slate-100 line-clamp-2 leading-snug group-hover:text-cyan-400 transition-colors m-0">
+                          {article.title}
+                        </h3>
+                        <p className="text-sm text-slate-400 mt-3 line-clamp-3 leading-relaxed flex-1 mb-0">
+                          {snippet}
+                        </p>
+                        
+                        <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-800/80">
+                          <span className="text-xs text-slate-500 font-medium">
+                            {formatDate(article.pubDate)}
+                          </span>
+                          <span className="text-cyan-500 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                            阅读 <i className="fa-solid fa-arrow-right text-xs ml-1"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       );
     }
 
-    return (
-      <div className="flex h-full w-full bg-slate-950 text-slate-200 font-sans overflow-hidden text-left">
-        
-        {/* 左侧边栏 */}
-        <div className="w-72 bg-slate-900/50 border-r border-slate-800 flex flex-col backdrop-blur-xl z-10 flex-shrink-0">
-          <div className="p-6">
-            <h1 className="text-2xl font-black bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent flex items-center gap-3 m-0">
-              <i className="fa-solid fa-bolt text-cyan-400"></i>
-              世界视野
-            </h1>
-            <p className="text-xs text-slate-500 mt-2 tracking-wider m-0">MODERN RSS READER</p>
-          </div>
+    const root = ReactDOM.createRoot(document.getElementById('rss-root'));
+    root.render(<App />);
+  </script>
 
-          <div className="px-4 pb-4">
-            <form onSubmit={handleAddFeed} className="relative m-0">
-              <input 
-                type="url" 
-                placeholder="直接输入 RSS 链接..." 
-                value={newFeedUrl}
-                onChange={(e) => setNewFeedUrl(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-800 rounded-xl py-2.5 pl-4 pr-10 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-500/50 transition-all m-0 box-border"
-                required
-              />
-              <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-cyan-400 transition-colors bg-transparent border-none cursor-pointer">
-                <i className="fa-solid fa-plus"></i>
-              </button>
-            </form>
+{% include footer.html %}
 
-            <button 
-              onClick={() => setShowImport(!showImport)}
-              className="w-full mt-3 flex items-center justify-center gap-2 text-xs font-medium text-cyan-400/80 hover:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 py-2 rounded-lg transition-colors border border-cyan-500/20 cursor-pointer"
-            >
-              <i className="fa-solid fa-cloud-download-alt"></i>
-              一键导入网页/博客源
-            </button>
-          </div>
-
-          {showImport && (
-            <div className="px-4 pb-4 mb-2">
-              <div className="bg-slate-950 border border-cyan-500/30 rounded-xl p-3 relative">
-                <button 
-                  onClick={() => setShowImport(false)}
-                  className="absolute top-2 right-2 text-slate-500 hover:text-slate-300 bg-transparent border-none cursor-pointer"
-                >
-                  <i className="fa-solid fa-times"></i>
-                </button>
-                <h3 className="text-xs font-bold text-slate-300 mb-2 mt-0">嗅探页面 RSS</h3>
-                <form onSubmit={extractFeedsFromUrl} className="flex flex-col gap-2 m-0">
-                  <input 
-                    type="url" 
-                    value={importUrl}
-                    onChange={(e) => setImportUrl(e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-lg py-1.5 px-3 text-xs text-slate-200 focus:outline-none focus:border-cyan-500/50 box-border m-0"
-                    required
-                  />
-                  <button 
-                    type="submit"
-                    disabled={loading}
-                    className="w-full bg-cyan-600 hover:bg-cyan-500 text-white text-xs py-1.5 rounded-lg transition-colors flex items-center justify-center gap-2 border-none cursor-pointer"
-                  >
-                    {loading ? <i className="fa-solid fa-spinner fa-spin"></i> : '开始提取'}
-                  </button>
-                </form>
-              </div>
-            </div>
-          )}
-
-          <div className="flex-1 overflow-y-auto px-3 space-y-1 custom-scrollbar pb-4">
-            <div className="text-xs font-bold text-slate-600 mb-3 px-3 uppercase tracking-wider">共 {feeds.length} 个订阅源</div>
-            {feeds.map(feed => (
-              <div 
-                key={feed.id}
-                onClick={() => setActiveFeed(feed)}
-                className={`group flex items-center justify-between px-3 py-3 rounded-xl cursor-pointer transition-all duration-200 border border-solid
-                  ${activeFeed?.id === feed.id 
-                    ? 'bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-cyan-500/20 text-cyan-400' 
-                    : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200 border-transparent'}`}
-              >
-                <div className="flex items-center gap-3 overflow-hidden">
-                  <i className={`fa-solid fa-rss text-xs ${activeFeed?.id === feed.id ? 'text-cyan-400' : 'text-slate-600'}`}></i>
-                  <span className="truncate text-sm font-medium">{feed.name}</span>
-                </div>
-                <button 
-                  onClick={(e) => removeFeed(e, feed.id)}
-                  className="opacity-0 group-hover:opacity-100 p-1 text-slate-500 hover:text-red-400 transition-all rounded-md hover:bg-red-400/10 bg-transparent border-none cursor-pointer"
-                >
-                  <i className="fa-solid fa-trash text-xs"></i>
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 右侧主内容区 */}
-        <div className="flex-1 flex flex-col bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 relative overflow-hidden">
-          
-          <header className="h-20 border-b border-slate-800/50 flex items-center justify-between px-8 bg-slate-950/20 backdrop-blur-sm relative z-10 flex-shrink-0">
-            <div>
-              <h2 className="text-xl font-bold text-slate-200">{activeFeed?.name || '请选择订阅源'}</h2>
-              <p className="text-xs text-slate-500">{articles.length} 篇文章</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={() => fetchFeed(activeFeed)}
-                disabled={loading}
-                className={`flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full transition-colors border-none cursor-pointer
-                  ${loading 
-                    ? 'bg-slate-800 text-slate-500' 
-                    : 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-500/20'}`}
-              >
-                <i className={`fa-solid fa-sync-alt ${loading ? 'fa-spin' : ''}`}></i>
-                刷新
-              </button>
-            </div>
-          </header>
-
-          <div className="flex-1 overflow-y-auto p-8 custom-scrollbar relative z-10">
-            {error && (
-              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-sm flex items-center gap-3 mb-6">
-                <i className="fa-solid fa-triangle-exclamation"></i> {error}
-              </div>
-            )}
-
-            {!activeFeed && !error && (
-              <div className="h-full flex flex-col items-center justify-center text-slate-500">
-                <i className="fa-solid fa-rss text-5xl mb-4 opacity-20"></i>
-                <p>请在左侧选择或添加一个 RSS 源</p>
-              </div>
-            )}
-
-            {loading && articles.length === 0 && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                {[1, 2, 3, 4, 5, 6].map(i => (
-                  <div key={i} className="animate-pulse bg-slate-800/50 border border-slate-800 rounded-2xl h-80"></div>
-                ))}
-              </div>
-            )}
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 auto-rows-max">
-              {articles.map((article, index) => {
-                const thumbnail = getThumbnail(article);
-                const snippet = article.description ? article.description.replace(/<[^>]+>/g, '').substring(0, 100) + '...' : '暂无摘要';
-
-                return (
-                  <div 
-                    key={index}
-                    onClick={() => setReadingArticle(article)}
-                    className="group bg-slate-900/60 border border-slate-800 hover:border-cyan-500/40 rounded-2xl overflow-hidden cursor-pointer hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-cyan-500/10 flex flex-col h-[380px]"
-                  >
-                    <div className="h-44 bg-slate-800 relative overflow-hidden flex-shrink-0">
-                      {thumbnail ? (
-                        <img 
-                          src={thumbnail} 
-                          alt="封面" 
-                          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                          onError={(e) => { e.target.style.display = 'none'; }} 
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-slate-700 group-hover:text-cyan-900 transition-colors">
-                          <i className="fa-solid fa-newspaper text-5xl"></i>
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/20 to-transparent"></div>
-                      
-                      {article.categories && article.categories.length > 0 && (
-                        <div className="absolute bottom-3 left-4">
-                          <span className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider bg-cyan-600 text-white rounded shadow-md">
-                            {article.categories[0]}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="p-5 flex flex-col flex-1">
-                      <h3 className="text-base font-bold text-slate-100 line-clamp-2 leading-snug group-hover:text-cyan-400 transition-colors m-0">
-                        {article.title}
-                      </h3>
-                      <p className="text-sm text-slate-400 mt-3 line-clamp-3 leading-relaxed flex-1 mb-0">
-                        {snippet}
-                      </p>
-                      
-                      <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-800/80">
-                        <span className="text-xs text-slate-500 font-medium">
-                          {formatDate(article.pubDate)}
-                        </span>
-                        <span className="text-cyan-500 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                          阅读 <i className="fa-solid fa-arrow-right text-xs ml-1"></i>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const root = ReactDOM.createRoot(document.getElementById('rss-root'));
-  root.render(<App />);
-</script>
+</body>
+</html>
