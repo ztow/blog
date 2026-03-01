@@ -14,13 +14,8 @@ sidebar: false
   <meta name="description" content="{{ page.description }}">
   
   {% include head.html %}
-</head>
-<body class="bg-slate-950">
-
-{% include nav.html %}
-
-  <!-- 1. 引入必要的前端运行环境 -->
-  <!-- 关闭 Tailwind 的 Preflight 以保护博客原有样式不被破坏 -->
+  
+  <!-- 引入必要的前端运行环境 -->
   <script>
     tailwind = {
       config: {
@@ -40,7 +35,7 @@ sidebar: false
       box-sizing: border-box;
       border-width: 0;
       border-style: solid;
-      border-color: #334155; /* slate-700 default border */
+      border-color: #334155;
     }
 
     /* 隐藏滚动条但保留滚动功能的 CSS */
@@ -69,8 +64,12 @@ sidebar: false
       max-height: 900px;
     }
   </style>
+</head>
+<body class="bg-slate-950">
 
-  <!-- 2. HTML 骨架挂载点 -->
+{% include nav.html %}
+
+  <!-- HTML 骨架挂载点 -->
   <div id="rss-app-container">
     <!-- 保留并美化原有的温馨提示 -->
     <div class="bg-amber-100/90 border-l-4 border-amber-500 rounded-r-lg p-4 mb-6 shadow-sm flex items-center gap-3 text-amber-900 font-medium">
@@ -82,7 +81,10 @@ sidebar: false
     <div id="rss-root" class="rounded-2xl overflow-hidden shadow-2xl border-2 border-slate-800 bg-slate-950 font-sans"></div>
   </div>
 
-  <!-- 3. React 业务逻辑代码 -->
+{% include footer.html %}
+
+{% raw %}
+  <!-- React 业务逻辑代码 -->
   <script type="text/babel">
     const { useState, useEffect } = React;
 
@@ -553,8 +555,7 @@ sidebar: false
     const root = ReactDOM.createRoot(document.getElementById('rss-root'));
     root.render(<App />);
   </script>
-
-{% include footer.html %}
+{% endraw %}
 
 </body>
 </html>
