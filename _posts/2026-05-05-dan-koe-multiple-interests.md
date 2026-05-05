@@ -3,7 +3,7 @@ layout: post
 title: "如果你兴趣广泛，别在未来 2-3 年浪费时间"
 subtitle: "Dan Koe：多重兴趣不是缺陷，是超能力"
 author: "ztow"
-header-img: "/img/post-bg-dan-koe-interests.jpeg"
+header-img: "img/post-bg-dan-koe-interests.jpeg"
 catalog: true
 tags:
   - 个人成长
