@@ -22,8 +22,8 @@ tags:
 
 ![](https://picx.zhimg.com/v2-76d15f92dfccebe51499de4232b88eef_1440w.jpg)
 
-**I - You aren't where you want to be because you aren't the person who would be there**  
-**I - 你之所以不在此处，是因为你还不是那个会在此处的人**  
+## I - You aren't where you want to be because you aren't the person who would be there
+## I - 你之所以不在此处，是因为你还不是那个会在此处的人  
   
 When it comes to setting big goals, people tend to focus on one of the two requirements for success:  
 当设定宏大目标时，人们往往只聚焦于成功所需的两大条件之一：  
@@ -66,8 +66,8 @@ You say you want to change. You say you want to "become financially free" and "g
 
 ---
 
-**II – You aren't where you want to be because you don't want to be there**  
-**II – 你之所以不在此处，是因为你并不真的想去那里**  
+## II – You aren't where you want to be because you don't want to be there
+## II – 你之所以不在此处，是因为你并不真的想去那里  
   
 Trust only movement. Life happens at the level of events, not of words. Trust movement.  
 只信任行动。生活发生在事件的层面，而非言语的层面。信任行动。  
@@ -113,8 +113,8 @@ I send out letters like these 1-2x a week. If you don't want to miss them, join 
 
 ---
 
-**III – You aren't where you want to be because you're afraid to be there**  
-**III – 你之所以不在此处，是因为你害怕去到那里**  
+## III – You aren't where you want to be because you're afraid to be there
+## III – 你之所以不在此处，是因为你害怕去到那里  
   
 The important thing for you to remember is that it does not matter in the least how you got the idea or where it came from. You may never have met a professional hypnotist. You may never have been formally hypnotized. But if you have accepted an idea - from yourself, your teachers, your parents, friends, advertisements, from any other source - and further, if you are firmly convinced that idea is true, it has the same power over you as the hypnotist's words have over the hypnotized subject.  
 你需要记住的重要一点是， **你如何得到这个想法或它来自何处，这一点都不重要** 。你可能从未见过专业的催眠师。你可能从未被正式催眠过。但如果你接受了一个想法——无论是来自你自己、你的老师、父母、朋友、广告，还是任何其他来源——并且，进一步地，如果你坚信这个想法是真实的，那么它对你就拥有与催眠师对被催眠者的话语同样的力量。  
@@ -181,8 +181,8 @@ The same thing happens when you unconsciously see yourself as a lawyer, a gamer,
 
 ---
 
-**IV – The life you want lies within a specific level of mind**  
-**IV – 你想要的生活存在于心智的特定层次**  
+## IV – The life you want lies within a specific level of mind
+## IV – 你想要的生活存在于心智的特定层次  
   
 The mind evolves through predictable stages over time.  
 心智会随着时间的推移经历可预测的阶段而发展。  
@@ -231,8 +231,8 @@ The good thing is, it doesn't really matter what stage you are in, because movin
 
 ---
 
-**V – Intelligence is the ability to get what you want out of life**  
-**V – 智慧是获得你想要的幸福人生的能力**  
+## V – Intelligence is the ability to get what you want out of life
+## V – 智慧是获得你想要的幸福人生的能力  
   
 The only real test of intelligence is if you get what you want out of life.  
 智慧的唯一真实检验标准，是你是否获得了你想要的幸福人生。  
@@ -376,8 +376,8 @@ That leads us into the next section perfectly.
 
 ---
 
-**VI – How to launch into a completely new life (in 1 day)**  
-**VI – 如何启动一个全新的生活（在1天内）**  
+## VI – How to launch into a completely new life (in 1 day)
+## VI – 如何启动一个全新的生活（在1天内）  
   
 The best periods of my life always came after a period of getting absolutely fed up with the lack of progress I was making.  
 我人生中最好的时期，总是出现在对我进展缓慢感到彻底厌倦之后。  
@@ -427,8 +427,8 @@ This protocol is structured so that it can be completed in one day. In the morni
 I cannot guarantee that this will work for everyone, because I cannot guarantee that everyone reading this is in the right chapter of their own story that would make these points impactful. You can't place the climax at the start of the book and expect it to be interesting.  
 我不能保证这对每个人都有效，因为我无法保证每个读到这篇文章的人都处在自己人生故事中能感受到这些观点冲击力的正确章节。你不能把高潮放在书的开头，还指望它有趣。  
   
-**Part 1) Morning – Psychological Excavation – Vision & Anti-Vision**  
-**第一部分）早晨 – 心理挖掘 – 愿景与反愿景**  
+### Part 1) Morning – Psychological Excavation – Vision & Anti-Vision
+### 第一部分）早晨 – 心理挖掘 – 愿景与反愿景  
   
 First we must create a new frame, or lens of perception, for your mind to operate from.  
 首先，我们必须为你的心智创建一个新的框架，或者说感知的透镜，让它从这个框架运作。  
@@ -492,8 +492,8 @@ Answer all of those first thing in the morning tomorrow.
 
 ---
 
-**Part 2) Throughout The Day – Interrupting Autopilot – Breaking Unconscious Patterns**  
-**第二部分）全天 – 中断自动驾驶 – 打破无意识模式**  
+### Part 2) Throughout The Day – Interrupting Autopilot – Breaking Unconscious Patterns
+### 第二部分）全天 – 中断自动驾驶 – 打破无意识模式  
   
 These journaling exercises are cute, but we want real change.  
 这些日记练习很好，但我们想要的是真正的改变。  
@@ -535,8 +535,8 @@ To add a bit more fuel to the fire, schedule these questions during times where 
 
 ---
 
-**Part 3) Evening – Synthesizing Insight – Entering A Season Of Progress**  
-**第三部分）晚上 – 洞见整合 – 进入进展期**  
+### Part 3) Evening – Synthesizing Insight – Entering A Season Of Progress
+### 第三部分）晚上 – 洞见整合 – 进入进展期  
   
 If you followed that process, I would be surprised if you didn't have at least one profound insight that could alter the course of your life. Now, we need to make those known, integrate them into who we are, and act on them to begin solidifying our journey to a new level of mind.  
 如果你遵循了这个过程，你至少会有一个足以改变人生轨迹的深刻洞见。现在，我们需要让这些洞见清晰可见，将它们整合进我们的身份，并依此行动，以开始巩固我们迈向新心智层次的旅程。  
@@ -582,8 +582,8 @@ Stick with me.
 
 ---
 
-**VII – Turn Your Life Into A Video Game**  
-**VII – 将你的人生变成一款电子游戏**  
+## VII – Turn Your Life Into A Video Game
+## VII – 将你的人生变成一款电子游戏  
   
 The optimal state of inner experience is one in which there is order in consciousness. This happens when psychic energy—or attention—is invested in realistic goals, and when skills match the opportunities for action. The pursuit of a goal brings order in awareness because a person must concentrate attention on the task at hand and momentarily forget everything else.  
 最优的内心体验状态是意识中有秩序。当心理能量——或称注意力——投入于现实的目标，且技能与行动机会相匹配时，就会发生这种情况。追求目标会带来意识的秩序，因为人必须将注意力集中在手头的任务上，暂时忘记其他一切。  
