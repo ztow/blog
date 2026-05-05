@@ -1378,10 +1378,11 @@ img::-moz-selection {
 .tags a,
 .tags .tag {
   display: inline-block;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.6);
   border-radius: 999em;
   padding: 0 10px 0 10px;
   color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.7);
   line-height: 24px;
   font-size: 12px;
   text-decoration: none;
@@ -1399,8 +1400,8 @@ img::-moz-selection {
 .tags a:active,
 .tags .tag:active {
   color: white;
-  border-color: white;
-  background-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.9);
   text-decoration: none;
 }
 @media only screen and (min-width: 768px) {
