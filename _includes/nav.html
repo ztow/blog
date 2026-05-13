@@ -21,13 +21,19 @@
             <div class="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="{{ site.baseurl }}/">Home</a>
+                        <a href="{{ site.baseurl }}/">首页</a>
                     </li>
                     {% for page in site.pages %}
                     {% if page.title and page.hide-in-nav != true %}
+                    {% if page.title == "关于" %}
+                    <li>
+                        <a href="{{ site.baseurl }}/about-new.html">{{ page.title }}</a>
+                    </li>
+                    {% else %}
                     <li>
                         <a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
                     </li>
+                    {% endif %}
                     {% endif %}
                     {% endfor %}
                 </ul>
