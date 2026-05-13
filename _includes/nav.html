@@ -25,15 +25,9 @@
                     </li>
                     {% for page in site.pages %}
                     {% if page.title and page.hide-in-nav != true %}
-                    {% if page.title == "关于" %}
-                    <li>
-                        <a href="{{ site.baseurl }}/about-new.html">{{ page.title }}</a>
-                    </li>
-                    {% else %}
                     <li>
                         <a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
                     </li>
-                    {% endif %}
                     {% endif %}
                     {% endfor %}
                 </ul>
@@ -64,7 +58,6 @@
             },400)
         },
         open: function(){
-            $collapse.style.height = "auto"
             $navbar.className += " in";
         }
     }
