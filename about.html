@@ -47,62 +47,21 @@ header-img: "img/about-bg.jpg"
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
             z-index: 0;
             overflow: hidden;
         }
 
-        .bg-gradient {
-            position: absolute;
+        .bg-container .grid-overlay {
+            pointer-events: none;
+        }
+
+        #floating-lines-canvas {
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
-        }
-
-        .floating-glow {
+            display: block;
             position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
-            animation: float 25s infinite ease-in-out;
-        }
-
-        .floating-glow:nth-child(1) {
-            width: 600px;
-            height: 600px;
-            background: linear-gradient(135deg, #8b5cf6, #ec4899);
-            top: -200px;
-            left: -100px;
-            animation-delay: 0s;
-        }
-
-        .floating-glow:nth-child(2) {
-            width: 500px;
-            height: 500px;
-            background: linear-gradient(135deg, #ec4899, #f43f5e);
-            bottom: -150px;
-            right: -100px;
-            animation-delay: -8s;
-        }
-
-        .floating-glow:nth-child(3) {
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #06b6d4, #3b82f6);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -15s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(80px, -60px) scale(1.1); }
-            50% { transform: translate(-40px, 80px) scale(0.9); }
-            75% { transform: translate(60px, 40px) scale(1.05); }
+            top: 0;
+            left: 0;
         }
 
         /* 网格背景 */
@@ -114,22 +73,7 @@ header-img: "img/about-bg.jpg"
                 linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
             background-size: 60px 60px;
-        }
-
-        /* 粒子效果 */
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(139, 92, 246, 0.8);
-            border-radius: 50%;
-            pointer-events: none;
+            z-index: 1;
         }
 
         /* 导航栏 */
@@ -716,12 +660,8 @@ header-img: "img/about-bg.jpg"
 <body>
     <!-- 动态背景 -->
     <div class="bg-container">
-        <div class="bg-gradient"></div>
-        <div class="floating-glow"></div>
-        <div class="floating-glow"></div>
-        <div class="floating-glow"></div>
+        <canvas id="floating-lines-canvas"></canvas>
         <div class="grid-overlay"></div>
-        <div class="particles" id="particles"></div>
     </div>
 
     <!-- 导航栏 -->
@@ -802,170 +742,231 @@ header-img: "img/about-bg.jpg"
         </footer>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
     <script>
-        // 粒子系统
-        class Particle {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.baseX = x;
-                this.baseY = y;
-                this.size = Math.random() * 3 + 2;
-                this.speedX = Math.random() * 2 - 1;
-                this.speedY = Math.random() * 2 - 1;
-                this.opacity = Math.random() * 0.5 + 0.3;
-                this.element = document.createElement('div');
-                this.element.className = 'particle';
-                this.element.style.left = x + 'px';
-                this.element.style.top = y + 'px';
-                this.element.style.width = this.size + 'px';
-                this.element.style.height = this.size + 'px';
-                this.element.style.opacity = this.opacity;
+    (function() {
+        const vertexShader = `
+            void main() {
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+
+        const fragmentShader = `
+            precision highp float;
+            uniform float iTime;
+            uniform vec3  iResolution;
+            uniform float animationSpeed;
+            uniform bool enableTop;
+            uniform bool enableMiddle;
+            uniform bool enableBottom;
+            uniform int topLineCount;
+            uniform int middleLineCount;
+            uniform int bottomLineCount;
+            uniform float topLineDistance;
+            uniform float middleLineDistance;
+            uniform float bottomLineDistance;
+            uniform vec3 topWavePosition;
+            uniform vec3 middleWavePosition;
+            uniform vec3 bottomWavePosition;
+            uniform vec2 iMouse;
+            uniform bool interactive;
+            uniform float bendRadius;
+            uniform float bendStrength;
+            uniform float bendInfluence;
+            uniform bool parallax;
+            uniform float parallaxStrength;
+            uniform vec2 parallaxOffset;
+            uniform vec3 lineGradient[8];
+            uniform int lineGradientCount;
+
+            mat2 rotate(float r) { return mat2(cos(r), sin(r), -sin(r), cos(r)); }
+
+            vec3 getLineColor(float t, vec3 baseColor) {
+                if (lineGradientCount <= 0) return baseColor;
+                if (lineGradientCount == 1) return lineGradient[0];
+                float clampedT = clamp(t, 0.0, 0.9999);
+                float scaled = clampedT * float(lineGradientCount - 1);
+                int idx = int(floor(scaled));
+                float f = fract(scaled);
+                int idx2 = min(idx + 1, lineGradientCount - 1);
+                return mix(lineGradient[idx], lineGradient[idx2], f) * 0.5;
             }
 
-            update(mouseX, mouseY) {
-                // 基础移动
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                // 鼠标交互 - 排斥效果
-                if (mouseX !== null && mouseY !== null) {
-                    const dx = mouseX - this.x;
-                    const dy = mouseY - this.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    
-                    if (distance < 150) {
-                        const force = (150 - distance) / 150;
-                        this.x -= dx * force * 0.05;
-                        this.y -= dy * force * 0.05;
-                    }
+            float wave(vec2 uv, float offset, vec2 screenUv, vec2 mouseUv, bool shouldBend) {
+                float time = iTime * animationSpeed;
+                float amp = sin(offset + time * 0.2) * 0.3;
+                float y = sin(uv.x + offset + time * 0.1) * amp;
+                if (shouldBend) {
+                    vec2 d = screenUv - mouseUv;
+                    float influence = exp(-dot(d, d) * bendRadius);
+                    y += (mouseUv.y - screenUv.y) * influence * bendStrength * bendInfluence;
                 }
-
-                // 边界检测 - 循环回到对面
-                if (this.x < 0) this.x = window.innerWidth;
-                if (this.x > window.innerWidth) this.x = 0;
-                if (this.y < 0) this.y = window.innerHeight;
-                if (this.y > window.innerHeight) this.y = 0;
-
-                this.element.style.left = this.x + 'px';
-                this.element.style.top = this.y + 'px';
-                
-                // 鼠标附近的粒子变大变亮
-                if (mouseX !== null && mouseY !== null) {
-                    const distance = Math.sqrt((mouseX - this.x) ** 2 + (mouseY - this.y) ** 2);
-                    if (distance < 100) {
-                        const scale = 1 + (100 - distance) / 100;
-                        const brightness = 0.3 + (100 - distance) / 200;
-                        this.element.style.transform = `scale(${scale})`;
-                        this.element.style.opacity = brightness;
-                        this.element.style.background = `rgba(236, 72, 153, ${brightness})`;
-                    } else {
-                        this.element.style.transform = 'scale(1)';
-                        this.element.style.opacity = this.opacity;
-                        this.element.style.background = 'rgba(139, 92, 246, 0.8)';
-                    }
-                }
+                float m = uv.y - y;
+                return 0.0175 / max(abs(m) + 0.01, 1e-3) + 0.01;
             }
+
+            void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+                vec2 baseUv = (2.0 * fragCoord - iResolution.xy) / iResolution.y;
+                baseUv.y *= -1.0;
+                if (parallax) baseUv += parallaxOffset;
+                vec3 col = vec3(0.0);
+                vec2 mouseUv = interactive ? (2.0 * iMouse - iResolution.xy) / iResolution.y * vec2(1.0, -1.0) : vec2(0.0);
+                if (enableBottom) {
+                    for (int i = 0; i < bottomLineCount; ++i) {
+                        float fi = float(i);
+                        vec3 lineCol = getLineColor(fi / max(float(bottomLineCount - 1), 1.0), vec3(0.0));
+                        float angle = bottomWavePosition.z * log(length(baseUv) + 1.0);
+                        vec2 ruv = baseUv * rotate(angle);
+                        col += lineCol * wave(ruv + vec2(bottomLineDistance * fi + bottomWavePosition.x, bottomWavePosition.y), 1.5 + 0.2 * fi, baseUv, mouseUv, interactive) * 0.2;
+                    }
+                }
+                if (enableMiddle) {
+                    for (int i = 0; i < middleLineCount; ++i) {
+                        float fi = float(i);
+                        vec3 lineCol = getLineColor(fi / max(float(middleLineCount - 1), 1.0), vec3(0.0));
+                        float angle = middleWavePosition.z * log(length(baseUv) + 1.0);
+                        vec2 ruv = baseUv * rotate(angle);
+                        col += lineCol * wave(ruv + vec2(middleLineDistance * fi + middleWavePosition.x, middleWavePosition.y), 2.0 + 0.15 * fi, baseUv, mouseUv, interactive);
+                    }
+                }
+                if (enableTop) {
+                    for (int i = 0; i < topLineCount; ++i) {
+                        float fi = float(i);
+                        vec3 lineCol = getLineColor(fi / max(float(topLineCount - 1), 1.0), vec3(0.0));
+                        float angle = topWavePosition.z * log(length(baseUv) + 1.0);
+                        vec2 ruv = baseUv * rotate(angle);
+                        ruv.x *= -1.0;
+                        col += lineCol * wave(ruv + vec2(topLineDistance * fi + topWavePosition.x, topWavePosition.y), 1.0 + 0.2 * fi, baseUv, mouseUv, interactive) * 0.1;
+                    }
+                }
+                fragColor = vec4(col, 1.0);
+            }
+
+            void main() {
+                vec4 color = vec4(0.0);
+                mainImage(color, gl_FragCoord.xy);
+                gl_FragColor = color;
+            }
+        `;
+
+        function hexToVec3(hex) {
+            var v = hex.replace('#','');
+            if (v.length === 3) v = v[0]+v[0]+v[1]+v[1]+v[2]+v[2];
+            return [parseInt(v.slice(0,2),16)/255, parseInt(v.slice(2,4),16)/255, parseInt(v.slice(4,6),16)/255];
         }
 
-        // 粒子系统管理器
-        class ParticleSystem {
-            constructor() {
-                this.particles = [];
-                this.container = document.getElementById('particles');
-                this.mouseX = null;
-                this.mouseY = null;
-                this.init();
-            }
+        function init() {
+            var canvas = document.getElementById('floating-lines-canvas');
+            if (!canvas || !window.THREE) return;
+            var THREE = window.THREE;
 
-            init() {
-                for (let i = 0; i < 80; i++) {
-                    const x = Math.random() * window.innerWidth;
-                    const y = Math.random() * window.innerHeight;
-                    const particle = new Particle(x, y);
-                    this.particles.push(particle);
-                    this.container.appendChild(particle.element);
+            var scene = new THREE.Scene();
+            var camera = new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+            camera.position.z = 1;
+
+            var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+            renderer.domElement.style.cssText = 'width:100%;height:100%;position:absolute;top:0;left:0';
+
+            var colors = ['#8b5cf6','#a855f7','#c084fc','#ec4899','#f43f5e'];
+            var gradient = colors.map(function(c) { var v = hexToVec3(c); return new THREE.Vector3(v[0],v[1],v[2]); });
+            while (gradient.length < 8) gradient.push(new THREE.Vector3(1,1,1));
+
+            var uniforms = {
+                iTime:           { value: 0 },
+                iResolution:     { value: new THREE.Vector3(1,1,1) },
+                animationSpeed:  { value: 1.0 },
+                enableTop:       { value: true },
+                enableMiddle:    { value: true },
+                enableBottom:    { value: true },
+                topLineCount:    { value: 4 },
+                middleLineCount: { value: 8 },
+                bottomLineCount: { value: 6 },
+                topLineDistance:    { value: 0.08 },
+                middleLineDistance: { value: 0.05 },
+                bottomLineDistance: { value: 0.06 },
+                topWavePosition:    { value: new THREE.Vector3(10.0, 0.5, -0.4) },
+                middleWavePosition: { value: new THREE.Vector3(5.0, 0.0, 0.2) },
+                bottomWavePosition: { value: new THREE.Vector3(2.0, -0.7, 0.4) },
+                iMouse:           { value: new THREE.Vector2(-1000,-1000) },
+                interactive:      { value: true },
+                bendRadius:       { value: 5.0 },
+                bendStrength:     { value: -0.5 },
+                bendInfluence:    { value: 0 },
+                parallax:         { value: true },
+                parallaxStrength: { value: 0.2 },
+                parallaxOffset:   { value: new THREE.Vector2(0,0) },
+                lineGradient:     { value: gradient },
+                lineGradientCount:{ value: 5 },
+            };
+
+            var material = new THREE.ShaderMaterial({
+                uniforms: uniforms,
+                vertexShader: vertexShader,
+                fragmentShader: fragmentShader,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false,
+            });
+            scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+
+            var clock = new THREE.Clock();
+            var tgtM = new THREE.Vector2(-1000,-1000), curM = new THREE.Vector2(-1000,-1000);
+            var tgtP = new THREE.Vector2(0,0), curP = new THREE.Vector2(0,0);
+            var tgtI = 0, curI = 0, dmp = 0.05;
+
+            function setSize() {
+                renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+                uniforms.iResolution.value.set(renderer.domElement.width, renderer.domElement.height, 1);
+            }
+            setSize();
+            new ResizeObserver(setSize).observe(canvas);
+
+            canvas.addEventListener('pointermove', function(e) {
+                var r = canvas.getBoundingClientRect();
+                var dpr = renderer.getPixelRatio();
+                tgtM.set((e.clientX - r.left) * dpr, (r.height - (e.clientY - r.top)) * dpr);
+                tgtI = 1.0;
+                if (uniforms.parallax.value) {
+                    tgtP.set(
+                        (e.clientX - r.left - r.width/2) / r.width * 0.2,
+                        -(e.clientY - r.top - r.height/2) / r.height * 0.2
+                    );
                 }
-                this.setupMouseListeners();
-                this.animate();
-            }
+            });
+            canvas.addEventListener('pointerleave', function() { tgtI = 0; });
 
-            setupMouseListeners() {
-                document.addEventListener('mousemove', (e) => {
-                    this.mouseX = e.clientX;
-                    this.mouseY = e.clientY;
-                });
+            (function animate() {
+                uniforms.iTime.value = clock.getElapsedTime();
+                curM.lerp(tgtM, dmp);
+                uniforms.iMouse.value.copy(curM);
+                curI += (tgtI - curI) * dmp;
+                uniforms.bendInfluence.value = curI;
+                curP.lerp(tgtP, dmp);
+                uniforms.parallaxOffset.value.copy(curP);
+                renderer.render(scene, camera);
+                requestAnimationFrame(animate);
+            })();
+        }
 
-                document.addEventListener('mouseleave', () => {
-                    this.mouseX = null;
-                    this.mouseY = null;
-                });
-            }
-
-            animate() {
-                this.particles.forEach(particle => {
-                    particle.update(this.mouseX, this.mouseY);
-                });
-                this.drawConnections();
-                requestAnimationFrame(() => this.animate());
-            }
-
-            drawConnections() {
-                // 移除旧的连线
-                const oldConnections = this.container.querySelectorAll('.connection');
-                oldConnections.forEach(conn => conn.remove());
-
-                // 绘制粒子间连线
-                for (let i = 0; i < this.particles.length; i++) {
-                    for (let j = i + 1; j < this.particles.length; j++) {
-                        const dx = this.particles[i].x - this.particles[j].x;
-                        const dy = this.particles[i].y - this.particles[j].y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < 120) {
-                            const opacity = (120 - distance) / 120 * 0.15;
-                            const line = document.createElement('div');
-                            line.className = 'connection';
-                            line.style.position = 'absolute';
-                            line.style.background = `rgba(139, 92, 246, ${opacity})`;
-                            line.style.height = '1px';
-                            line.style.width = distance + 'px';
-                            line.style.left = this.particles[i].x + 'px';
-                            line.style.top = this.particles[i].y + 'px';
-                            line.style.transformOrigin = '0 0';
-                            const angle = Math.atan2(dy, dx);
-                            line.style.transform = `rotate(${angle}rad)`;
-                            this.container.appendChild(line);
-                        }
-                    }
-                }
-            }
+        if (window.THREE) init();
+        else {
+            var s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js';
+            s.onload = init;
+            document.head.appendChild(s);
         }
 
         // 导航栏滚动效果
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
+        var navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', function() {
             navbar.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', e => {
-                e.preventDefault();
-                const target = document.querySelector(anchor.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
         // 页面加载动画
-        document.addEventListener('DOMContentLoaded', () => {
-            new ParticleSystem();
-            
-            const sections = document.querySelectorAll('section');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
+        document.addEventListener('DOMContentLoaded', function() {
+            var sections = document.querySelectorAll('section');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         entry.target.style.opacity = '1';
                         entry.target.style.transform = 'translateY(0)';
@@ -973,13 +974,14 @@ header-img: "img/about-bg.jpg"
                 });
             }, { threshold: 0.1 });
 
-            sections.forEach(section => {
+            sections.forEach(function(section) {
                 section.style.opacity = '0';
                 section.style.transform = 'translateY(40px)';
                 section.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
                 observer.observe(section);
             });
         });
+    })();
     </script>
 </body>
 </html>
