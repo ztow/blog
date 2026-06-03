@@ -6,7 +6,7 @@ catalog: true
 tags:
   - 人生智慧
   - 深度思考
-header-style: text
+header-img: "img/post-bg-ten-traps.jpg"
 multilingual: false
 AIGC:
     Label: "1"
