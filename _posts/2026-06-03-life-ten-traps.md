@@ -1,4 +1,13 @@
 ---
+layout: post
+title: 一个人在任何年龄都要提防的人生十大陷阱
+author: "ztow"
+catalog: true
+tags:
+  - 人生智慧
+  - 深度思考
+header-style: text
+multilingual: false
 AIGC:
     Label: "1"
     ContentProducer: 001191440300708461136T1XGW3
