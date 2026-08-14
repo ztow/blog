@@ -450,6 +450,8 @@ button {
 .collage-card {
   position: absolute;
   margin: 0;
+  width: 52%;
+  height: 66%;
   border-radius: 18px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
@@ -464,27 +466,21 @@ button {
 }
 
 .collage-back {
-  width: 62%;
-  height: 74%;
-  top: 4%;
+  top: 0;
   left: 0;
-  transform: rotate(-6deg);
+  transform: rotate(-5deg);
 }
 
 .collage-third {
-  width: 46%;
-  height: 52%;
-  top: 34%;
-  left: 26%;
-  transform: rotate(-2deg);
+  top: 17%;
+  left: 24%;
+  transform: rotate(1deg);
   z-index: 1;
 }
 
 .collage-front {
-  width: 58%;
-  height: 66%;
-  right: 0;
   bottom: 0;
+  right: 0;
   transform: rotate(4deg);
   z-index: 2;
 }
