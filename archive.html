@@ -13,14 +13,7 @@ description: "「Stay Hungry, Stay Foolish.」"
     </div>
 </header>
 
-<div class="container narrow archive-body">
-    <div class="tag-cloud" id="tagCloud" role="group" aria-label="按标签筛选">
-        <button class="tag-btn is-active" type="button" data-tag="">全部 <sup>{{ site.posts.size }}</sup></button>
-        {% for tag in site.tags %}
-        <button class="tag-btn" type="button" data-tag="{{ tag[0] | strip | url_encode }}">{{ tag[0] }} <sup>{{ tag[1].size }}</sup></button>
-        {% endfor %}
-    </div>
-
+<div class="container archive-layout">
     <div class="archive-list" id="archiveList">
         {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
         {% assign current_year = "" %}
@@ -42,4 +35,16 @@ description: "「Stay Hungry, Stay Foolish.」"
         {% if forloop.last %}</div></section>{% endif %}
         {% endfor %}
     </div>
+
+    <aside class="archive-side" aria-label="按标签筛选">
+        <div class="side-card">
+            <p class="side-card-title">标签筛选</p>
+            <div class="tag-cloud" id="tagCloud" role="group" aria-label="按标签筛选">
+                <button class="tag-btn is-active" type="button" data-tag="">全部 <sup>{{ site.posts.size }}</sup></button>
+                {% for tag in site.tags %}
+                <button class="tag-btn" type="button" data-tag="{{ tag[0] | strip | url_encode }}">{{ tag[0] }} <sup>{{ tag[1].size }}</sup></button>
+                {% endfor %}
+            </div>
+        </div>
+    </aside>
 </div>

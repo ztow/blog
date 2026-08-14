@@ -127,14 +127,13 @@
     var archiveYears = Array.prototype.slice.call(archiveList.querySelectorAll(".archive-year"));
 
     function applyTagFilter(rawTag) {
-      var tag = decodeURIComponent(rawTag || "");
       tagButtons.forEach(function (btn) {
         btn.classList.toggle("is-active", (btn.getAttribute("data-tag") || "") === rawTag);
       });
 
       archiveItems.forEach(function (item) {
         var tags = (item.getAttribute("data-tags") || "").split(",");
-        var visible = !tag || tags.indexOf(tag) !== -1;
+        var visible = !rawTag || tags.indexOf(rawTag) !== -1;
         item.classList.toggle("is-hidden", !visible);
       });
 
@@ -145,7 +144,9 @@
 
       var url = new URL(window.location.href);
       if (rawTag) {
-        url.searchParams.set("tag", rawTag);
+        var decoded;
+        try { decoded = decodeURIComponent(rawTag); } catch (e) { decoded = rawTag; }
+        url.searchParams.set("tag", decoded);
       } else {
         url.searchParams.delete("tag");
       }
@@ -160,7 +161,7 @@
 
     var urlParams = new URL(window.location.href).searchParams;
     if (urlParams.get("tag")) {
-      applyTagFilter(urlParams.get("tag"));
+      applyTagFilter(encodeURIComponent(urlParams.get("tag")));
     }
   }
 

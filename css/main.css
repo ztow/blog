@@ -1508,26 +1508,39 @@ button {
 }
 
 /* ---------- Archive ---------- */
-.archive-body {
+.archive-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 56px;
+  align-items: start;
   padding-bottom: 88px;
+}
+
+.archive-side {
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
 }
 
 .tag-cloud {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 44px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--line);
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
 }
 
 .tag-btn {
-  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 9px 14px;
   font-size: 0.86rem;
+  text-align: left;
   color: var(--text-2);
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 10px;
   cursor: pointer;
   transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -1535,6 +1548,7 @@ button {
 .tag-btn sup {
   font-size: 0.68em;
   color: var(--text-3);
+  margin-left: 10px;
 }
 
 .tag-btn:hover {
@@ -1732,6 +1746,32 @@ button {
   .masthead-grid {
     grid-template-columns: minmax(0, 1fr) 300px;
     gap: 40px;
+  }
+
+  .archive-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .archive-side {
+    position: static;
+    order: -1;
+  }
+
+  .tag-cloud {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tag-btn {
+    width: auto;
+    padding: 7px 16px;
+    border-radius: 999px;
+  }
+
+  .tag-btn sup {
+    margin-left: 6px;
   }
 
   .home-layout {
