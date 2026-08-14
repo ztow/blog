@@ -44,16 +44,22 @@
     <!-- Set theme before first paint to avoid flash -->
     <script>
         (function () {
+            function apply(theme) {
+                document.documentElement.setAttribute("data-theme", theme);
+                // Inline background kills the white flash before the stylesheet arrives
+                document.documentElement.style.backgroundColor = theme === "dark" ? "#0f0e13" : "#faf8f5";
+            }
             try {
                 var preset = document.documentElement.getAttribute("data-theme");
                 if (preset === "dark" || preset === "light") {
+                    apply(preset);
                     return;
                 }
                 var saved = localStorage.getItem('theme');
                 var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-                document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+                apply(dark ? 'dark' : 'light');
             } catch (e) {
-                document.documentElement.setAttribute('data-theme', 'light');
+                apply('light');
             }
         })();
     </script>
