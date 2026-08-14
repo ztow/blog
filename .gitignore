@@ -1,0 +1,14 @@
+.DS_Store
+backup/
+_site/
+.jekyll-cache/
+_preview/
+Gemfile
+Gemfile.lock
+.bundle/
+vendor/
+*.swp
+*.bak
+*.tmp
+_posts/.Ulysses-*
+_includes/about/.Ulysses-*

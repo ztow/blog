@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+{% include head.html %}
+<body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+
+    {% include nav.html %}
+
+    <div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+
+    <main id="main">
+        {{ content }}
+    </main>
+
+    {% include footer.html %}
+
+    <script src="{{ "/js/main.js" | prepend: site.baseurl }}"></script>
+    {% if site.service-worker %}
+    <script src="{{ "/js/sw-registration.js" | prepend: site.baseurl }}"></script>
+    {% endif %}
+</body>
+</html>

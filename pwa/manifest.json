@@ -1,0 +1,21 @@
+{
+  "name": "ztow Blog",
+  "short_name": "ztow",
+  "description": "ztow 的个人博客：产品、电影、音乐与漫长生活。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf8f5",
+  "theme_color": "#faf8f5",
+  "icons": [
+    {
+      "src": "/pwa/icons/128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/pwa/icons/512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

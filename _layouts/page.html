@@ -1,0 +1,18 @@
+---
+layout: default
+---
+<header class="page-hero">
+    <div class="container narrow">
+        <p class="hero-kicker">{{ page.kicker | default: "ZT&#8226;BLOG" }}</p>
+        <h1 class="hero-title">{{ page.title | default: site.title }}</h1>
+        {% if page.description %}
+        <p class="hero-desc">{{ page.description }}</p>
+        {% endif %}
+    </div>
+</header>
+
+<div class="container">
+    <div class="page-content narrow {{ page.body-class }}">
+        {{ content }}
+    </div>
+</div>

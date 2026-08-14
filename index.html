@@ -1,0 +1,155 @@
+---
+layout: default
+description: "等号的意思，等于有些东西不重要"
+---
+
+<!-- Masthead -->
+<header class="masthead">
+    <div class="masthead-bg" aria-hidden="true">
+        <span class="blob blob-a"></span>
+        <span class="blob blob-b"></span>
+        <span class="blob blob-c"></span>
+    </div>
+    <div class="container masthead-grid">
+        <div class="masthead-main">
+            <p class="masthead-kicker">PERSONAL BLOG · 2012 — {{ site.time | date: "%Y" }}</p>
+            <h1 class="masthead-title">ztow<span class="accent-dot">.</span></h1>
+            <p class="masthead-desc">{{ site.description }}</p>
+            <div class="masthead-stats">
+                <span class="stat"><strong>{{ site.posts.size }}</strong> 篇文章</span>
+                <span class="stat-sep" aria-hidden="true"></span>
+                <span class="stat"><strong>{{ site.tags.size }}</strong> 个标签</span>
+                <span class="stat-sep" aria-hidden="true"></span>
+                <span class="stat"><strong>{{ site.time | date: "%Y" | minus: 2012 }}</strong> 年书写</span>
+            </div>
+        </div>
+        <div class="masthead-collage" aria-hidden="true">
+            <figure class="collage-card collage-back">
+                <img src="/img/post-bg-dan-koe-interests.jpeg" alt="" loading="lazy">
+            </figure>
+            <figure class="collage-card collage-front">
+                <img src="/img/post-bg-icar-robox.jpg" alt="" loading="lazy">
+            </figure>
+            <span class="collage-sticker">2012 → 2026</span>
+        </div>
+    </div>
+</header>
+
+<div class="container home-layout">
+    <div class="home-main">
+        {% assign featured = site.posts | first %}
+        {% if paginator.page == 1 %}
+        <article class="featured-post">
+            <div class="featured-media">
+                {% if featured.header-img %}
+                <img src="{% if featured.header-img contains 'http' %}{{ featured.header-img }}{% else %}{{ site.baseurl }}/{{ featured.header-img }}{% endif %}" alt="" loading="lazy">
+                {% endif %}
+            </div>
+            <div class="featured-body">
+                <p class="featured-label"><span class="featured-pin" aria-hidden="true"></span>最新文章 · {{ featured.date | date: "%Y-%m-%d" }}</p>
+                <h2 class="featured-title">
+                    <a href="{{ featured.url | prepend: site.baseurl }}">{{ featured.title }}</a>
+                </h2>
+                {% if featured.subtitle %}
+                <p class="featured-subtitle">{{ featured.subtitle }}</p>
+                {% endif %}
+                <p class="featured-excerpt">{{ featured.content | strip_html | truncate: 200 }}</p>
+                <div class="featured-foot">
+                    <div class="post-item-tags">
+                        {% for tag in featured.tags limit: 4 %}
+                        <a class="chip chip-sm" href="{{ site.baseurl }}/archive/?tag={{ tag | url_encode }}">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                    <span class="post-item-more">阅读全文 <span class="more-arrow" aria-hidden="true">→</span></span>
+                </div>
+            </div>
+        </article>
+        {% endif %}
+
+        <div class="section-head">
+            <h2 class="section-title"><span class="section-mark" aria-hidden="true"></span>最近更新</h2>
+            <a class="section-link" href="{{ site.baseurl }}/archive/">全部归档 →</a>
+        </div>
+
+        <div class="post-grid">
+        {% if paginator.page == 1 %}
+        {% assign grid_start = 1 %}
+        {% else %}
+        {% assign grid_start = paginator.page | minus: 1 | times: 16 | plus: 1 %}
+        {% endif %}
+        {% assign grid_posts = site.posts | slice: grid_start, 16 %}
+        {% for post in grid_posts %}
+        <article class="post-card">
+            <a class="post-card-cover" href="{{ post.url | prepend: site.baseurl }}" tabindex="-1" aria-hidden="true">
+                {% if post.header-img %}
+                <img src="{% if post.header-img contains 'http' %}{{ post.header-img }}{% else %}{{ site.baseurl }}/{{ post.header-img }}{% endif %}" alt="" loading="lazy">
+                {% endif %}
+            </a>
+            <div class="post-card-body">
+                <time class="post-card-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+                <h3 class="post-card-title">
+                    <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                </h3>
+                {% if post.subtitle %}
+                <p class="post-card-subtitle">{{ post.subtitle }}</p>
+                {% endif %}
+                <p class="post-card-excerpt">{{ post.content | strip_html | truncate: 110 }}</p>
+                <div class="post-card-foot">
+                    <div class="post-item-tags">
+                        {% for tag in post.tags limit: 3 %}
+                        <a class="chip chip-sm" href="{{ site.baseurl }}/archive/?tag={{ tag | url_encode }}">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                    <span class="card-more" aria-hidden="true">→</span>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+        </div>
+
+        {% if paginator.total_pages > 1 %}
+        <nav class="pagination" aria-label="文章分页">
+            {% if paginator.previous_page %}
+            <a class="page-btn" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">← 较新</a>
+            {% else %}
+            <span class="page-btn is-disabled" aria-disabled="true">← 较新</span>
+            {% endif %}
+            <span class="page-info">{{ paginator.page }} / {{ paginator.total_pages }}</span>
+            {% if paginator.next_page %}
+            <a class="page-btn" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">较旧 →</a>
+            {% else %}
+            <span class="page-btn is-disabled" aria-disabled="true">较旧 →</span>
+            {% endif %}
+        </nav>
+        {% endif %}
+    </div>
+
+    {% if site.sidebar %}
+    <aside class="home-side" aria-label="侧边栏">
+        <div class="side-card side-about">
+            <img class="side-avatar" src="{{ site.sidebar-avatar | prepend: site.baseurl }}" alt="ztow 头像" loading="lazy">
+            <p class="side-name">{{ site.title }}</p>
+            <p class="side-desc">{{ site.sidebar-about-description }}</p>
+            <a class="side-link" href="{{ site.baseurl }}/about.html">关于我 →</a>
+        </div>
+
+        {% if site.featured-tags %}
+        <div class="side-card">
+            <p class="side-card-title">热门标签</p>
+            <div class="side-tags">
+                {% for tag in site.tags %}
+                {% if tag[1].size > site.featured-condition-size %}
+                <a class="chip chip-sm" href="{{ site.baseurl }}/archive/?tag={{ tag[0] | url_encode }}">{{ tag[0] }}<sup>{{ tag[1].size }}</sup></a>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <a class="side-rss" href="{{ site.baseurl }}/feed.xml">
+            <span class="rss-icon" aria-hidden="true">RSS</span>
+            订阅文章更新
+        </a>
+    </aside>
+    {% endif %}
+</div>

@@ -1,0 +1,60 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="{% if page.description %}{{ page.description | strip_html }}{% else %}{{ site.description }}{% endif %}">
+    <meta name="keywords" content="{{ site.keyword }}">
+    <meta name="theme-color" content="#faf8f5">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{ site.SEOTitle }}{% endif %}">
+    <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+    <meta property="og:description" content="{% if page.layout == 'post' %}{{ page.excerpt | strip_html | truncate: 200 }}{% else %}{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}{% endif %}">
+    <meta property="og:image" content="{{ site.url }}{{ site.sidebar-avatar }}">
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    <meta property="og:site_name" content="{{ site.SEOTitle }}">
+    {% if page.layout == 'post' and page.date %}
+    <meta property="article:published_time" content="{{ page.date | date: "%Y-%m-%dT%H:%M:%SZ" }}">
+    {% endif %}
+    {% if page.author %}
+    <meta property="article:author" content="{{ page.author }}">
+    {% endif %}
+    {% for tag in page.tags %}
+    <meta property="article:tag" content="{{ tag }}">
+    {% endfor %}
+
+    <title>{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{ site.SEOTitle }}{% endif %}</title>
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+
+    <!-- RSS -->
+    <link rel="alternate" type="application/rss+xml" title="{{ site.SEOTitle }} RSS" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ site.baseurl }}/img/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}/img/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl }}/img/favicon.ico">
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="{{ site.baseurl }}/pwa/manifest.json">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+
+    <!-- Set theme before first paint to avoid flash -->
+    <script>
+        (function () {
+            try {
+                var preset = document.documentElement.getAttribute("data-theme");
+                if (preset === "dark" || preset === "light") {
+                    return;
+                }
+                var saved = localStorage.getItem('theme');
+                var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+</head>

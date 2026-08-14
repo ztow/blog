@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS 阅读器 - 使用说明</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            line-height: 1.8;
+            color: #1e293b;
+        }
+        h1 { color: #2563eb; }
+        h2 { color: #1e40af; margin-top: 30px; }
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .solution {
+            background: #f0fdf4;
+            border-left: 4px solid #10b981;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        code {
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        a { color: #2563eb; }
+        .step {
+            background: #eff6ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📰 RSS 阅读器 - 使用说明</h1>
+    
+    <div class="warning">
+        <strong>⚠️ 重要提示：CORS 跨域问题</strong><br>
+        由于浏览器安全限制，直接从网页访问其他网站的 RSS 源会被 CORS 策略阻止。
+        本阅读器使用公共 CORS 代理来解决此问题。
+    </div>
+    
+    <h2>🚀 快速开始</h2>
+    
+    <div class="step">
+        <strong>方案 1：直接使用（推荐）</strong><br>
+        双击 <code>index.html</code> 打开，系统会自动使用公共 CORS 代理（api.allorigins.win）。
+        <br>✅ 优点：无需安装任何东西
+        <br>⚠️ 缺点：依赖第三方代理服务
+    </div>
+    
+    <div class="step">
+        <strong>方案 2：使用本地 HTTP 服务器（最佳体验）</strong><br>
+        <pre>cd /Users/weizhao/Desktop/rss
+python3 -m http.server 8000</pre>
+        然后在浏览器访问：<code>http://localhost:8000</code>
+        <br>✅ 优点：性能最好，无第三方依赖
+    </div>
+    
+    <div class="step">
+        <strong>方案 3：安装 CORS 浏览器插件（开发调试用）</strong><br>
+        Chrome 插件：<a href="https://chrome.google.com/webstore/detail/allow-cors-access-control/lhobafahddgcelffkeicbagpdiomnemg" target="_blank">Allow CORS: Access-Control-Allow-Origin</a>
+        <br>✅ 优点：可访问任何 RSS 源
+        <br>⚠️ 缺点：需要安装插件
+    </div>
+    
+    <h2>📁 文件结构</h2>
+    <pre>
+rss/
+├── index.html      # 主页面
+├── css/
+│   └── style.css   # 样式文件
+├── js/
+│   └── app.js      # 应用逻辑（纯前端解析）
+├── opml/
+│   └── feeds.opml  # 订阅源配置
+└── README.html     # 本说明文档
+    </pre>
+    
+    <h2>➕ 添加新订阅源</h2>
+    <p>编辑 <code>opml/feeds.opml</code> 文件，在 <code>&lt;body&gt;</code> 内添加：</p>
+    <pre>
+&lt;outline text="网站名称" title="显示名称" type="rss" 
+         xmlUrl="RSS 地址" htmlUrl="网站地址"/&gt;
+    </pre>
+    
+    <h2>🔧 技术说明</h2>
+    <ul>
+        <li><strong>无 API 依赖</strong>：使用浏览器原生 fetch + DOMParser 解析 RSS XML</li>
+        <li><strong>CORS 代理</strong>：默认使用 api.allorgins.win，失败时自动切换其他代理</li>
+        <li><strong>本地缓存</strong>：5 分钟缓存，减少重复请求</li>
+        <li><strong>懒加载</strong>：IntersectionObserver 实现滚动加载</li>
+        <li><strong>多格式支持</strong>：支持 RSS 2.0、RSS 1.0、Atom 格式</li>
+    </ul>
+    
+    <h2>📋 预置订阅源</h2>
+    <p>已配置 15 个技术博客 RSS 源，包括 Hacker News、Paul Graham、阮一峰、酷壳等。</p>
+    
+    <hr>
+    <p style="color: #64748b; font-size: 0.9em;">
+        💡 提示：如果某些 RSS 源无法加载，可能是该源不支持 CORS 或需要科学上网。
+    </p>
+</body>
+</html>

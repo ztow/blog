@@ -1,0 +1,80 @@
+---
+layout: default
+---
+<header class="post-hero{% unless page.header-img %} post-hero-plain{% endunless %}">
+    {% if page.header-img %}
+    <div class="post-hero-bg" style="background-image: url('{% if page.header-img contains 'http' %}{{ page.header-img }}{% else %}{{ site.baseurl }}/{{ page.header-img }}{% endif %}');"></div>
+    <div class="post-hero-mask" aria-hidden="true"></div>
+    {% endif %}
+    <div class="container narrow post-hero-content">
+        {% if page.tags %}
+        <div class="post-tags post-hero-tags" aria-label="文章标签">
+            {% for tag in page.tags %}
+            <a class="chip chip-hero" href="{{ site.baseurl }}/archive/?tag={{ tag | url_encode }}">{{ tag }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <h1 class="post-hero-title">{{ page.title }}</h1>
+        {% if page.subtitle %}
+        <p class="post-hero-subtitle">{{ page.subtitle }}</p>
+        {% endif %}
+        <div class="post-hero-meta">
+            <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y 年 %-m 月 %-d 日" }}</time>
+            <span class="meta-dot" aria-hidden="true">·</span>
+            <span class="post-author">{{ page.author | default: site.title }}</span>
+            <span class="meta-dot" aria-hidden="true">·</span>
+            <span class="reading-time" id="readingTime">阅读约 1 分钟</span>
+        </div>
+    </div>
+</header>
+
+<div class="container post-layout">
+    <div class="post-main">
+        <article class="post-content" id="postContent">
+            {{ content }}
+        </article>
+
+        {% if page.tags %}
+        <div class="post-foot-tags">
+            <span class="foot-tags-label">标签</span>
+            <div class="post-tags">
+                {% for tag in page.tags %}
+                <a class="chip" href="{{ site.baseurl }}/archive/?tag={{ tag | url_encode }}">{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <nav class="post-pager" aria-label="上一篇 / 下一篇">
+            {% if page.previous.url %}
+            <a class="pager-card pager-prev" href="{{ page.previous.url | prepend: site.baseurl }}">
+                <span class="pager-label">← 上一篇</span>
+                <span class="pager-title">{{ page.previous.title }}</span>
+            </a>
+            {% else %}
+            <span class="pager-card is-empty" aria-hidden="true"></span>
+            {% endif %}
+            {% if page.next.url %}
+            <a class="pager-card pager-next" href="{{ page.next.url | prepend: site.baseurl }}">
+                <span class="pager-label">下一篇 →</span>
+                <span class="pager-title">{{ page.next.title }}</span>
+            </a>
+            {% else %}
+            <span class="pager-card is-empty" aria-hidden="true"></span>
+            {% endif %}
+        </nav>
+
+        <div class="post-back">
+            <a href="{{ site.baseurl }}/archive/">查看全部文章 →</a>
+        </div>
+    </div>
+
+    {% if page.catalog and site.catalog %}
+    <aside class="catalog" aria-label="文章目录">
+        <div class="catalog-inner">
+            <p class="catalog-title">本页目录</p>
+            <nav class="catalog-list" id="catalogList"></nav>
+        </div>
+    </aside>
+    {% endif %}
+</div>
