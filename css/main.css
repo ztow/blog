@@ -1590,7 +1590,7 @@ button {
 
 .archive-item {
   display: grid;
-  grid-template-columns: 62px minmax(0, 1fr) auto;
+  grid-template-columns: 62px minmax(0, 1fr);
   align-items: baseline;
   gap: 18px;
   padding: 13px 4px;
@@ -1610,7 +1610,12 @@ button {
   white-space: nowrap;
 }
 
+.archive-item-main {
+  min-width: 0;
+}
+
 .archive-item-title {
+  display: inline;
   font-family: var(--font-serif);
   font-size: 1rem;
   font-weight: 600;
@@ -1623,12 +1628,11 @@ button {
 }
 
 .archive-item-subtitle {
+  display: block;
+  margin-top: 2px;
   font-size: 0.8rem;
+  line-height: 1.55;
   color: var(--text-3);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 220px;
 }
 
 .archive-item.is-hidden,
@@ -1831,9 +1835,6 @@ button {
     grid-template-columns: 54px minmax(0, 1fr);
   }
 
-  .archive-item-subtitle {
-    display: none;
-  }
 }
 
 @media (max-width: 640px) {
