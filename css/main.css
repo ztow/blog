@@ -966,6 +966,85 @@ button {
   padding-bottom: 88px;
 }
 
+/* ---------- About page ---------- */
+.about-hero-card {
+  text-align: center;
+  padding: 44px 28px 38px;
+  margin-bottom: 44px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.about-avatar {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid transparent;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    var(--gradient) border-box;
+  box-shadow: var(--shadow-md);
+}
+
+.about-name {
+  margin: 18px 0 4px;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.about-sub {
+  margin: 0;
+  font-size: 0.84rem;
+  letter-spacing: 0.14em;
+  color: var(--text-3);
+}
+
+.about-contact {
+  position: relative;
+  overflow: hidden;
+  margin-top: 52px;
+  padding: 34px 38px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.about-contact::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--gradient);
+}
+
+.about-contact h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+}
+
+.about-contact p {
+  margin: 0 0 20px;
+  color: var(--text-2);
+}
+
+@media (max-width: 640px) {
+  .about-hero-card {
+    padding: 32px 20px 28px;
+  }
+
+  .about-contact {
+    padding: 26px 24px;
+  }
+}
+
 /* ---------- Post hero ---------- */
 .post-hero {
   position: relative;
