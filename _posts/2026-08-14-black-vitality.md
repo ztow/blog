@@ -1,5 +1,6 @@
 ---
 layout: post
+date: 2026-08-14 19:41:00 +0800
 title: "黑色生命力"
 subtitle: "真正强大的人，都曾独自穿越过一片黑暗森林。"
 author: "ztow"
