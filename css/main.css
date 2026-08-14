@@ -504,9 +504,7 @@ button {
 /* Featured post (home) */
 .featured-post {
   position: relative;
-  display: grid;
-  grid-template-columns: 42% minmax(0, 1fr);
-  margin: 0 0 54px;
+  margin: 0 0 46px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -517,7 +515,9 @@ button {
 
 .featured-media {
   position: relative;
-  min-height: 320px;
+  display: block;
+  aspect-ratio: 16 / 6;
+  overflow: hidden;
   background: var(--bg-soft);
 }
 
@@ -527,11 +527,11 @@ button {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
 }
 
 .featured-body {
-  grid-column: 2;
-  padding: 38px 42px 34px;
+  padding: 28px 34px 26px;
   min-width: 0;
 }
 
@@ -540,11 +540,15 @@ button {
   box-shadow: var(--shadow-md);
 }
 
+.featured-post:hover .featured-media img {
+  transform: scale(1.04);
+}
+
 .featured-label {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -560,9 +564,9 @@ button {
 }
 
 .featured-title {
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   font-family: var(--font-serif);
-  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  font-size: clamp(1.45rem, 2.8vw, 1.85rem);
   font-weight: 700;
   line-height: 1.3;
 }
@@ -576,16 +580,9 @@ button {
 }
 
 .featured-subtitle {
-  margin: 0 0 14px;
-  font-size: 1.02rem;
+  margin: 0 0 16px;
+  font-size: 0.98rem;
   color: var(--text-2);
-}
-
-.featured-excerpt {
-  margin: 0 0 20px;
-  font-size: 0.95rem;
-  line-height: 1.85;
-  color: var(--text-3);
 }
 
 .featured-foot {
@@ -1770,17 +1767,15 @@ button {
   }
 
   .featured-post {
-    grid-template-columns: 1fr;
+    margin-bottom: 40px;
   }
 
   .featured-media {
-    min-height: 0;
-    aspect-ratio: 16 / 8;
+    aspect-ratio: 16 / 7;
   }
 
   .featured-body {
-    grid-column: 1;
-    padding: 30px 30px 28px;
+    padding: 26px 28px 24px;
   }
 
   .post-grid {
@@ -1836,15 +1831,15 @@ button {
   }
 
   .featured-media {
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 16 / 9;
   }
 
   .featured-body {
-    padding: 24px 22px 22px;
+    padding: 22px 20px 20px;
   }
 
   .featured-title {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
   }
 
   .post-grid {

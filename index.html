@@ -43,11 +43,11 @@ description: "等号的意思，等于有些东西不重要"
         {% assign featured = site.posts | first %}
         {% if paginator.page == 1 %}
         <article class="featured-post">
-            <div class="featured-media">
+            <a class="featured-media" href="{{ featured.url | prepend: site.baseurl }}" tabindex="-1" aria-hidden="true">
                 {% if featured.header-img %}
                 <img src="{% if featured.header-img contains 'http' %}{{ featured.header-img }}{% else %}{{ site.baseurl }}/{{ featured.header-img }}{% endif %}" alt="" loading="lazy">
                 {% endif %}
-            </div>
+            </a>
             <div class="featured-body">
                 <p class="featured-label"><span class="featured-pin" aria-hidden="true"></span>最新文章 · {{ featured.date | date: "%Y-%m-%d" }}</p>
                 <h2 class="featured-title">
@@ -56,7 +56,6 @@ description: "等号的意思，等于有些东西不重要"
                 {% if featured.subtitle %}
                 <p class="featured-subtitle">{{ featured.subtitle }}</p>
                 {% endif %}
-                <p class="featured-excerpt">{{ featured.content | strip_html | truncate: 200 }}</p>
                 <div class="featured-foot">
                     <div class="post-item-tags">
                         {% for tag in featured.tags limit: 4 %}
