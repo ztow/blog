@@ -963,6 +963,7 @@ button {
 }
 
 .page-content {
+  margin: 0 auto;
   padding-bottom: 88px;
 }
 
