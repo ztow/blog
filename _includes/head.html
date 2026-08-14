@@ -49,13 +49,24 @@
                 // Inline background kills the white flash before the stylesheet arrives
                 document.documentElement.style.backgroundColor = theme === "dark" ? "#0f0e13" : "#faf8f5";
             }
+            function readSavedTheme() {
+                try {
+                    var s = localStorage.getItem("theme");
+                    if (s === "dark" || s === "light") return s;
+                } catch (e) {}
+                try {
+                    var m = document.cookie.match(/(?:^|; )ztow_theme=(dark|light)/);
+                    if (m) return m[1];
+                } catch (e) {}
+                return null;
+            }
             try {
                 var preset = document.documentElement.getAttribute("data-theme");
                 if (preset === "dark" || preset === "light") {
                     apply(preset);
                     return;
                 }
-                var saved = localStorage.getItem('theme');
+                var saved = readSavedTheme();
                 var dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
                 apply(dark ? 'dark' : 'light');
             } catch (e) {

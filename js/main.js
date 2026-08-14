@@ -12,6 +12,9 @@
     root.setAttribute("data-theme", theme);
     if (persist !== false) {
       try { localStorage.setItem("theme", theme); } catch (e) {}
+      try {
+        document.cookie = "ztow_theme=" + theme + "; path=/; max-age=31536000; SameSite=Lax";
+      } catch (e) {}
     }
     if (themeColorMeta) {
       themeColorMeta.setAttribute("content", theme === "dark" ? "#0f0e13" : "#faf8f5");
