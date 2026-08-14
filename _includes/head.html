@@ -3,14 +3,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="{% if page.description %}{{ page.description | strip_html }}{% else %}{{ site.description }}{% endif %}">
+    <meta name="description" content="{% if page.description %}{{ page.description | strip_html }}{% else %}{{ site.description | strip_html }}{% endif %}">
     <meta name="keywords" content="{{ site.keyword }}">
     <meta name="theme-color" content="#faf8f5">
 
     <!-- Open Graph -->
     <meta property="og:title" content="{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{ site.SEOTitle }}{% endif %}">
     <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
-    <meta property="og:description" content="{% if page.layout == 'post' %}{{ page.excerpt | strip_html | truncate: 200 }}{% else %}{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}{% endif %}">
+    <meta property="og:description" content="{% if page.layout == 'post' %}{{ page.excerpt | strip_html | truncate: 200 }}{% else %}{% if page.description %}{{ page.description | strip_html }}{% else %}{{ site.description | strip_html }}{% endif %}{% endif %}">
     <meta property="og:image" content="{{ site.url }}{{ site.sidebar-avatar }}">
     <meta property="og:url" content="{{ site.url }}{{ page.url }}">
     <meta property="og:site_name" content="{{ site.SEOTitle }}">
