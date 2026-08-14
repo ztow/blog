@@ -506,7 +506,7 @@ button {
   position: relative;
   display: grid;
   grid-template-columns: 42% minmax(0, 1fr);
-  margin: 24px 0 54px;
+  margin: 0 0 54px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 20px;
