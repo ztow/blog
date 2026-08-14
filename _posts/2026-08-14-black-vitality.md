@@ -3,7 +3,7 @@ layout: post
 title: "黑色生命力"
 subtitle: "真正强大的人，都曾独自穿越过一片黑暗森林。"
 author: "ztow"
-header-img: "img/post-bg-black-vitality.jpg"
+header-img: "img/post-bg-black-vitality-pexels.jpg"
 catalog: true
 tags:
   - 心理学
