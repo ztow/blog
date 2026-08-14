@@ -24,15 +24,12 @@ description: "等号的意思，等于有些东西不重要"
             </div>
         </div>
         <div class="masthead-collage" aria-hidden="true">
-            <figure class="collage-card collage-back">
-                <img src="/img/post-bg-dan-koe-interests.jpeg" alt="" loading="lazy">
-            </figure>
-            <figure class="collage-card collage-third">
-                <img src="/img/post-bg-stranger-talk.jpg" alt="" loading="lazy">
-            </figure>
-            <figure class="collage-card collage-front">
-                <img src="/img/post-bg-icar-robox.jpg" alt="" loading="lazy">
-            </figure>
+            {% assign collage_posts = site.posts | slice: 1, 3 %}
+            {% for post in collage_posts %}
+            <a class="collage-card {% cycle 'collage-back', 'collage-third', 'collage-front' %}" href="{{ post.url | prepend: site.baseurl }}" tabindex="-1">
+                <img src="{% if post.header-img contains 'http' %}{{ post.header-img }}{% else %}{{ site.baseurl }}/{{ post.header-img }}{% endif %}" alt="{{ post.title }}" loading="lazy">
+            </a>
+            {% endfor %}
             <span class="collage-sticker">2012 → 2026</span>
         </div>
     </div>

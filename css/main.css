@@ -449,6 +449,7 @@ button {
 
 .collage-card {
   position: absolute;
+  display: block;
   margin: 0;
   width: 52%;
   height: 66%;
