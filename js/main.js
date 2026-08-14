@@ -18,6 +18,11 @@
     }
   }
 
+  // Keep the browser UI color in sync with the current theme on load
+  if (themeColorMeta && root.getAttribute("data-theme")) {
+    themeColorMeta.setAttribute("content", root.getAttribute("data-theme") === "dark" ? "#0f0e13" : "#faf8f5");
+  }
+
   if (themeToggle) {
     themeToggle.addEventListener("click", function () {
       var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
