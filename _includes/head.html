@@ -38,8 +38,8 @@
     <!-- Web App Manifest -->
     <link rel="manifest" href="{{ site.baseurl }}/pwa/manifest.json">
 
-    <!-- Main stylesheet -->
-    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+    <!-- Main stylesheet (versioned to bust CDN/browser cache on every deploy) -->
+    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}?v={{ site.time | date: "%Y%m%d%H%M%S" }}">
 
     <!-- Set theme before first paint to avoid flash -->
     <script>

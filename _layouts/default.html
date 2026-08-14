@@ -14,9 +14,9 @@
 
     {% include footer.html %}
 
-    <script src="{{ "/js/main.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/js/main.js" | prepend: site.baseurl }}?v={{ site.time | date: "%Y%m%d%H%M%S" }}"></script>
     {% if site.service-worker %}
-    <script src="{{ "/js/sw-registration.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/js/sw-registration.js" | prepend: site.baseurl }}?v={{ site.time | date: "%Y%m%d%H%M%S" }}"></script>
     {% endif %}
 </body>
 </html>

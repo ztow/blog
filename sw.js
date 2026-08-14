@@ -1,5 +1,5 @@
 /* ztow Blog service worker */
-const CACHE_NAME = "ztow-blog-v1";
+const CACHE_NAME = "ztow-blog-v2";
 const CORE_ASSETS = [
   "./",
   "./offline.html",
