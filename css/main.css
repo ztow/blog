@@ -1523,24 +1523,21 @@ button {
 
 .tag-cloud {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 8px;
   margin: 0;
   padding: 0;
 }
 
 .tag-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 9px 14px;
+  padding: 6px 13px;
   font-size: 0.86rem;
-  text-align: left;
   color: var(--text-2);
   background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 999px;
   cursor: pointer;
   transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
