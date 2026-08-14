@@ -1510,8 +1510,8 @@ button {
 /* ---------- Archive ---------- */
 .archive-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: 56px;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 48px;
   align-items: start;
   padding-bottom: 88px;
 }
@@ -1524,7 +1524,7 @@ button {
 .tag-cloud {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
   margin: 0;
   padding: 0;
 }
@@ -1532,8 +1532,8 @@ button {
 .tag-btn {
   display: inline-flex;
   align-items: center;
-  padding: 6px 13px;
-  font-size: 0.86rem;
+  padding: 4px 10px;
+  font-size: 0.78rem;
   color: var(--text-2);
   background: var(--surface);
   border: 1px solid var(--line);
@@ -1543,9 +1543,9 @@ button {
 }
 
 .tag-btn sup {
-  font-size: 0.68em;
+  font-size: 0.62em;
   color: var(--text-3);
-  margin-left: 10px;
+  margin-left: 4px;
 }
 
 .tag-btn:hover {
@@ -1763,7 +1763,8 @@ button {
 
   .tag-btn {
     width: auto;
-    padding: 7px 16px;
+    padding: 4px 10px;
+    font-size: 0.78rem;
     border-radius: 999px;
   }
 
