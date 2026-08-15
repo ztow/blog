@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 丸子桌面
 title: "丸子桌面 - 2019年4月日历"
 subtitle: "“芒果就是那种又好看，又好拍，又好吃的东西。”"
 author: "ztow"

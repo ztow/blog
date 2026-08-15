@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 随笔
 title: "我说的内向不是你们以为的那样"
 subtitle: "社交这种在以人情为主的中国来看,其实是非常重要的一件事"
 author: "ztow"

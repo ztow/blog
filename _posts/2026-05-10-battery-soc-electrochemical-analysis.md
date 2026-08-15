@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 科技与AI
 title: "动力电池SOC电化学分析：为什么建议不要经常充至100%？"
 subtitle: "从晶格应力到SEI撕裂，深度解构高SOC下的电池退化机理"
 author: "ztow"

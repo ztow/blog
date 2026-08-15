@@ -7,8 +7,11 @@ layout: default
     <div class="post-hero-mask" aria-hidden="true"></div>
     {% endif %}
     <div class="container narrow post-hero-content">
-        {% if page.tags %}
-        <div class="post-tags post-hero-tags" aria-label="文章标签">
+        {% if page.tags or page.category %}
+        <div class="post-tags post-hero-tags" aria-label="文章分类与标签">
+            {% if page.category %}
+            <a class="chip chip-hero chip-cat" href="{{ site.baseurl }}/archive/?cat={{ page.category | url_encode }}">{{ page.category }}</a>
+            {% endif %}
             {% for tag in page.tags %}
             <a class="chip chip-hero" href="{{ site.baseurl }}/archive/?tag={{ tag | url_encode }}">{{ tag }}</a>
             {% endfor %}
@@ -33,6 +36,15 @@ layout: default
         <article class="post-content" id="postContent">
             {{ content }}
         </article>
+
+        {% if page.category %}
+        <div class="post-foot-tags">
+            <span class="foot-tags-label">分类</span>
+            <div class="post-tags">
+                <a class="chip" href="{{ site.baseurl }}/archive/?cat={{ page.category | url_encode }}">{{ page.category }}</a>
+            </div>
+        </div>
+        {% endif %}
 
         {% if page.tags %}
         <div class="post-foot-tags">

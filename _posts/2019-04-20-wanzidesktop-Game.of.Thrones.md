@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 丸子桌面
 title: "丸子桌面 - 权利的游戏"
 subtitle: "“我哥哥曾教导我说，“但是”之前的话，都是毫无意义的。”"
 author: "ztow"

@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 随笔
 title: "你要知道，这个世界，到底变化有多快！"
 subtitle: "思维跳跃过度往往会偏离本质,但这一点都不影响我瞎掰。"
 author: "ztow"

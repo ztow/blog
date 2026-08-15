@@ -810,6 +810,20 @@ button {
   font-size: 0.76rem;
 }
 
+/* Category chip: accent-filled, visually distinct from tags */
+.chip-cat {
+  color: #fff;
+  background: var(--gradient);
+  border-color: transparent;
+}
+
+.chip-cat:hover {
+  color: #fff;
+  background: var(--gradient);
+  border-color: transparent;
+  box-shadow: var(--shadow-sm);
+}
+
 /* Pagination */
 .pagination {
   display: flex;
@@ -1519,6 +1533,10 @@ button {
 .archive-side {
   position: sticky;
   top: calc(var(--nav-h) + 24px);
+}
+
+.archive-side .side-card + .side-card {
+  margin-top: 20px;
 }
 
 .tag-cloud {

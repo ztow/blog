@@ -118,23 +118,32 @@
     }
   }
 
-  /* ---------- Archive tag filter ---------- */
+  /* ---------- Archive filter (category + tag) ---------- */
+  var catCloud = document.getElementById("catCloud");
   var tagCloud = document.getElementById("tagCloud");
   var archiveList = document.getElementById("archiveList");
-  if (tagCloud && archiveList) {
-    var tagButtons = Array.prototype.slice.call(tagCloud.querySelectorAll(".tag-btn"));
+  if (archiveList && (catCloud || tagCloud)) {
+    var catButtons = catCloud ? Array.prototype.slice.call(catCloud.querySelectorAll(".tag-btn")) : [];
+    var tagButtons = tagCloud ? Array.prototype.slice.call(tagCloud.querySelectorAll(".tag-btn")) : [];
     var archiveItems = Array.prototype.slice.call(archiveList.querySelectorAll(".archive-item"));
     var archiveYears = Array.prototype.slice.call(archiveList.querySelectorAll(".archive-year"));
+    var activeCat = "";
+    var activeTag = "";
 
-    function applyTagFilter(rawTag) {
+    function applyFilter() {
+      catButtons.forEach(function (btn) {
+        btn.classList.toggle("is-active", (btn.getAttribute("data-cat") || "") === activeCat);
+      });
       tagButtons.forEach(function (btn) {
-        btn.classList.toggle("is-active", (btn.getAttribute("data-tag") || "") === rawTag);
+        btn.classList.toggle("is-active", (btn.getAttribute("data-tag") || "") === activeTag);
       });
 
       archiveItems.forEach(function (item) {
         var tags = (item.getAttribute("data-tags") || "").split(",");
-        var visible = !rawTag || tags.indexOf(rawTag) !== -1;
-        item.classList.toggle("is-hidden", !visible);
+        var cat = item.getAttribute("data-category") || "";
+        var matchCat = !activeCat || cat === activeCat;
+        var matchTag = !activeTag || tags.indexOf(activeTag) !== -1;
+        item.classList.toggle("is-hidden", !(matchCat && matchTag));
       });
 
       archiveYears.forEach(function (year) {
@@ -143,26 +152,35 @@
       });
 
       var url = new URL(window.location.href);
-      if (rawTag) {
-        var decoded;
-        try { decoded = decodeURIComponent(rawTag); } catch (e) { decoded = rawTag; }
-        url.searchParams.set("tag", decoded);
-      } else {
-        url.searchParams.delete("tag");
+      function setParam(name, value) {
+        if (value) {
+          var decoded;
+          try { decoded = decodeURIComponent(value); } catch (e) { decoded = value; }
+          url.searchParams.set(name, decoded);
+        } else {
+          url.searchParams.delete(name);
+        }
       }
+      setParam("cat", activeCat);
+      setParam("tag", activeTag);
       history.replaceState(null, "", url.toString());
     }
 
-    tagCloud.addEventListener("click", function (event) {
-      var btn = event.target.closest(".tag-btn");
-      if (!btn) return;
-      applyTagFilter(btn.getAttribute("data-tag"));
-    });
+    function onCloudClick(cloud, paramName, setter) {
+      cloud.addEventListener("click", function (event) {
+        var btn = event.target.closest(".tag-btn");
+        if (!btn) return;
+        setter(btn.getAttribute(paramName) || "");
+        applyFilter();
+      });
+    }
+    if (catCloud) onCloudClick(catCloud, "data-cat", function (v) { activeCat = v; });
+    if (tagCloud) onCloudClick(tagCloud, "data-tag", function (v) { activeTag = v; });
 
     var urlParams = new URL(window.location.href).searchParams;
-    if (urlParams.get("tag")) {
-      applyTagFilter(encodeURIComponent(urlParams.get("tag")));
-    }
+    if (urlParams.get("cat")) activeCat = encodeURIComponent(urlParams.get("cat"));
+    if (urlParams.get("tag")) activeTag = encodeURIComponent(urlParams.get("tag"));
+    if (activeCat || activeTag) applyFilter();
   }
 
   /* ---------- Back to top ---------- */

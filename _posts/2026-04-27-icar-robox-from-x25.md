@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 科技与AI
 title: "奇瑞ROBOX：从X25到\"圆盒子\"，一台概念车背后的十年布局"
 subtitle: "iCAR X序列首款量产车型深度解读"
 author: "ztow"

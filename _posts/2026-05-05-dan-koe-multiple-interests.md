@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 随笔
 title: "如果你兴趣广泛，别在未来 2-3 年浪费时间"
 subtitle: "Dan Koe：多重兴趣不是缺陷，是超能力"
 author: "ztow"

@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 科技与AI
 title: “弄了个Newsletter”
 subtitle: “媒体形式会越来越变化和归零，一定会慢慢分布话，微信的订阅号，还远远做不到。”
 author: "ztow"

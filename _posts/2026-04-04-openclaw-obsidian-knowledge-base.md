@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 科技与AI
 title: "OpenClaw 与 Obsidian 知识库联动实践"
 subtitle: "为什么本地 Markdown 是最优解"
 author: "作者"

@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 随笔
 title: 一个人在任何年龄都要提防的人生十大陷阱
 author: "ztow"
 catalog: true

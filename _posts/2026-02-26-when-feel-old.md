@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 随笔
 title: "什么时候觉得自己老了？"
 subtitle: "关于年龄、身体和心态的思考"
 author: "ztow"

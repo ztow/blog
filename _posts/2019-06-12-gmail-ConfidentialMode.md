@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 科技与AI
 title: "Gmail的 机密模式 - 全面开放"
 subtitle: "“普通Gmail用户也可以使用”"
 author: "ztow"

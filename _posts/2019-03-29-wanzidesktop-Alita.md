@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 丸子桌面
 title: "丸子桌面 - 阿丽塔 铳梦"
 subtitle: "“我的前世，一定是枪或什么东西吧……”"
 author: "ztow"

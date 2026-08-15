@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 随笔
 title: "转个妙文:【你们这些还魂尸】"
 subtitle: "这简直是自己玩自己的典范啊！"
 author: "ztow"

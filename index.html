@@ -20,6 +20,8 @@ description: "等号的意思，等于有些东西不重要"
                 <span class="stat-sep" aria-hidden="true"></span>
                 <span class="stat"><strong>{{ site.tags.size }}</strong> 个标签</span>
                 <span class="stat-sep" aria-hidden="true"></span>
+                <span class="stat"><strong>{{ site.categories.size }}</strong> 个分类</span>
+                <span class="stat-sep" aria-hidden="true"></span>
                 <span class="stat"><strong>{{ site.time | date: "%Y" | minus: 2012 }}</strong> 年书写</span>
             </div>
         </div>
@@ -55,6 +57,9 @@ description: "等号的意思，等于有些东西不重要"
                 {% endif %}
                 <div class="featured-foot">
                     <div class="post-item-tags">
+                        {% if featured.category %}
+                        <a class="chip chip-sm chip-cat" href="{{ site.baseurl }}/archive/?cat={{ featured.category | url_encode }}">{{ featured.category }}</a>
+                        {% endif %}
                         {% for tag in featured.tags limit: 4 %}
                         <a class="chip chip-sm" href="{{ site.baseurl }}/archive/?tag={{ tag | url_encode }}">{{ tag }}</a>
                         {% endfor %}
@@ -95,6 +100,9 @@ description: "等号的意思，等于有些东西不重要"
                 <p class="post-card-excerpt">{{ post.content | strip_html | truncate: 110 }}</p>
                 <div class="post-card-foot">
                     <div class="post-item-tags">
+                        {% if post.category %}
+                        <a class="chip chip-sm chip-cat" href="{{ site.baseurl }}/archive/?cat={{ post.category | url_encode }}">{{ post.category }}</a>
+                        {% endif %}
                         {% for tag in post.tags limit: 3 %}
                         <a class="chip chip-sm" href="{{ site.baseurl }}/archive/?tag={{ tag | url_encode }}">{{ tag }}</a>
                         {% endfor %}

@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 科技与AI
 title: "如何写一封合适的邮件"
 subtitle: "邮件，大概对很多人觉得很久远了，但作为一个快把Gmail用满的人来说，邮件的作用仍不可替代，微信、钉钉一直都不是很好的沟通工具"
 author: "ztow"

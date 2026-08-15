@@ -1,5 +1,6 @@
 ---
 layout: post
+category: 随笔
 title: "How to fix your entire life in 1 day 如何在一天内重启人生"
 subtitle: "Dan Koe：中英文对照翻译"
 author: "ztow"
