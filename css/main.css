@@ -824,19 +824,22 @@ button {
   box-shadow: var(--shadow-sm);
 }
 
-/* Home category strip */
+/* Home category strip (below masthead stats) */
 .home-cats {
-  margin-bottom: 40px;
+  margin-top: 14px;
 }
 
 .cat-bar {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 10px 16px;
-  background: var(--bg-soft);
+  padding: 10px 24px;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-sm);
   overflow-x: auto;
 }
 

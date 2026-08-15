@@ -24,6 +24,16 @@ description: "等号的意思，等于有些东西不重要"
                 <span class="stat-sep" aria-hidden="true"></span>
                 <span class="stat"><strong>{{ site.time | date: "%Y" | minus: 2012 }}</strong> 年书写</span>
             </div>
+            <section class="home-cats" aria-label="文章分类">
+                <div class="cat-bar">
+                    <span class="cat-bar-label">分类</span>
+                    <nav class="cat-nav">
+                        {% for cat in site.categories %}
+                        <a class="cat-pill" href="{{ site.baseurl }}/archive/?cat={{ cat[0] | url_encode }}">{{ cat[0] }}<sup>{{ cat[1].size }}</sup></a>
+                        {% endfor %}
+                    </nav>
+                </div>
+            </section>
         </div>
         <div class="masthead-collage" aria-hidden="true">
             {% assign collage_posts = site.posts | slice: 1, 3 %}
@@ -69,17 +79,6 @@ description: "等号的意思，等于有些东西不重要"
             </div>
         </article>
         {% endif %}
-
-        <section class="home-cats" aria-label="文章分类">
-            <div class="cat-bar">
-                <span class="cat-bar-label">分类</span>
-                <nav class="cat-nav">
-                    {% for cat in site.categories %}
-                    <a class="cat-pill" href="{{ site.baseurl }}/archive/?cat={{ cat[0] | url_encode }}">{{ cat[0] }}<sup>{{ cat[1].size }}</sup></a>
-                    {% endfor %}
-                </nav>
-            </div>
-        </section>
 
         <div class="section-head">
             <h2 class="section-title"><span class="section-mark" aria-hidden="true"></span>最近更新</h2>
