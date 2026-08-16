@@ -18,6 +18,8 @@
       try {
         document.cookie = "ztow_theme=" + theme + "; path=/; max-age=31536000; SameSite=Lax";
       } catch (e) {}
+      // window.name survives navigations even when storage & cookies are blocked
+      try { window.name = "ztow_theme=" + theme; } catch (e) {}
     }
     if (themeColorMeta) {
       themeColorMeta.setAttribute("content", theme === "dark" ? "#0f0e13" : "#faf8f5");

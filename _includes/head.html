@@ -58,6 +58,10 @@
                     var m = document.cookie.match(/(?:^|; )ztow_theme=(dark|light)/);
                     if (m) return m[1];
                 } catch (e) {}
+                try {
+                    var n = (window.name || "").match(/ztow_theme=(dark|light)/);
+                    if (n) return n[1];
+                } catch (e) {}
                 return null;
             }
             try {
