@@ -74,7 +74,7 @@ description: "等号的意思，等于有些东西不重要"
                         <a class="chip chip-sm" href="{{ site.baseurl }}/archive/?tag={{ tag | url_encode }}">{{ tag }}</a>
                         {% endfor %}
                     </div>
-                    <span class="post-item-more">阅读全文 <span class="more-arrow" aria-hidden="true">→</span></span>
+                    <a class="post-item-more" href="{{ featured.url | prepend: site.baseurl }}">阅读全文 <span class="more-arrow" aria-hidden="true">→</span></a>
                 </div>
             </div>
         </article>
@@ -117,7 +117,7 @@ description: "等号的意思，等于有些东西不重要"
                         <a class="chip chip-sm" href="{{ site.baseurl }}/archive/?tag={{ tag | url_encode }}">{{ tag }}</a>
                         {% endfor %}
                     </div>
-                    <span class="card-more" aria-hidden="true">→</span>
+                    <a class="card-more" href="{{ post.url | prepend: site.baseurl }}" aria-label="阅读全文">→</a>
                 </div>
             </div>
         </article>
