@@ -10,6 +10,9 @@
 
   function applyTheme(theme, persist) {
     root.setAttribute("data-theme", theme);
+    // Keep the inline anti-flash background in sync, otherwise <html> keeps
+    // the load-time color after toggling (visible in overscroll areas).
+    root.style.backgroundColor = theme === "dark" ? "#0f0e13" : "#faf8f5";
     if (persist !== false) {
       try { localStorage.setItem("theme", theme); } catch (e) {}
       try {

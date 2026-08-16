@@ -5,7 +5,8 @@
 
 /* ---------- Design tokens ---------- */
 :root {
-  color-scheme: light;
+  /* light dark: 声明本站自带深浅主题,避免 Chrome 自动暗色模式覆盖切换按钮 */
+  color-scheme: light dark;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
   --font-serif: Georgia, "Times New Roman", "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", SimSun, serif;
   --font-mono: "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
