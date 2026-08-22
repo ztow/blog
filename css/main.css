@@ -850,14 +850,6 @@ button {
   overflow-x: auto;
 }
 
-.cat-bar-label {
-  flex: none;
-  font-family: var(--font-serif);
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: var(--text-2);
-}
-
 .cat-nav {
   display: flex;
   align-items: center;
