@@ -36,7 +36,7 @@ description: "年过四十五，对社会贡献不大；好在还有这片自留
             </section>
         </div>
         <div class="masthead-collage" aria-hidden="true">
-            {% assign collage_posts = site.posts | slice: 1, 3 %}
+            {% assign collage_posts = site.posts | slice: 0, 3 %}
             {% for post in collage_posts %}
             <a class="collage-card {% cycle 'collage-back', 'collage-third', 'collage-front' %}" href="{{ post.url | prepend: site.baseurl }}" tabindex="-1">
                 <img src="{% if post.header-img contains 'http' %}{{ post.header-img }}{% else %}{{ site.baseurl }}/{{ post.header-img }}{% endif %}" alt="{{ post.title }}" loading="lazy">
