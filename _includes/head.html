@@ -27,6 +27,20 @@
     <title>{% if page.title %}{{ page.title }} - {{ site.SEOTitle }}{% else %}{{ site.SEOTitle }}{% endif %}</title>
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
+    {% if page.url == '/' %}
+    <!-- Structured data: helps search engines use the site's own description -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "{{ site.title }}",
+      "alternateName": "ztow",
+      "url": "{{ site.url }}{{ site.baseurl }}/",
+      "description": "{{ site.description | strip_html }}"
+    }
+    </script>
+    {% endif %}
+
     <!-- RSS -->
     <link rel="alternate" type="application/rss+xml" title="{{ site.SEOTitle }} RSS" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
 
