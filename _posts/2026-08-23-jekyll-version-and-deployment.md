@@ -5,7 +5,7 @@ date: 2026-08-23 10:00:00 +0800
 title: "Jekyll 版本这件事，我为什么停在 4.3.4"
 subtitle: "从 GitHub Pages 旧构建迁到 Actions，顺手把版本锁在了 4.3.4"
 author: "ztow"
-header-img: "img/2026-jekyll/jekyll-code-pexels.jpg"
+header-img: "img/2026-jekyll/jekyll-header.jpg"
 catalog: true
 tags:
   - Jekyll
@@ -65,4 +65,4 @@ gem "jekyll", "~> 4.3.4"
 
 如果以后真要上 4.4.1，我会先把 `Gemfile` 改成 `~> 4.4.1`，本地构建通过，再推一个版本出来。等真遇到必须升级的场景再说，不急。
 
-题图：[Daniil Komov / Pexels](https://www.pexels.com/zh-cn/photo/c-n-c-nh-ma-l-p-trinh-tren-man-hinh-may-tinh-34804020/)，仅做尺寸裁剪。
+题图：Jekyll 官方标识，来自 [mmy83.online](https://mmy83.online/images/2023/02/2023-02-20/%E4%BD%BF%E7%94%A8Jekyll%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/%E4%BD%BF%E7%94%A8Jekyll%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F-00.jpg)。
