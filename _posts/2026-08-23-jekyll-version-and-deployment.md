@@ -2,8 +2,8 @@
 layout: post
 category: 博客
 date: 2026-08-23 10:00:00 +0800
-title: "博客升级：Jekyll 4.3.4 与 GitHub Actions 构建"
-subtitle: "从 GitHub Pages 内置构建迁到 Actions，顺便把版本锁在 4.3.4"
+title: "升级为Jekyll 4.3.4 并改为 GitHub Actions 构建"
+subtitle: "从 GitHub Pages 内置构建迁到 Actions,顺便给Jekyll生了个级."
 author: "ztow"
 header-img: "img/2026-jekyll/jekyll-header.jpg"
 catalog: true
