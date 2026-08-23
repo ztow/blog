@@ -3,8 +3,6 @@ backup/
 _site/
 .jekyll-cache/
 _preview/
-Gemfile
-Gemfile.lock
 .bundle/
 vendor/
 *.swp
